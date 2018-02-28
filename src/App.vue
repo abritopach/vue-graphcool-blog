@@ -1,7 +1,15 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <v-app>
+      <!-- Render the Navbar component. -->
+      <app-navbar></app-navbar>
+      <v-card-text>
+        <img src="./assets/logo.png">    
+      </v-card-text>
+      <router-view/>
+      <!-- Render the Footer component. -->
+      <app-footer></app-footer>
+    </v-app>
   </div>
 </template>
 
@@ -9,8 +17,16 @@
 
 import Vue from 'vue' 
 import Component from 'vue-class-component'
+import AppNavbar from './components/common/AppNavbar.vue'
+import AppFooter from './components/common/AppFooter.vue'
 
-@Component
+@Component({
+  components: {
+    // Add a reference to components in the components property.
+    AppNavbar,
+    AppFooter
+  }
+})
 export default class App extends Vue {
 
   // https://scotch.io/tutorials/build-a-blog-with-vue-graphql-and-apollo-client
@@ -30,6 +46,5 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
