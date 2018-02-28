@@ -7,7 +7,8 @@
         Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.
       </v-card-text>
       <v-card-text>
-        <img src="./assets/graphql_apollo_vue_graphcool.png">    
+        <img v-if="$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" width="100%">  
+        <img v-if="!$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png">  
       </v-card-text>
       <router-view/>
       <!-- Render the Footer component. -->
