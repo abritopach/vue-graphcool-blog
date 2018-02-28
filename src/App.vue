@@ -4,7 +4,10 @@
       <!-- Render the Navbar component. -->
       <app-navbar></app-navbar>
       <v-card-text>
-        <img src="./assets/logo.png">    
+        Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.
+      </v-card-text>
+      <v-card-text>
+        <img src="./assets/graphql_apollo_vue_graphcool.png">    
       </v-card-text>
       <router-view/>
       <!-- Render the Footer component. -->
