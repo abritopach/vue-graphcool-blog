@@ -27,6 +27,8 @@ export const USER_QUERY = gql`
 
 // MUTATIONS.
 
+// User.
+
 export const SIGNUP_MUTATION = gql`
     mutation SignupMutation($username: String!, $email: String!, $password: String!) {
         createUser(
@@ -52,6 +54,39 @@ export const LOGIN_MUTATION = gql`
             }
         ) {
             token
+        }
+    }
+`
+
+// Post.
+
+export const ADD_POST_MUTATION = gql`
+    mutation AddPostMutation($title: String!, $content: String!, $userId: ID!) {
+        createPost(
+            title: $title,
+            content: $content,
+            userId: $userId
+        ) {
+            id
+            title
+            content
+            user {
+                id
+                username
+                email
+            }
+        }
+    }
+`
+
+export const ALL_POSTS_QUERY = gql`
+    query AllPostsQuery {
+        allPosts {
+            id
+            title
+            user {
+                username
+            }
         }
     }
 `

@@ -16,7 +16,7 @@ import Component from 'vue-class-component'
 export default class AppFooter extends Vue {
 };
 </script>
-<style>
+<style scoped>
   .footer {
     padding-left: 5px!important;
     padding-right: 5px!important;

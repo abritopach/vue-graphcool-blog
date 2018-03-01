@@ -75,7 +75,7 @@ export default class AppNavbar extends Vue {
 };
 </script>
    
-<style>
+<style scoped>
     a {
         text-decoration: none;
     }

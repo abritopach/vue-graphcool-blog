@@ -22,7 +22,6 @@
                 </v-card>
             </v-flex>
         </v-layout>
-
     </section>
 </template>
 
@@ -74,7 +73,7 @@ export default class SignUp extends Vue {
 };
 </script>
 
-<style>
+<style scoped>
     .loginForm {
         width: 100%;
     }

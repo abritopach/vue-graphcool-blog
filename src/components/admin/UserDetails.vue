@@ -69,7 +69,7 @@ export default class UserDetails extends Vue {
 };
 </script>
    
-<style>
+<style scoped>
     .avatar {
         margin-top: 15px;
     }

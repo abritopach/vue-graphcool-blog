@@ -82,7 +82,7 @@ export default class SignUp extends Vue {
 };
 </script>
 
-<style>
+<style scoped>
     .signUpForm {
         width: 100%;
     }
