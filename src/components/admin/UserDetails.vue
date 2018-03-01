@@ -2,14 +2,15 @@
     <v-layout row>
         <v-flex xs12 sm6 offset-sm3>
             <h2>User Details</h2>
-            <v-card>
+            <v-card v-if="User">
                 <v-avatar size="100px">
                     <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
                 </v-avatar>
                 <v-card-title primary-title>
                 <div>
-                    <div class="headline">Top western road trips</div>
-                    <span class="grey--text">1,000 miles of wonder</span>
+                    <input class="input is-static">
+                    <div class="headline">{{User.username}}</div>
+                    <span class="grey--text">{{User.email}}</span>
                 </div>
                 </v-card-title>
                 <v-card-actions>
@@ -17,13 +18,13 @@
                 <v-btn flat>Share</v-btn>
                 <v-btn flat color="purple">Explore</v-btn>
                 -->
-                <div>
-                    <v-badge color="red">
-                        <span slot="badge">2</span>
-                        <span>Number of posts</span>
-                    </v-badge>
-                </div>
                 <v-spacer></v-spacer>
+                <div>
+                        <v-badge color="red">
+                            <span slot="badge">{{User.posts.length}}</span>
+                            <span>Number of posts</span>
+                        </v-badge>
+                    </div>
                 <v-btn icon @click.native="show = !show">
                     <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
                 </v-btn>
@@ -47,11 +48,11 @@ import { USER_QUERY } from '../../graphql/graphql'
 @Component({
     apollo: {
         // Fetch user by ID
-        user: {
+        User: {
             query: USER_QUERY,
             variables () {
                 return {
-                    id: 'cje795cezzo140177f263pu5e'
+                    id: this.$route.params.id
                 }
             }
         }
@@ -60,15 +61,9 @@ import { USER_QUERY } from '../../graphql/graphql'
 export default class UserDetails extends Vue {
 
     show: boolean = false;
-    id: any;
 
     constructor() {
         super();
-    }
-
-    mounted() {
-        console.log('this.$route.params.id', this.$route.params.id);
-        this.id = this.$route.params.id;
     }
     
 };
@@ -77,5 +72,9 @@ export default class UserDetails extends Vue {
 <style>
     .avatar {
         margin-top: 15px;
+    }
+    .card__title {
+        justify-content: center;
+        padding: 0;
     }
 </style>

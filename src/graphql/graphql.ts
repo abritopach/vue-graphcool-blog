@@ -13,8 +13,8 @@ export const ALL_USERS_QUERY = gql`
 `
 
 export const USER_QUERY = gql`
-    query UserQuery($id: Int!) {
-        user(id: $id) {
+    query UserQuery($id: ID!) {
+        User(id: $id) {
             id
             username
             email
