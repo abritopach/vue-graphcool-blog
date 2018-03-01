@@ -12,6 +12,19 @@ export const ALL_USERS_QUERY = gql`
     }
 `
 
+export const USER_QUERY = gql`
+    query UserQuery($id: Int!) {
+        user(id: $id) {
+            id
+            username
+            email
+            posts {
+                id
+            }
+        }
+    }
+`
+
 // MUTATIONS.
 
 export const SIGNUP_MUTATION = gql`
