@@ -57,7 +57,7 @@ export default class SignUp extends Vue {
                     }
                 })
                 .then(response => {
-                    console.log(response);
+                    // console.log(response);
 
                     // Save user token to localstorage.
                     localStorage.setItem('blog-app-token', JSON.stringify(response.data.signinUser));

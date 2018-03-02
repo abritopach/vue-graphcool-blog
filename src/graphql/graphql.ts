@@ -25,6 +25,21 @@ export const USER_QUERY = gql`
     }
 `
 
+export const POST_QUERY = gql`
+    query PostQuery($id: ID!) {
+        Post(id: $id) {
+            id
+            title
+            content
+            user {
+                id
+                username
+                email
+            }
+        }
+    }
+`
+
 // MUTATIONS.
 
 // User.

@@ -11,9 +11,11 @@
                 <td class="text-xs-left">{{ props.item.title }}</td>
                 <td v-if="props.item.user" class="text-xs-left">{{ props.item.user.username }}</td>
                 <td class="justify-center layout px-0">
-                    <v-btn icon class="mx-0">
-                        <v-icon color="primary">visibility</v-icon>
-                    </v-btn>
+                    <router-link :to="`/postdetails/${props.item.id}`">
+                        <v-btn icon class="mx-0">
+                            <v-icon color="primary">visibility</v-icon>
+                        </v-btn>
+                    </router-link>
                     <v-btn icon class="mx-0" @click="editItem(props.item)">
                         <v-icon color="teal">edit</v-icon>
                     </v-btn>
@@ -62,4 +64,7 @@ export default class Users extends Vue {
 </script>
    
 <style scoped>
+    a {
+        text-decoration: none;
+    }
 </style>

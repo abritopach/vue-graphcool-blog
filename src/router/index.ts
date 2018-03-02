@@ -8,6 +8,7 @@ import UserDetails from '@/components/admin/UserDetails.vue'
 import NewPost from '@/components/admin/NewPost.vue'
 import Posts from '@/components/admin/Posts.vue'
 import Denied from '@/components/common/Denied.vue'
+import PostDetails from '@/components/PostDetails.vue'
 
 Vue.use(Router)
 
@@ -58,7 +59,13 @@ const router = new Router({
       name: 'Denied',
       component: Denied,
       meta: { requiresAuth: true, roles: ['admin', 'user'] }
-    }
+    },
+    {
+      path: '/postdetails/:id',
+      name: 'PostDetails',
+      component: PostDetails,
+      meta: { requiresAuth: true, roles: ['admin', 'user'] }
+  }
   ]
 })
 
@@ -78,7 +85,7 @@ router.beforeEach((to, from, next) => {
     return next();
   }
 
-  console.log('authUser.user.role', authUser.user.role);
+  // console.log('authUser.user.role', authUser.user.role);
   if (to.meta.roles.includes(authUser.user.role)) {
     return next();
   }

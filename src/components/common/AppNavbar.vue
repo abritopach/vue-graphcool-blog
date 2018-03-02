@@ -35,6 +35,20 @@
         </v-list>
         <v-list class="pt-0" dense subheader>
             <v-divider></v-divider>
+            <v-subheader>HOME</v-subheader>
+            <router-link v-for="item in itemsHome" :key="item.title" :to="item.to">
+                <v-list-tile v-if="showMenuOption(item.roles)">
+                <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
+            </router-link>
+        </v-list>
+        <v-list class="pt-0" dense subheader>
+            <v-divider></v-divider>
             <v-subheader>POST</v-subheader>
             <router-link v-for="item in itemsPost" :key="item.title" :to="item.to">
                 <v-list-tile v-if="showMenuOption(item.roles)">
@@ -81,6 +95,7 @@ import Component from 'vue-class-component';
 export default class AppNavbar extends Vue {
 
     title: any;
+    itemsHome: any;
     itemsPost: any;
     itemsUser: any;
     drawer: any;
@@ -89,6 +104,9 @@ export default class AppNavbar extends Vue {
         super();
         this.title = "VueJS & GraphCool Blog ";
         this.drawer = null,
+        this.itemsHome = [
+            { title: 'Latest Posts', icon: 'schedule', to: '/', roles: ['admin', 'user']}
+        ];
         this.itemsPost = [
           { title: 'New Post', icon: 'create', to: '/admin/posts/new', roles: ['admin', 'user']},
           { title: 'Posts', icon: 'description', to: '/admin/posts', roles: ['admin']}
