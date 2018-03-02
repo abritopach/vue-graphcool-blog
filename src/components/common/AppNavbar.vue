@@ -1,14 +1,14 @@
 <template>
     <div>
         <v-toolbar dark color="primary">
-        <v-toolbar-side-icon @click.stop="drawer = !drawer">
+        <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="showMenu()">
         </v-toolbar-side-icon>
         <v-toolbar-title class="white--text">{{title}}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <router-link to="/login">
+        <router-link to="/login" v-if="!showMenu()">
             <v-btn flat>Login</v-btn>
         </router-link>
-        <router-link to="/signup">
+        <router-link to="/signup" v-if="!showMenu()">
             <v-btn flat>
                 SignUp
             </v-btn>
@@ -33,18 +33,41 @@
             </v-list-tile-content>
             </v-list-tile>
         </v-list>
-        <v-list class="pt-0" dense>
+        <v-list class="pt-0" dense subheader>
             <v-divider></v-divider>
-            <router-link v-for="item in items" :key="item.title" :to="item.to">
-            <v-list-tile>
-            <v-list-tile-action>
-                <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile-content>
-            </v-list-tile>
+            <v-subheader>POST</v-subheader>
+            <router-link v-for="item in itemsPost" :key="item.title" :to="item.to">
+                <v-list-tile>
+                <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
             </router-link>
+        </v-list>
+        <v-list class="pt-0" dense subheader>
+            <v-subheader>USER</v-subheader>
+            <router-link v-for="item in itemsUser" :key="item.title" :to="item.to">
+                <v-list-tile>
+                <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
+            </router-link>
+            <v-divider></v-divider>
+            <v-list-tile @click="logout()">
+                <v-list-tile-action>
+                    <v-icon>exit_to_app</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Logout</v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
         </v-list>
     </v-navigation-drawer>
     </div>
@@ -58,18 +81,32 @@ import Component from 'vue-class-component';
 export default class AppNavbar extends Vue {
 
     title: any;
-    items: any;
+    itemsPost: any;
+    itemsUser: any;
     drawer: any;
 
     constructor() {
         super();
         this.title = "VueJS & GraphCool Blog ";
         this.drawer = null,
-        this.items = [
+        this.itemsPost = [
           { title: 'New Post', icon: 'create', to: '/admin/posts/new'},
-          { title: 'Posts', icon: 'description', to: '/admin/posts' },
-          { title: 'Users', icon: 'people', to: '/admin/users' }
+          { title: 'Posts', icon: 'description', to: '/admin/posts' }
         ];
+        this.itemsUser = [
+            { title: 'Users', icon: 'people', to: '/admin/users' }
+        ];
+    }
+
+    showMenu() {
+        return this.$route.meta.requiresAuth;
+    }
+
+    logout() {
+        console.log('logout');
+        // Remove token from localstorage.
+        localStorage.removeItem('blog-app-token');
+        this.$router.push({ path: '/login' })
     }
     
 };

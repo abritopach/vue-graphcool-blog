@@ -10,12 +10,13 @@ import Posts from '@/components/admin/Posts.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: { requiresAuth: true, roles: ['admin', 'user'] }
     },
     {
       path: '/signup',
@@ -52,14 +53,22 @@ export default new Router({
       meta: { requiresAuth: true, roles: ['admin'] }
     }
   ]
-})/*.beforeEach((to, from, next) => {
+})
+
+router.beforeEach((to, from, next) => {
+  // console.log('to.meta.requiresAuth', to.meta.requiresAuth);
+
   if (!to.meta.requiresAuth) {
-    return next;
+    return next();
   }
-  let token = localStorage.getItem('blog-app-token') || '';
-  let authUser = JSON.parse(token)
-  console.log(authUser);
+  let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "{}");
+
   if (!authUser || !authUser.token) {
-    return next({name: 'login'})
+    return next({name: 'Login'})
   }
-})*/
+  
+  return next();
+
+})
+
+export default router;

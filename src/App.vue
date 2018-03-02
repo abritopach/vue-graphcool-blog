@@ -4,7 +4,7 @@
       <!-- Render the Navbar component. -->
       <app-navbar></app-navbar>
       <v-card-text>
-        Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.
+        <h1>Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.</h1>
       </v-card-text>
       <v-card-text>
         <img v-if="$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" width="100%">  
