@@ -54,6 +54,9 @@ export const LOGIN_MUTATION = gql`
             }
         ) {
             token
+            user {
+                role
+            }
         }
     }
 `

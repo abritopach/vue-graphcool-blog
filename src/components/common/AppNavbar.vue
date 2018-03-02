@@ -37,7 +37,7 @@
             <v-divider></v-divider>
             <v-subheader>POST</v-subheader>
             <router-link v-for="item in itemsPost" :key="item.title" :to="item.to">
-                <v-list-tile>
+                <v-list-tile v-if="showMenuOption(item.roles)">
                 <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
                 </v-list-tile-action>
@@ -50,7 +50,7 @@
         <v-list class="pt-0" dense subheader>
             <v-subheader>USER</v-subheader>
             <router-link v-for="item in itemsUser" :key="item.title" :to="item.to">
-                <v-list-tile>
+                <v-list-tile v-if="showMenuOption(item.roles)">
                 <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
                 </v-list-tile-action>
@@ -90,11 +90,11 @@ export default class AppNavbar extends Vue {
         this.title = "VueJS & GraphCool Blog ";
         this.drawer = null,
         this.itemsPost = [
-          { title: 'New Post', icon: 'create', to: '/admin/posts/new'},
-          { title: 'Posts', icon: 'description', to: '/admin/posts' }
+          { title: 'New Post', icon: 'create', to: '/admin/posts/new', roles: ['admin', 'user']},
+          { title: 'Posts', icon: 'description', to: '/admin/posts', roles: ['admin']}
         ];
         this.itemsUser = [
-            { title: 'Users', icon: 'people', to: '/admin/users' }
+            { title: 'Users', icon: 'people', to: '/admin/users', roles: ['admin']}
         ];
     }
 
@@ -107,6 +107,12 @@ export default class AppNavbar extends Vue {
         // Remove token from localstorage.
         localStorage.removeItem('blog-app-token');
         this.$router.push({ path: '/login' })
+    }
+
+    showMenuOption(roles: string[]) {
+        let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
+        if (authUser !== null) return roles.includes(authUser.user.role);
+        return false;
     }
     
 };

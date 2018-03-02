@@ -63,7 +63,7 @@ export default class SignUp extends Vue {
                     localStorage.setItem('blog-app-token', JSON.stringify(response.data.signinUser));
 
                     // Redirect user.
-                    this.$router.replace('/admin/posts');
+                    this.$router.replace('/');
                 })
                 .catch( reason => {
                     console.error( 'onRejected function called: ', reason );

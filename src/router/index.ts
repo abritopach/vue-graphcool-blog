@@ -7,6 +7,7 @@ import Users from '@/components/admin/Users.vue'
 import UserDetails from '@/components/admin/UserDetails.vue'
 import NewPost from '@/components/admin/NewPost.vue'
 import Posts from '@/components/admin/Posts.vue'
+import Denied from '@/components/common/Denied.vue'
 
 Vue.use(Router)
 
@@ -51,6 +52,12 @@ const router = new Router({
       name: 'Posts',
       component: Posts,
       meta: { requiresAuth: true, roles: ['admin'] }
+    },
+    {
+      path: '/denied',
+      name: 'Denied',
+      component: Denied,
+      meta: { requiresAuth: true, roles: ['admin', 'user'] }
     }
   ]
 })
@@ -61,13 +68,22 @@ router.beforeEach((to, from, next) => {
   if (!to.meta.requiresAuth) {
     return next();
   }
-  let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "{}");
+  let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
 
   if (!authUser || !authUser.token) {
     return next({name: 'Login'})
   }
+
+  if (!to.meta.roles) {
+    return next();
+  }
+
+  console.log('authUser.user.role', authUser.user.role);
+  if (to.meta.roles.includes(authUser.user.role)) {
+    return next();
+  }
   
-  return next();
+  return next({name: 'Denied'});
 
 })
 
