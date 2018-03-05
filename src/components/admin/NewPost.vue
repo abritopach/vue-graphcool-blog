@@ -76,7 +76,7 @@ export default class NewPost extends Vue {
             })
             .then(response => {
                 // redirect to all posts
-                this.$router.replace('/admin/posts')
+                this.$router.replace('/')
             })
     }
     

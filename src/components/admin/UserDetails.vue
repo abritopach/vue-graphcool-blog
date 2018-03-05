@@ -30,9 +30,20 @@
                 </v-btn>
                 </v-card-actions>
                 <v-slide-y-transition>
-                <v-card-text v-show="show">
-                    I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-                </v-card-text>
+                <v-data-table v-show="show" :headers="headers" :items="User.posts" :loading="!User.posts" hide-actions class="elevation-1">
+                    <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+                    <template slot="items" slot-scope="props">
+                        <td class="text-xs-left">{{ props.item.title }}</td>
+                        <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
+                        <td class="justify-center layout px-0">
+                            <router-link :to="`/postdetails/${props.item.id}`">
+                                <v-btn icon class="mx-0">
+                                    <v-icon color="primary">visibility</v-icon>
+                                </v-btn>
+                            </router-link>
+                        </td>
+                    </template>
+                </v-data-table>
                 </v-slide-y-transition>
             </v-card>
         </v-flex>
@@ -61,9 +72,15 @@ import { USER_QUERY } from '../../graphql/graphql'
 export default class UserDetails extends Vue {
 
     show: boolean = false;
+    headers: any;
 
     constructor() {
         super();
+         this.headers = [
+            { text: 'Title', align: 'left', value: 'title'},
+            { text: 'DateTime', align: 'left', value: 'datetime'},
+            { text: 'Actions', align: 'left', value: 'actions' }
+        ];
     }
     
 };
@@ -76,5 +93,8 @@ export default class UserDetails extends Vue {
     .card__title {
         justify-content: center;
         padding: 0;
+    }
+    a {
+        text-decoration: none;
     }
 </style>

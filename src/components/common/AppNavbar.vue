@@ -26,7 +26,7 @@
         <v-list class="pa-1">
             <v-list-tile avatar>
             <v-list-tile-avatar>
-                <img src="https://randomuser.me/api/portraits/men/85.jpg" >
+                <img src="http://i.pravatar.cc/120" >
             </v-list-tile-avatar>
             <v-list-tile-content>
                 <v-list-tile-title>John Leider</v-list-tile-title>

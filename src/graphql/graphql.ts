@@ -9,7 +9,8 @@ export const ALL_USERS_QUERY = gql`
         allUsers {
             id
             username
-            email
+            email,
+            role
         }
     }
 `
@@ -22,6 +23,8 @@ export const USER_QUERY = gql`
             email
             posts {
                 id
+                title
+                createdAt
             }
         }
     }
@@ -52,6 +55,7 @@ export const ALL_POSTS_QUERY = gql`
             createdAt
             content
             user {
+                id
                 username
             }
         }
@@ -67,7 +71,7 @@ export const SIGNUP_MUTATION = gql`
         createUser(
             authProvider: { 
                 email: { 
-                    email: $email, 
+                    email: $email
                     password: $password
                 } 
             },
@@ -82,7 +86,7 @@ export const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!, $password: String!) {
         signinUser(
             email: { 
-                email: $email, 
+                email: $email
                 password: $password 
             }
         ) {
@@ -95,13 +99,38 @@ export const LOGIN_MUTATION = gql`
     }
 `
 
+export const DELETE_USER_MUTATION = gql`
+    mutation DeleteUserMutation($id: ID!) {
+        deleteUser(
+            id: $id
+        ) {
+            id
+        }
+    }
+`
+
+export const UPDATE_USER_MUTATION = gql`
+    mutation UpdateUserMutation($id:ID!, $username: String!, $role: String!) {
+        updateUser(
+            id: $id
+            username: $username
+            role: $role
+        ) {
+            id
+            username
+            email
+            role
+        }
+    }
+`
+
 // Post.
 
 export const ADD_POST_MUTATION = gql`
     mutation AddPostMutation($title: String!, $content: String!, $userId: ID!) {
         createPost(
-            title: $title,
-            content: $content,
+            title: $title
+            content: $content
             userId: $userId
         ) {
             id
@@ -120,7 +149,7 @@ export const ADD_POST_MUTATION = gql`
 export const DELETE_POST_MUTATION = gql`
     mutation DeletePostMutation($id: ID!) {
         deletePost(
-            id: $id,
+            id: $id
         ) {
             id
         }
@@ -131,8 +160,8 @@ export const UPDATE_POST_MUTATION = gql`
     mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!) {
         updatePost(
             id: $id
-            title: $title,
-            content: $content,
+            title: $title
+            content: $content
         ) {
             id
             title

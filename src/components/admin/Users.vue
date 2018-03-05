@@ -1,6 +1,24 @@
 <template>
     <section v-if="allUsers">
         <h2>Users</h2>
+         <!-- Dialog edit user. -->
+        <v-dialog v-model="dialog.show" max-width="500px">
+            <v-card>
+            <v-card-title>
+                Edit User
+            </v-card-title>
+            <v-card-text>
+                <v-flex xs12>
+                    <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
+                    <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
+                </v-flex>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn color="primary" flat @click.stop="onClickAccept()">Accept</v-btn>
+                <v-btn color="pink darken-1" flat @click.stop="dialog.show=false">Close</v-btn>
+            </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -35,7 +53,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { ALL_USERS_QUERY } from '../../graphql/graphql'
+import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION } from '../../graphql/graphql'
 
 @Component({
     apollo: {
@@ -50,6 +68,7 @@ export default class Users extends Vue {
     headers: any;
     items: any = [];
     search: string = '';
+    dialog: any = {show: false, newUsername: '', newEmail: '', newRole: ''};
 
     constructor() {
         super();
@@ -58,6 +77,56 @@ export default class Users extends Vue {
           { text: 'Email', align: 'left', value: 'email' },
           { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    deleteItem(item: any) {
+        console.log('deleteItem', item);
+        this.$apollo
+            .mutate({
+                mutation: DELETE_USER_MUTATION,
+                variables: {
+                    id: item.id,
+                },
+                update: (store, { data: { deleteUser } }) => {
+                    // Read data from cache for the allPosts query.
+                    let data = store.readQuery({ query: ALL_USERS_QUERY }) || {};
+
+                    // Delete post from the data.
+                    (data as any)['allUsers'] = (data as any)['allUsers'].filter((i: any) => i.id !== deleteUser.id);
+
+                    // Write data back to the cache for the allPosts query.
+                    store.writeQuery({ query: ALL_USERS_QUERY, data })
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
+    }
+
+    editItem(item: any) {
+        this.dialog = {show: true, newUsername: item.username, newRole: item.role, user: item};
+    }
+
+     onClickAccept() {
+        // console.log('onClickAccept');
+        // console.log(this.dialog);
+        this.updateItem();
+    }
+
+    updateItem() {
+        this.$apollo
+            .mutate({
+                mutation: UPDATE_USER_MUTATION,
+                variables: {
+                    id: this.dialog.user.id,
+                    username: this.dialog.newUsername,
+                    role: this.dialog.newRole
+                }
+            })
+            .then(response => {
+                console.log(response);
+                this.dialog.show = false;
+            })
     }
     
 };

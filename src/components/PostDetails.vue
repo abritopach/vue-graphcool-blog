@@ -10,7 +10,7 @@
                 <div>
                     <div class="headline">{{ Post.title }}</div>
                     <v-avatar size="36px">
-                        <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                        <img src="http://i.pravatar.cc/120" alt="">
                     </v-avatar>
                     <span class="grey--text">{{ Post.user.username }}</span>
                 </div>
