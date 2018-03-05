@@ -31,6 +31,9 @@ import Component from 'vue-class-component';
 
 import { LOGIN_MUTATION  } from '../../graphql/graphql'
 
+// Vuex.
+import { Action } from 'vuex-class';
+
 @Component
 export default class SignUp extends Vue {
 
@@ -39,6 +42,8 @@ export default class SignUp extends Vue {
     password: string = '';
     emailRules: any;
     passwordRules: any;
+
+    @Action('LOGGED_USER') actionLoggedUser: any;
 
     constructor() {
         super();
@@ -61,6 +66,8 @@ export default class SignUp extends Vue {
 
                     // Save user token to localstorage.
                     localStorage.setItem('blog-app-token', JSON.stringify(response.data.signinUser));
+
+                    this.actionLoggedUser({ user: response.data.signinUser });
 
                     // Redirect user.
                     this.$router.replace('/');

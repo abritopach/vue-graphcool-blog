@@ -5,11 +5,15 @@ import Vuetify from 'vuetify'
 import App from './App.vue'
 import router from './router'
 
+// GRAPHQL.
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import { setContext } from 'apollo-link-context'
+
+// VUEX
+import store from './store';
 
 import moment from 'moment';
 
@@ -64,6 +68,7 @@ Vue.filter('formatDate', function(value: any) {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   apolloProvider,
   components: { App },
