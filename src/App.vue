@@ -3,14 +3,16 @@
     <v-app>
       <!-- Render the Navbar component. -->
       <app-navbar></app-navbar>
-      <v-card-text>
-        <h1>Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.</h1>
-      </v-card-text>
-      <v-card-text>
-        <img v-if="$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" width="100%">  
-        <img v-if="!$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png">  
-      </v-card-text>
-      <router-view/>
+      <div class="main">
+        <v-card-text>
+          <h1>Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.</h1>
+        </v-card-text>
+        <v-card-text>
+          <img v-if="$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" width="100%">  
+          <img v-if="!$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png">  
+        </v-card-text>
+        <router-view/>
+      </div>
       <!-- Render the Footer component. -->
       <app-footer></app-footer>
     </v-app>
@@ -50,5 +52,8 @@ export default class App extends Vue {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.main {
+  margin-bottom: 48px;
 }
 </style>

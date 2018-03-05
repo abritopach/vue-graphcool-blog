@@ -11,6 +11,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import { setContext } from 'apollo-link-context'
 
+import moment from 'moment';
+
 const SIMPLE_API_ENDPOINT = 'https://api.graph.cool/simple/v1/cje2ponq50idi01357s55y4h2';
 
 
@@ -51,6 +53,13 @@ Vue.use(VueApollo)
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
+
+Vue.filter('formatDate', function(value: any) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY hh:mm')
+  }
+  return '';
+})
 
 /* eslint-disable no-new */
 new Vue({

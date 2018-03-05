@@ -10,6 +10,7 @@
             <template slot="items" slot-scope="props">
                 <td class="text-xs-left">{{ props.item.title }}</td>
                 <td v-if="props.item.user" class="text-xs-left">{{ props.item.user.username }}</td>
+                <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                 <td class="justify-center layout px-0">
                     <router-link :to="`/postdetails/${props.item.id}`">
                         <v-btn icon class="mx-0">
@@ -35,7 +36,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { ALL_POSTS_QUERY } from '../../graphql/graphql'
+import { ALL_POSTS_QUERY, DELETE_POST_MUTATION } from '../../graphql/graphql'
+
 
 @Component({
     apollo: {
@@ -56,8 +58,33 @@ export default class Users extends Vue {
         this.headers = [
           { text: 'Title', align: 'left', value: 'title'},
           { text: 'Username', align: 'left', value: 'username' },
+          { text: 'DateTime', align: 'left', value: 'datetime' },
           { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    deleteItem(item: any) {
+        console.log('deleteItem', item);
+        this.$apollo
+            .mutate({
+                mutation: DELETE_POST_MUTATION,
+                variables: {
+                    id: item.id,
+                },
+                update: (store, { data: { deletePost } }) => {
+                    // Read data from cache for the allPosts query.
+                    let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
+
+                    // Delete post from the data.
+                    (data as any)['allPosts'] = (data as any)['allPosts'].filter((i: any) => i.id !== deletePost.id);
+
+                    // Write data back to the cache for the allPosts query.
+                    store.writeQuery({ query: ALL_POSTS_QUERY, data })
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
     }
     
 };

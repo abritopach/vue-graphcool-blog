@@ -1,6 +1,8 @@
 import gql from 'graphql-tag'
 
-// QUERIES
+// QUERIES.
+
+// User.
 
 export const ALL_USERS_QUERY = gql`
     query AllUsersQuery {
@@ -25,6 +27,8 @@ export const USER_QUERY = gql`
     }
 `
 
+// Post.
+
 export const POST_QUERY = gql`
     query PostQuery($id: ID!) {
         Post(id: $id) {
@@ -35,6 +39,19 @@ export const POST_QUERY = gql`
                 id
                 username
                 email
+            }
+        }
+    }
+`
+
+export const ALL_POSTS_QUERY = gql`
+    query AllPostsQuery {
+        allPosts {
+            id
+            title
+            createdAt
+            user {
+                username
             }
         }
     }
@@ -70,6 +87,7 @@ export const LOGIN_MUTATION = gql`
         ) {
             token
             user {
+                id,
                 role
             }
         }
@@ -88,6 +106,7 @@ export const ADD_POST_MUTATION = gql`
             id
             title
             content
+            createdAt
             user {
                 id
                 username
@@ -97,14 +116,12 @@ export const ADD_POST_MUTATION = gql`
     }
 `
 
-export const ALL_POSTS_QUERY = gql`
-    query AllPostsQuery {
-        allPosts {
+export const DELETE_POST_MUTATION = gql`
+    mutation DeletePostMutation($id: ID!) {
+        deletePost(
+            id: $id,
+        ) {
             id
-            title
-            user {
-                username
-            }
         }
     }
 `

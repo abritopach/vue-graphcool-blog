@@ -48,6 +48,12 @@ export default class NewPost extends Vue {
         this.contentRules = [(v: any) => !!v || 'Content is required.'];
     }
 
+    getUserId() {
+        let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
+        console.log('getuserId', authUser);
+        return authUser.user.id;
+    }
+
     addPost() {
         this.$apollo
             .mutate({
@@ -55,17 +61,17 @@ export default class NewPost extends Vue {
                 variables: {
                     title: this.title,
                     content: this.content,
-                    userId: "cje8o8083lt460167e7cwdgka"
+                    userId: this.getUserId()
                 },
-                update: (store, { data: { addPost } }) => {
+                update: (store, { data: { createPost } }) => {
                     // Read data from cache for this query.
                     let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
 
                     // Add new post from the mutation to existing posts.
-                    (data as any)['allPosts'].push(addPost)
+                    (data as any)['allPosts'].push(createPost)
 
                     // Write data back to the cache.
-                    //store.writeQuery({ query: ALL_POSTS_QUERY, data })
+                    store.writeQuery({ query: ALL_POSTS_QUERY, data })
                 }
             })
             .then(response => {
