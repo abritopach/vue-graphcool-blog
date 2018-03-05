@@ -1,6 +1,24 @@
 <template>
     <section v-if="allPosts">
         <h2>Posts</h2>
+         <!-- Dialog edit post. -->
+        <v-dialog v-model="dialog.show" max-width="500px">
+            <v-card>
+            <v-card-title>
+                Edit Post
+            </v-card-title>
+            <v-card-text>
+                <v-flex xs12>
+                    <v-text-field label="Title" v-model="dialog.newTitle" required></v-text-field>
+                    <v-text-field label="Content" v-model="dialog.newContent" multi-line required=""></v-text-field>
+                </v-flex>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn color="primary" flat @click.stop="onClickAccept()">Accept</v-btn>
+                <v-btn color="pink darken-1" flat @click.stop="dialog.show=false">Close</v-btn>
+            </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -36,7 +54,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { ALL_POSTS_QUERY, DELETE_POST_MUTATION } from '../../graphql/graphql'
+import { ALL_POSTS_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION } from '../../graphql/graphql'
 
 
 @Component({
@@ -52,6 +70,7 @@ export default class Users extends Vue {
     headers: any;
     items: any = [];
     search: string = '';
+    dialog: any = {show: false, newTitle: '', newContent: ''};
 
     constructor() {
         super();
@@ -64,7 +83,7 @@ export default class Users extends Vue {
     }
 
     deleteItem(item: any) {
-        console.log('deleteItem', item);
+        // console.log('deleteItem', item);
         this.$apollo
             .mutate({
                 mutation: DELETE_POST_MUTATION,
@@ -84,6 +103,33 @@ export default class Users extends Vue {
             })
             .then(response => {
                 console.log(response);
+            })
+    }
+
+    editItem(item: any) {
+        // console.log('editItem', item);
+        this.dialog = {show: true, newTitle: item.title, newContent: item.content, post: item};
+    }
+
+    onClickAccept() {
+        // console.log('onClickAccept');
+        // console.log(this.dialog);
+        this.updateItem();
+    }
+
+    updateItem() {
+        this.$apollo
+            .mutate({
+                mutation: UPDATE_POST_MUTATION,
+                variables: {
+                    id: this.dialog.post.id,
+                    title: this.dialog.newTitle,
+                    content: this.dialog.newContent
+                }
+            })
+            .then(response => {
+                console.log(response);
+                this.dialog.show = false;
             })
     }
     

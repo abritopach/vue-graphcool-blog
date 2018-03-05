@@ -4,7 +4,7 @@
             <h2>User Details</h2>
             <v-card v-if="User">
                 <v-avatar size="100px">
-                    <img src="https://avatars0.githubusercontent.com/u/9064066?v=4&s=460" alt="">
+                    <img src="http://i.pravatar.cc/120" alt="">
                 </v-avatar>
                 <v-card-title primary-title>
                 <div>

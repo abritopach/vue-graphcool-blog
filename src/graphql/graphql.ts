@@ -50,6 +50,7 @@ export const ALL_POSTS_QUERY = gql`
             id
             title
             createdAt
+            content
             user {
                 username
             }
@@ -122,6 +123,24 @@ export const DELETE_POST_MUTATION = gql`
             id: $id,
         ) {
             id
+        }
+    }
+`
+
+export const UPDATE_POST_MUTATION = gql`
+    mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!) {
+        updatePost(
+            id: $id
+            title: $title,
+            content: $content,
+        ) {
+            id
+            title
+            content
+            createdAt
+            user {
+                username
+            }
         }
     }
 `
