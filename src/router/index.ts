@@ -37,7 +37,7 @@ const router = new Router({
       meta: { requiresAuth: true, roles: ['admin'] }
     },
     {
-      path: '/admin/users/:id',
+      path: '/admin/users/details',
       name: 'UserDetails',
       component: UserDetails,
       meta: { requiresAuth: true, roles: ['admin'] }

@@ -1,7 +1,8 @@
 // Store.
 export interface State {
     token: String,
-    user: UserModel
+    user: UserModel,
+    selectedUser: UserModel
 }
 
 export type ROLE = 'admin' | 'user';

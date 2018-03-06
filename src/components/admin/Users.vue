@@ -29,11 +29,11 @@
                 <td class="text-xs-left">{{ props.item.username }}</td>
                 <td class="text-xs-left">{{ props.item.email }}</td>
                 <td class="justify-center layout px-0">
-                    <router-link :to="`/admin/users/${props.item.id}`">
-                        <v-btn icon class="mx-0">
+                    <!--<router-link :to="`/admin/users/${props.item.id}`">-->
+                        <v-btn icon class="mx-0" @click="viewItem(props.item)">
                             <v-icon color="primary">visibility</v-icon>
                         </v-btn>
-                    </router-link>
+                    <!--</router-link>-->
                     <v-btn icon class="mx-0" @click="editItem(props.item)">
                         <v-icon color="teal">edit</v-icon>
                     </v-btn>
@@ -53,6 +53,9 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+// Vuex.
+import { Action } from 'vuex-class';
+
 import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION } from '../../graphql/graphql'
 
 @Component({
@@ -70,6 +73,8 @@ export default class Users extends Vue {
     search: string = '';
     dialog: any = {show: false, newUsername: '', newEmail: '', newRole: ''};
 
+    @Action('SELECTED_USER') actionSelectedUser: any;
+
     constructor() {
         super();
         this.headers = [
@@ -77,6 +82,12 @@ export default class Users extends Vue {
           { text: 'Email', align: 'left', value: 'email' },
           { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    viewItem(item: any) {
+        console.log('viewItem', item);
+        this.actionSelectedUser({ data: item });
+        this.$router.replace('/admin/users/details')
     }
 
     deleteItem(item: any) {

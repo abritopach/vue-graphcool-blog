@@ -67,7 +67,7 @@ export default class SignUp extends Vue {
                     // Save user token to localstorage.
                     localStorage.setItem('blog-app-token', JSON.stringify(response.data.signinUser));
 
-                    this.actionLoggedUser({ user: response.data.signinUser });
+                    this.actionLoggedUser({ data: response.data.signinUser });
 
                     // Redirect user.
                     this.$router.replace('/');

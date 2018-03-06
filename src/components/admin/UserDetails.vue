@@ -56,6 +56,9 @@ import Component from 'vue-class-component';
 
 import { USER_QUERY } from '../../graphql/graphql'
 
+import { Getter } from 'vuex-class';
+import { UserModel } from '../../types';
+
 @Component({
     apollo: {
         // Fetch user by ID
@@ -63,7 +66,7 @@ import { USER_QUERY } from '../../graphql/graphql'
             query: USER_QUERY,
             variables () {
                 return {
-                    id: this.$route.params.id
+                    id: this.selectedUser.id
                 }
             }
         }
@@ -73,6 +76,8 @@ export default class UserDetails extends Vue {
 
     show: boolean = false;
     headers: any;
+
+    @Getter('selectedUser') selectedUser: any;
 
     constructor() {
         super();
