@@ -30,11 +30,11 @@
                 <td v-if="props.item.user" class="text-xs-left">{{ props.item.user.username }}</td>
                 <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                 <td class="justify-center layout px-0">
-                    <router-link :to="`/postdetails/${props.item.id}`">
-                        <v-btn icon class="mx-0">
+                    <!--<router-link :to="`/postdetails/${props.item.id}`">-->
+                        <v-btn icon class="mx-0" @click="viewItem(props.item)">
                             <v-icon color="primary">visibility</v-icon>
                         </v-btn>
-                    </router-link>
+                    <!--</router-link>-->
                     <v-btn icon class="mx-0" @click="editItem(props.item)">
                         <v-icon color="teal">edit</v-icon>
                     </v-btn>
@@ -54,6 +54,9 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+// Vuex.
+import { Action } from 'vuex-class';
+
 import { ALL_POSTS_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION } from '../../graphql/graphql'
 
 
@@ -72,6 +75,8 @@ export default class Users extends Vue {
     search: string = '';
     dialog: any = {show: false, newTitle: '', newContent: ''};
 
+    @Action('SELECTED_POST') actionSelectedPost: any;
+
     constructor() {
         super();
         this.headers = [
@@ -80,6 +85,12 @@ export default class Users extends Vue {
           { text: 'DateTime', align: 'left', value: 'datetime' },
           { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    viewItem(item: any) {
+        // console.log('viewItem', item);
+        this.actionSelectedPost({ data: item });
+        this.$router.push('/postdetails')
     }
 
     deleteItem(item: any) {

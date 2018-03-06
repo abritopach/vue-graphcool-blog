@@ -36,11 +36,11 @@
                         <td class="text-xs-left">{{ props.item.title }}</td>
                         <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                         <td class="justify-center layout px-0">
-                            <router-link :to="`/postdetails/${props.item.id}`">
-                                <v-btn icon class="mx-0">
+                            <!--<router-link :to="`/postdetails/${props.item.id}`">-->
+                                <v-btn icon class="mx-0" @click="viewItem(props.item)">
                                     <v-icon color="primary">visibility</v-icon>
                                 </v-btn>
-                            </router-link>
+                            <!--</router-link>-->
                         </td>
                     </template>
                 </v-data-table>
@@ -56,7 +56,7 @@ import Component from 'vue-class-component';
 
 import { USER_QUERY } from '../../graphql/graphql'
 
-import { Getter } from 'vuex-class';
+import { Getter, Action } from 'vuex-class';
 import { UserModel } from '../../types';
 
 @Component({
@@ -78,6 +78,7 @@ export default class UserDetails extends Vue {
     headers: any;
 
     @Getter('selectedUser') selectedUser: any;
+    @Action('SELECTED_POST') actionSelectedPost: any;
 
     constructor() {
         super();
@@ -86,6 +87,12 @@ export default class UserDetails extends Vue {
             { text: 'DateTime', align: 'left', value: 'datetime'},
             { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    viewItem(item: any) {
+        console.log('viewItem', item);
+        this.actionSelectedPost({ data: item });
+        this.$router.push('/postdetails')
     }
     
 };

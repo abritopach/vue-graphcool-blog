@@ -71,7 +71,7 @@ export default class SignUp extends Vue {
                     console.log(response);
 
                     // Redirect to login page.
-                    this.$router.replace('/login')
+                    this.$router.push('/login')
                 })
                 .catch( reason => {
                     console.error( 'onRejected function called: ', reason );

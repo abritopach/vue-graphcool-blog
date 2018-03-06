@@ -91,6 +91,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+import { Getter, Action } from 'vuex-class';
+
 @Component
 export default class AppNavbar extends Vue {
 
@@ -99,6 +101,9 @@ export default class AppNavbar extends Vue {
     itemsPost: any;
     itemsUser: any;
     drawer: any;
+
+    @Getter('loggedUser') loggedUser: any;
+    @Action('LOGOUT') actionLogout: any;
 
     constructor() {
         super();
@@ -124,12 +129,15 @@ export default class AppNavbar extends Vue {
         console.log('logout');
         // Remove token from localstorage.
         localStorage.removeItem('blog-app-token');
+        // Clear state.
+        this.actionLogout();
         this.$router.push({ path: '/login' })
     }
 
     showMenuOption(roles: string[]) {
-        let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
-        if (authUser !== null) return roles.includes(authUser.user.role);
+        // let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
+        //if (authUser !== null) return roles.includes(authUser.user.role);
+        if (this.loggedUser.id != null) return roles.includes(this.loggedUser.role);
         return false;
     }
     

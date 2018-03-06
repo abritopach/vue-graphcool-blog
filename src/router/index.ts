@@ -10,6 +10,8 @@ import Posts from '@/components/admin/Posts.vue'
 import Denied from '@/components/common/Denied.vue'
 import PostDetails from '@/components/PostDetails.vue'
 
+import store from '../store';
+
 Vue.use(Router)
 
 const router = new Router({
@@ -61,7 +63,7 @@ const router = new Router({
       meta: { requiresAuth: true, roles: ['admin', 'user'] }
     },
     {
-      path: '/postdetails/:id',
+      path: '/postdetails',
       name: 'PostDetails',
       component: PostDetails,
       meta: { requiresAuth: true, roles: ['admin', 'user'] }
@@ -75,9 +77,11 @@ router.beforeEach((to, from, next) => {
   if (!to.meta.requiresAuth) {
     return next();
   }
-  let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
+  
+  // let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
 
-  if (!authUser || !authUser.token) {
+  //if (!authUser || !authUser.token) {
+  if (!store.getters.token) {
     return next({name: 'Login'})
   }
 
@@ -86,7 +90,8 @@ router.beforeEach((to, from, next) => {
   }
 
   // console.log('authUser.user.role', authUser.user.role);
-  if (to.meta.roles.includes(authUser.user.role)) {
+  //if (to.meta.roles.includes(authUser.user.role)) {
+  if (to.meta.roles.includes(store.getters.loggedUser.role)) {
     return next();
   }
   

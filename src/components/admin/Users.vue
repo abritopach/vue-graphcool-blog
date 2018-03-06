@@ -85,9 +85,9 @@ export default class Users extends Vue {
     }
 
     viewItem(item: any) {
-        console.log('viewItem', item);
+        // console.log('viewItem', item);
         this.actionSelectedUser({ data: item });
-        this.$router.replace('/admin/users/details')
+        this.$router.push('/admin/users/details')
     }
 
     deleteItem(item: any) {

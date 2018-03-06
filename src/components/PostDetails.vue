@@ -39,6 +39,8 @@
 import Vue from 'vue' 
 import Component from 'vue-class-component'
 
+import { Getter } from 'vuex-class';
+
 import { POST_QUERY } from '../graphql/graphql'
 
 @Component({
@@ -48,7 +50,7 @@ import { POST_QUERY } from '../graphql/graphql'
             query: POST_QUERY,
             variables () {
                 return {
-                    id: this.$route.params.id
+                    id: this.selectedPost.id
                 }
             }
         }
@@ -57,6 +59,8 @@ import { POST_QUERY } from '../graphql/graphql'
 export default class PostDetails extends Vue {
 
     show: boolean = false;
+
+    @Getter('selectedPost') selectedPost: any;
 
     constructor() {
         super();
