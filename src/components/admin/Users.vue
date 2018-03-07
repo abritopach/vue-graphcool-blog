@@ -23,7 +23,7 @@
                         <v-icon color="teal">edit</v-icon>
                     </v-btn>
                     <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                        <v-icon color="pink">delete</v-icon>
+                        <v-icon color="pink darken-1">delete</v-icon>
                     </v-btn>
                 </td>
             </template>
@@ -41,6 +41,8 @@ import AppDialog from '../common/AppDialog.vue';
 
 // Vuex.
 import { Action } from 'vuex-class';
+
+import EventBus from '../../event.bus';
 
 import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION } from '../../graphql/graphql'
 
@@ -100,6 +102,7 @@ export default class Users extends Vue {
                 }
             })
             .then(response => {
+                EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User deleted successfully"});
                 console.log(response);
             })
     }
@@ -126,6 +129,7 @@ export default class Users extends Vue {
             })
             .then(response => {
                 console.log(response);
+                EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User updated successfully"});
                 this.dialog.show = false;
             })
     }

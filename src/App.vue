@@ -51,12 +51,11 @@ export default class App extends Vue {
     super();
 
     EventBus.$on('SHOW_SNACKBAR', (snackbar: any) => {
-      console.log("show snackbar", snackbar);
-      //this.snackbar = {...snackbar};
-      //console.log(this.snackbar)
-      this.snackbar.show = snackbar.show;
-      this.snackbar.color = snackbar.color;
-      this.snackbar.text = snackbar.text;
+      // console.log("show snackbar", snackbar);
+      const {show, color, text} = snackbar;
+      this.snackbar.show = show;
+      this.snackbar.color = color;
+      this.snackbar.text = text;
     });
   }
 

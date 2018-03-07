@@ -114,7 +114,8 @@ export default class AppNavbar extends Vue {
         ];
         this.itemsPost = [
           { title: 'New Post', icon: 'create', to: '/admin/posts/new', roles: ['admin', 'user']},
-          { title: 'Posts', icon: 'description', to: '/admin/posts', roles: ['admin']}
+          { title: 'Posts', icon: 'description', to: '/admin/posts', roles: ['admin']},
+          { title: 'My Posts', icon: 'description', to: '/myposts', roles: ['user']}
         ];
         this.itemsUser = [
             { title: 'Users', icon: 'people', to: '/admin/users', roles: ['admin']}

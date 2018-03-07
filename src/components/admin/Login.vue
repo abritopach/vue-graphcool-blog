@@ -55,6 +55,9 @@ export default class SignUp extends Vue {
 
     login() {
          console.log('login');
+
+        if ((<any>this.$refs.form).validate()) {
+
          this.$apollo
                 .mutate({
                     mutation: LOGIN_MUTATION,
@@ -80,6 +83,7 @@ export default class SignUp extends Vue {
                     EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "error", timeout: 6000, text: JSON.parse(JSON.stringify(reason)).message});
                     console.error( 'onRejected function called: ', reason );
                 })
+        }
     }
     
 };

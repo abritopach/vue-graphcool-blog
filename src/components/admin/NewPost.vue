@@ -30,6 +30,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+import EventBus from '../../event.bus';
+
 import { Getter } from 'vuex-class';
 
 import { ADD_POST_MUTATION , ALL_POSTS_QUERY } from '../../graphql/graphql' 
@@ -52,29 +54,32 @@ export default class NewPost extends Vue {
     }
 
     addPost() {
-        this.$apollo
-            .mutate({
-                mutation: ADD_POST_MUTATION,
-                variables: {
-                    title: this.title,
-                    content: this.content,
-                    userId: this.loggedUser.id
-                },
-                update: (store, { data: { createPost } }) => {
-                    // Read data from cache for this query.
-                    let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
+        if ((<any>this.$refs.form).validate()) {
+            this.$apollo
+                .mutate({
+                    mutation: ADD_POST_MUTATION,
+                    variables: {
+                        title: this.title,
+                        content: this.content,
+                        userId: this.loggedUser.id
+                    },
+                    update: (store, { data: { createPost } }) => {
+                        // Read data from cache for this query.
+                        let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
 
-                    // Add new post from the mutation to existing posts.
-                    (data as any)['allPosts'].push(createPost)
+                        // Add new post from the mutation to existing posts.
+                        (data as any)['allPosts'].push(createPost)
 
-                    // Write data back to the cache.
-                    store.writeQuery({ query: ALL_POSTS_QUERY, data })
-                }
-            })
-            .then(response => {
-                // redirect to all posts
-                this.$router.push('/')
-            })
+                        // Write data back to the cache.
+                        store.writeQuery({ query: ALL_POSTS_QUERY, data })
+                    }
+                })
+                .then(response => {
+                    EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "Post added successfully"});
+                    // redirect to all posts
+                    this.$router.push('/')
+                })
+        }
     }
     
 };

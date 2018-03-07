@@ -9,6 +9,7 @@ import NewPost from '@/components/admin/NewPost.vue'
 import Posts from '@/components/admin/Posts.vue'
 import Denied from '@/components/common/Denied.vue'
 import PostDetails from '@/components/PostDetails.vue'
+import MyPosts from '@/components/MyPosts.vue'
 
 import store from '../store';
 
@@ -63,11 +64,17 @@ const router = new Router({
       meta: { requiresAuth: true, roles: ['admin', 'user'] }
     },
     {
+      path: '/myposts',
+      name: 'MyPosts',
+      component: MyPosts,
+      meta: { requiresAuth: true, roles: ['user'] }
+    },
+    {
       path: '/postdetails',
       name: 'PostDetails',
       component: PostDetails,
       meta: { requiresAuth: true, roles: ['admin', 'user'] }
-  }
+   }
   ]
 })
 
