@@ -21,6 +21,7 @@ export const USER_QUERY = gql`
             id
             username
             email
+            role
             posts {
                 id
                 title

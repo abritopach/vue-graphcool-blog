@@ -30,8 +30,9 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { ADD_POST_MUTATION , ALL_POSTS_QUERY } from '../../graphql/graphql'
+import { Getter } from 'vuex-class';
 
+import { ADD_POST_MUTATION , ALL_POSTS_QUERY } from '../../graphql/graphql' 
 
 @Component
 export default class NewPost extends Vue {
@@ -42,16 +43,12 @@ export default class NewPost extends Vue {
     titleRules: any;
     contentRules: any;
 
+    @Getter('loggedUser') loggedUser: any;
+
     constructor() {
         super();
         this.titleRules = [(v: any) => !!v || 'Title is required.'];
         this.contentRules = [(v: any) => !!v || 'Content is required.'];
-    }
-
-    getUserId() {
-        let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
-        console.log('getuserId', authUser);
-        return authUser.user.id;
     }
 
     addPost() {
@@ -61,7 +58,7 @@ export default class NewPost extends Vue {
                 variables: {
                     title: this.title,
                     content: this.content,
-                    userId: this.getUserId()
+                    userId: this.loggedUser.id
                 },
                 update: (store, { data: { createPost } }) => {
                     // Read data from cache for this query.

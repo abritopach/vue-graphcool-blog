@@ -78,9 +78,6 @@ router.beforeEach((to, from, next) => {
     return next();
   }
   
-  // let authUser = JSON.parse(localStorage.getItem('blog-app-token') || "null");
-
-  //if (!authUser || !authUser.token) {
   if (!store.getters.token) {
     return next({name: 'Login'})
   }
@@ -89,8 +86,6 @@ router.beforeEach((to, from, next) => {
     return next();
   }
 
-  // console.log('authUser.user.role', authUser.user.role);
-  //if (to.meta.roles.includes(authUser.user.role)) {
   if (to.meta.roles.includes(store.getters.loggedUser.role)) {
     return next();
   }

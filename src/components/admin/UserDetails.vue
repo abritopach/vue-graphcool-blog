@@ -14,6 +14,7 @@
                 </div>
                 </v-card-title>
                 <v-card-actions>
+                    <v-chip color="pink darken-1" text-color="white">Role: {{User.role}}</v-chip>
                 <!--
                 <v-btn flat>Share</v-btn>
                 <v-btn flat color="purple">Explore</v-btn>

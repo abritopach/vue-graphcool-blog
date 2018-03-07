@@ -3,21 +3,20 @@ import { State, UserModel, PostModel } from '../types';
 
 const state: State = {
     token: '',
-    user: new UserModel('', '', '', '', 'user'),
-    selectedUser: new UserModel('', '', '', '', 'user'),
-    selectedPost: new PostModel('', '', '', new Date(), new Date(), '')
+    loggedUser: <UserModel>{},
+    selectedUser: <UserModel>{},
+    selectedPost: <PostModel>{}
 }
 
 const getters: GetterTree<State, any> = {
     token: state => state.token,
-    loggedUser: state => state.user,
+    loggedUser: state => state.loggedUser,
     selectedUser: state => state.selectedUser,
     selectedPost: state => state.selectedPost
 }
 
 const actions: ActionTree<State, any> = {
     LOGGED_USER: function({commit}, {data}) {
-        // console.log(data);
         commit("LOGGED_USER_MUTATION", {data: data});
     },
     SELECTED_USER: function({commit}, {data}) {
@@ -35,9 +34,9 @@ const actions: ActionTree<State, any> = {
 
 const mutations: MutationTree<State> = {
     LOGGED_USER_MUTATION(state, payload) {
-        // console.log("payload", payload);
-        state.user = {... payload.data.user}
-        state.token = payload.data.token
+        const { user, token } = payload.data;
+        state.loggedUser = {...user}
+        state.token = token
     },
     SELECTED_USER_MUTATION(state, payload) {
         // console.log("payload", payload);
@@ -49,9 +48,9 @@ const mutations: MutationTree<State> = {
     },
     LOGOUT_MUTATION(state) {
         state.token = '';
-        state.user = new UserModel('', '', '', '', 'user');
-        state.selectedUser=  new UserModel('', '', '', '', 'user');
-        state.selectedPost = new PostModel('', '', '', new Date(), new Date(), '');
+        state.loggedUser = <UserModel>{};
+        state.selectedUser=  <UserModel>{};
+        state.selectedPost = <PostModel>{};
     }
 }
 
