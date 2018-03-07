@@ -13,10 +13,5 @@ export default class MyMixin extends Vue {
     toggleShow() {
         this.isShowing = !this.isShowing;
     }
-
-    onClickAccept() {
-        console.log('onClickAccept');
-    }
-
-
+    
 }

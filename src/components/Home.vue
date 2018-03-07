@@ -53,8 +53,6 @@
 import Vue from 'vue' 
 import Component from 'vue-class-component'
 
-import AppDialog from './common/AppDialog.vue';
-
 // Vuex.
 import { Action } from 'vuex-class';
 
@@ -66,10 +64,6 @@ import { ALL_POSTS_QUERY } from '../graphql/graphql'
         allPosts: {
             query: ALL_POSTS_QUERY
         }
-    },
-    components: {
-        // Add a reference to the component in the components property.
-        AppDialog
     }
 })
 export default class Home extends Vue {
@@ -91,6 +85,10 @@ export default class Home extends Vue {
 
     created() {
         console.log("created Home");
+    }
+
+    mounted() {
+        console.log("mounted Home");
     }
 
     viewItem(item: any) {

@@ -2,11 +2,12 @@
     <!-- Dialog edit post. -->
     <v-dialog v-model="isShowing" max-width="500px">
         <v-card>
-        <v-card-title v-if="title">
-            {{ title }}
+        <v-card-title>
+            {{ dialogTitle }}
         </v-card-title>
         <v-card-text>
             <v-flex xs12>
+                <slot></slot>
             </v-flex>
         </v-card-text>
         <v-card-actions>
@@ -20,31 +21,43 @@
 <script lang="ts">
 import Vue from 'vue';
 //import Component from 'vue-class-component'
-import { Prop } from 'vue-property-decorator'
 import { Component, Mixins } from 'vue-mixin-decorator'
+import { Watch } from 'vue-property-decorator'
 
 import MyMixin from '../mixins/toggle'
 
-@Component
+@Component({
+    props: {
+        title: String,
+        show: Boolean
+    }
+})
 export default class AppDialog extends Mixins<MyMixin>(MyMixin) {
 
-    @Prop({ default: "Dialog Title"})
-    title: String = 'Dialog Title';
+    dialogTitle: String = "";
+    @Watch('show')
+    onShowChanged(val: Boolean, oldVal: Boolean) {
+        this.toggleShow();
+    }
 
-    /*
     constructor() {
         super();
     }
-    */
 
     created() {
         console.log("created AppDialog");
-        this.toggleShow();
     }
 
     mounted() {
         console.log("mounted AppDialog");
-        console.log("title", this.title);
+        // console.log(this.$props);
+        this.dialogTitle = this.$props.title;
+        this.isShowing = this.$props.show;
+    }
+
+    onClickAccept() {
+        // console.log('onClickAccept');
+        this.$emit('clickAccept', 'someValue');
     }
     
 };

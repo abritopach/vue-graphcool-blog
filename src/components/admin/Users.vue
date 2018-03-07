@@ -2,23 +2,10 @@
     <section v-if="allUsers">
         <h2>Users</h2>
          <!-- Dialog edit user. -->
-        <v-dialog v-model="dialog.show" max-width="500px">
-            <v-card>
-            <v-card-title>
-                Edit User
-            </v-card-title>
-            <v-card-text>
-                <v-flex xs12>
-                    <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
-                    <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
-                </v-flex>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn color="primary" flat @click.stop="onClickAccept()">Accept</v-btn>
-                <v-btn color="pink darken-1" flat @click.stop="dialog.show=false">Close</v-btn>
-            </v-card-actions>
-            </v-card>
-        </v-dialog>
+         <app-dialog title="Edit User" :show="dialog.show" @clickAccept="onClickAccept">
+            <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
+            <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
+        </app-dialog>
         <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -50,6 +37,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import AppDialog from '../common/AppDialog.vue';
 
 // Vuex.
 import { Action } from 'vuex-class';
@@ -62,6 +50,10 @@ import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION } from '../
         allUsers: {
             query: ALL_USERS_QUERY
         }
+    },
+    components: {
+        // Add a reference to the component in the components property.
+        AppDialog
     }
 })
 export default class Users extends Vue {

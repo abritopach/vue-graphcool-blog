@@ -171,6 +171,7 @@ export const UPDATE_POST_MUTATION = gql`
             content
             createdAt
             user {
+                id
                 username
             }
         }
