@@ -12,6 +12,10 @@
           <img v-if="!$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png">  
         </v-card-text>
         <router-view/>
+         <v-snackbar :color="snackbar.color" v-model="snackbar.show" :timeout="snackbar.timeout">
+            {{ snackbar.text }}
+            <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+        </v-snackbar>
       </div>
       <!-- Render the Footer component. -->
       <app-footer></app-footer>
@@ -26,6 +30,8 @@ import Component from 'vue-class-component'
 import AppNavbar from './components/common/AppNavbar.vue'
 import AppFooter from './components/common/AppFooter.vue'
 
+import EventBus from './event.bus';
+
 @Component({
   components: {
     // Add a reference to components in the components property.
@@ -39,9 +45,21 @@ export default class App extends Vue {
   // https://alexjoverm.github.io/2017/06/28/Integrate-TypeScript-in-your-Vue-project/
   // https://johnpapa.net/vue-typescript/
   
+  snackbar: any = {show: false, color: "primary", timeout: 6000, text: ""}; 
+
   constructor() {
     super();
+
+    EventBus.$on('SHOW_SNACKBAR', (snackbar: any) => {
+      console.log("show snackbar", snackbar);
+      //this.snackbar = {...snackbar};
+      //console.log(this.snackbar)
+      this.snackbar.show = snackbar.show;
+      this.snackbar.color = snackbar.color;
+      this.snackbar.text = snackbar.text;
+    });
   }
+
 }
 </script>
 

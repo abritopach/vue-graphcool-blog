@@ -29,6 +29,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+import EventBus from '../../event.bus';
+
 import { LOGIN_MUTATION  } from '../../graphql/graphql'
 
 // Vuex.
@@ -74,6 +76,8 @@ export default class SignUp extends Vue {
                     this.$router.push('/');
                 })
                 .catch( reason => {
+                    console.log(JSON.parse(JSON.stringify(reason)));
+                    EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "error", timeout: 6000, text: JSON.parse(JSON.stringify(reason)).message});
                     console.error( 'onRejected function called: ', reason );
                 })
     }
