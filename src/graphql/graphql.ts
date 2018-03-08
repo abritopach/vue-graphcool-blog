@@ -244,12 +244,12 @@ export function subscribeToPostsChanges(apollo: any) {
         // Mutate the previous result.
         updateQuery: (previousResult: any, { subscriptionData } : any) => {
             // Here, return the new result from the previous with the new data.
-            console.log('previousResult', previousResult);
+            // console.log('previousResult', previousResult);
             if (!subscriptionData.data) {
                 return previousResult;
             }
 
-            console.log('subscriptionData', subscriptionData);
+            // console.log('subscriptionData', subscriptionData);
 
             if (subscriptionData.data.Post.mutation == 'CREATED') {
                 console.log("CREATED NEW POST");
@@ -274,12 +274,12 @@ export function subscribeToUsersChanges(apollo: any) {
         // Mutate the previous result.
         updateQuery: (previousResult: any, { subscriptionData } : any) => {
             // Here, return the new result from the previous with the new data.
-            console.log('previousResult', previousResult);
+            // console.log('previousResult', previousResult);
             if (!subscriptionData.data) {
                 return previousResult;
             }
 
-            console.log('subscriptionData', subscriptionData);
+            // console.log('subscriptionData', subscriptionData);
 
             if (subscriptionData.data.User.mutation == 'CREATED') {
                 console.log("CREATED NEW USER");

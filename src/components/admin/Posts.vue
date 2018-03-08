@@ -6,6 +6,8 @@
             <v-text-field label="Title" v-model="dialog.newTitle" required></v-text-field>
             <v-text-field label="Content" v-model="dialog.newContent" multi-line required=""></v-text-field>
         </app-dialog>
+        <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <!--
         <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -32,6 +34,7 @@
                 Your search for "{{ search }}" found no results.
             </v-alert>
         </v-data-table>
+        -->
     </section>
 </template>
 
@@ -39,6 +42,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import AppDialog from '../common/AppDialog.vue';
+import AppDataTable from '../common/AppDataTable.vue'
 
 // Vuex.
 import { Action } from 'vuex-class';
@@ -57,7 +61,8 @@ import { ALL_POSTS_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, subscribeT
     },
     components: {
         // Add a reference to the component in the components property.
-        AppDialog
+        AppDialog,
+        AppDataTable
     }
 })
 export default class Users extends Vue {
@@ -67,6 +72,7 @@ export default class Users extends Vue {
     search: string = '';
     dialog: any = {show: false, newTitle: '', newContent: ''};
     subscription: any;
+    showActions: any = {search: true, view: true, edit: true, delete: true}
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -147,6 +153,24 @@ export default class Users extends Vue {
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "Post updated successfully"});
                 this.dialog.show = false;
             })
+    }
+
+    onClick(option: any) {
+        console.log(option);
+        const {action, item} = option;
+        switch (action) {
+            case "viewItem":
+                this.viewItem(item);
+                break;
+
+            case "editItem":
+                this.editItem(item);
+                break;
+            
+            case "deleteItem":
+                this.deleteItem(item);
+                break;
+        }
     }
     
 };

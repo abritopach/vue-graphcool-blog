@@ -1,6 +1,8 @@
 <template>
    <section v-if="allPosts">
         <h2>Latest Posts</h2>
+        <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <!--
         <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -9,19 +11,19 @@
             <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
             <template slot="items" slot-scope="props">
                   <td class="text-xs-left">{{ props.item.title }}</td>
+                  <td class="text-xs-left">{{ props.item.user.username }}</td>
                   <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                   <td class="justify-center layout px-0">
-                    <!--<router-link :to="`/postdetails/${props.item.id}`">-->
-                        <v-btn icon class="mx-0" @click="viewItem(props.item)">
-                            <v-icon color="primary">visibility</v-icon>
-                        </v-btn>
-                    <!--</router-link>-->
+                    <v-btn icon class="mx-0" @click="viewItem(props.item)">
+                        <v-icon color="primary">visibility</v-icon>
+                    </v-btn>
                 </td>
             </template>
             <v-alert slot="no-results" :value="true" color="error" icon="warning">
                 Your search for "{{ search }}" found no results.
             </v-alert>
         </v-data-table>
+        -->
         <!--
         <v-layout row wrap>
           <v-flex xs12>
@@ -53,6 +55,8 @@
 import Vue from 'vue' 
 import Component from 'vue-class-component'
 
+import AppDataTable from '../components/common/AppDataTable.vue'
+
 // Vuex.
 import { Action } from 'vuex-class';
 
@@ -64,6 +68,10 @@ import { ALL_POSTS_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
         allPosts: {
             query: ALL_POSTS_QUERY
         }
+    },
+    components: {
+        // Add a reference to the component in the components property.
+        AppDataTable
     }
 })
 export default class Home extends Vue {
@@ -72,16 +80,18 @@ export default class Home extends Vue {
     headers: any;
     items: any = [];
     subscription: any;
+    showActions: any = {search: true, view: true, edit: false, delete: false}
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
     constructor() {
-    super();
-    this.headers = [
-        { text: 'Title', align: 'left', value: 'title'},
-        { text: 'DateTime', align: 'left', value: 'datetime'},
-        { text: 'Actions', align: 'left', value: 'actions' }
-    ];
+        super();
+        this.headers = [
+            { text: 'Title', align: 'left', value: 'title'},
+            { text: 'Username', align: 'left', value: 'username' },
+            { text: 'DateTime', align: 'left', value: 'datetime'},
+            { text: 'Actions', align: 'left', value: 'actions' }
+        ];
     }
 
     created() {
@@ -103,6 +113,13 @@ export default class Home extends Vue {
         // console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
         this.$router.push('/postdetails')
+    }
+
+    onClick(option: any) {
+        const {action, item} = option;
+        if (action === "viewItem") {
+            this.viewItem(item);
+        }
     }
 
 }
