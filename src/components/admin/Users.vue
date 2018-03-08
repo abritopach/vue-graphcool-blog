@@ -44,7 +44,7 @@ import { Action } from 'vuex-class';
 
 import EventBus from '../../event.bus';
 
-import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION } from '../../graphql/graphql'
+import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION, subscribeToUsersChanges } from '../../graphql/graphql'
 
 @Component({
     apollo: {
@@ -64,6 +64,7 @@ export default class Users extends Vue {
     items: any = [];
     search: string = '';
     dialog: any = {show: false, newUsername: '', newEmail: '', newRole: ''};
+    subscription: any;
 
     @Action('SELECTED_USER') actionSelectedUser: any;
 
@@ -74,6 +75,15 @@ export default class Users extends Vue {
           { text: 'Email', align: 'left', value: 'email' },
           { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    mounted() {
+        this.subscription = subscribeToUsersChanges(this.$apollo);
+    }
+
+    beforeDestroy() {
+        console.log("beforeDestroy Users");
+        this.subscription.unsubscribe();
     }
 
     viewItem(item: any) {
@@ -89,7 +99,7 @@ export default class Users extends Vue {
                 mutation: DELETE_USER_MUTATION,
                 variables: {
                     id: item.id,
-                },
+                }/*,
                 update: (store, { data: { deleteUser } }) => {
                     // Read data from cache for the allPosts query.
                     let data = store.readQuery({ query: ALL_USERS_QUERY }) || {};
@@ -100,6 +110,7 @@ export default class Users extends Vue {
                     // Write data back to the cache for the allPosts query.
                     store.writeQuery({ query: ALL_USERS_QUERY, data })
                 }
+                */
             })
             .then(response => {
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User deleted successfully"});

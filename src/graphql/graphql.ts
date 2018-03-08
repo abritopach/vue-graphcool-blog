@@ -211,6 +211,32 @@ export const POSTS_SUBSCRIPTION = gql`
     }
 `;
 
+export const USERS_SUBSCRIPTION = gql`  
+    subscription changedUsers {  
+        User(
+            filter: {
+                mutation_in: [CREATED, UPDATED, DELETED]
+            }
+        ) {
+            mutation
+            node {
+                id
+                username
+                email
+                role
+                posts {
+                    id
+                    title
+                    createdAt
+                }
+            }
+            previousValues {
+                id
+            }
+        }
+    }
+`;
+
 export function subscribeToPostsChanges(apollo: any) {
     return apollo.queries.allPosts.subscribeToMore({
         // GraphQL document.
@@ -235,6 +261,36 @@ export function subscribeToPostsChanges(apollo: any) {
                 console.log("DELETED POST");
                 return Object.assign({}, previousResult, {
                     allPosts: previousResult['allPosts'].filter((i: any) => i.id !== subscriptionData.data.Post.previousValues.id)
+                });
+            }
+        },
+    })
+}
+
+export function subscribeToUsersChanges(apollo: any) {
+    return apollo.queries.allUsers.subscribeToMore({
+        // GraphQL document.
+        document: USERS_SUBSCRIPTION,
+        // Mutate the previous result.
+        updateQuery: (previousResult: any, { subscriptionData } : any) => {
+            // Here, return the new result from the previous with the new data.
+            console.log('previousResult', previousResult);
+            if (!subscriptionData.data) {
+                return previousResult;
+            }
+
+            console.log('subscriptionData', subscriptionData);
+
+            if (subscriptionData.data.User.mutation == 'CREATED') {
+                console.log("CREATED NEW USER");
+                return Object.assign({}, previousResult, {
+                    allUsers: previousResult['allUsers'].concat(subscriptionData.data.User.node)
+                });
+            }
+            else if (subscriptionData.data.User.mutation == 'DELETED') {
+                console.log("DELETED USER");
+                return Object.assign({}, previousResult, {
+                    allUsers: previousResult['allUsers'].filter((i: any) => i.id !== subscriptionData.data.User.previousValues.id)
                 });
             }
         },
