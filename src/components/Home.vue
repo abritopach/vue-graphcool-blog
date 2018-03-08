@@ -56,7 +56,7 @@ import Component from 'vue-class-component'
 // Vuex.
 import { Action } from 'vuex-class';
 
-import { ALL_POSTS_QUERY } from '../graphql/graphql'
+import { ALL_POSTS_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
 
 @Component({
     apollo: {
@@ -71,6 +71,7 @@ export default class Home extends Vue {
     search: string = '';
     headers: any;
     items: any = [];
+    subscription: any;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -89,6 +90,13 @@ export default class Home extends Vue {
 
     mounted() {
         console.log("mounted Home");
+        this.subscription = subscribeToPostsChanges(this.$apollo);
+        console.log(this.subscription);
+    }
+
+    beforeDestroy() {
+        console.log("beforeDestroy Home");
+        this.subscription.unsubscribe();
     }
 
     viewItem(item: any) {

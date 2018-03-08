@@ -34,6 +34,8 @@ import EventBus from '../../event.bus';
 
 import { Getter } from 'vuex-class';
 
+import { UserModel } from '../../types'
+
 import { ADD_POST_MUTATION , ALL_POSTS_QUERY } from '../../graphql/graphql' 
 
 @Component

@@ -45,7 +45,7 @@ import { Action } from 'vuex-class';
 
 import EventBus from '../../event.bus';
 
-import { ALL_POSTS_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION } from '../../graphql/graphql'
+import { ALL_POSTS_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, subscribeToPostsChanges } from '../../graphql/graphql'
 
 
 @Component({
@@ -66,6 +66,7 @@ export default class Users extends Vue {
     items: any = [];
     search: string = '';
     dialog: any = {show: false, newTitle: '', newContent: ''};
+    subscription: any;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -77,6 +78,15 @@ export default class Users extends Vue {
           { text: 'DateTime', align: 'left', value: 'datetime' },
           { text: 'Actions', align: 'left', value: 'actions' }
         ];
+    }
+
+    mounted() {
+        this.subscription = subscribeToPostsChanges(this.$apollo);
+    }
+
+    beforeDestroy() {
+        console.log("beforeDestroy Posts");
+        this.subscription.unsubscribe();
     }
 
     viewItem(item: any) {
@@ -92,7 +102,7 @@ export default class Users extends Vue {
                 mutation: DELETE_POST_MUTATION,
                 variables: {
                     id: item.id,
-                },
+                }/*,
                 update: (store, { data: { deletePost } }) => {
                     // Read data from cache for the allPosts query.
                     let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
@@ -103,6 +113,7 @@ export default class Users extends Vue {
                     // Write data back to the cache for the allPosts query.
                     store.writeQuery({ query: ALL_POSTS_QUERY, data })
                 }
+                */
             })
             .then(response => {
                 console.log(response);
