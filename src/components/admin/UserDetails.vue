@@ -1,6 +1,6 @@
 <template>
     <v-layout row>
-        <v-flex xs12 sm6 offset-sm3>
+        <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
             <h2>User Details</h2>
             <v-card v-if="User">
                 <v-avatar size="100px">

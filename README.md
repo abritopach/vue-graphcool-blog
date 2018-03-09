@@ -1,6 +1,6 @@
 # Vue-Graphcool-Blog
 
-Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.
+Sample project that shows how to build a Blog App (Role Based Authentication) with VueJS, GraphQL, Apollo Client and Graphcool.
 
 This example is based on the example ["Build a Blog with VueJS, GraphQL and Apollo Client"](https://scotch.io/tutorials/build-a-blog-with-vue-graphql-and-apollo-client) that I modified to practice my skills. The original post uses GraphQL server built with AdonisJS and it also uses Bulma CSS. I have decided to replace "GraphQL server built with AdonisJS and Bulma CSS" with Graphcool and Vuetify. This project integrates Typescript in VueJS.
 

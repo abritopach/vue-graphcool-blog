@@ -1,7 +1,9 @@
 <template>
     <section v-if="User">
         <h2>My Posts</h2>
-        <app-data-table :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <v-flex xs12 sm6 offset-sm3>
+            <app-data-table :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        </v-flex>
         <!--
         <v-data-table :headers="headers" :items="User.posts" :loading="!User.posts" hide-actions class="elevation-1">
             <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>

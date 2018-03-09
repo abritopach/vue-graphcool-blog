@@ -1,7 +1,7 @@
 <template>
      <section>
         <v-layout>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
                 <v-card>
                     <v-card-text>
                         <h3 class="headline mb-0">New Post</h3>    

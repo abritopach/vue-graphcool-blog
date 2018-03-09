@@ -1,7 +1,11 @@
 <template>
    <section v-if="allPosts">
         <h2>Latest Posts</h2>
-        <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <!--
+        <v-flex xs12 sm6 offset-sm3>
+            <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        </v-flex>
+        -->
         <!--
         <v-card-title>
             <v-spacer></v-spacer>
@@ -24,29 +28,54 @@
             </v-alert>
         </v-data-table>
         -->
-        <!--
+    <v-card>
+      <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
-          <v-flex xs12>
-            <v-card v-for="item in allPosts" v-bind:key="item.id" color="blue-grey darken-2" class="white--text">
-              <router-link :to="`/postdetails/${item.id}`">                
-              <v-container fluid grid-list-lg>
-                <v-layout row>
+          <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
+            <v-card height="100%">   
+              <v-container fluid grid-list-md text-xs-center @click="viewItem(item)">
+                <v-layout row wrap>
                   <v-flex xs7>
-                    <div>
-                      <div class="headline">{{ item.title }}</div>
-                      <div>{{ item.user.username }}</div>
-                    </div>
+                    <v-card-title primary-title>
+                        <div>
+                            <h3 class="headline mb-0">{{ item.title }}</h3>
+                            <div class="content">{{ item.content }}</div>
+                        </div>
+                    </v-card-title>
+                    <v-spacer></v-spacer>
+                    <v-card-actions>
+                        <!--
+                        <v-avatar size="40px">
+                            <img src="http://i.pravatar.cc/120" alt="">
+                        </v-avatar>
+                        <span>{{ item.user.username }}</span>
+                        -->
+                        <v-list-tile avatar>
+                            <v-list-tile-avatar>
+                                <img src="http://i.pravatar.cc/120" alt="">
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
+                                <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
+                            </v-list-tile-content>
+                            <!--
+                            <v-list-tile-action>
+                                <v-icon>chat_bubble</v-icon>
+                            </v-list-tile-action>
+                            -->
+                        </v-list-tile>
+                    </v-card-actions>
                   </v-flex>
                   <v-flex xs5>
-                    <v-card-media src="http://jjblog.wp-themes.pro/wp-content/uploads/2015/09/zgsdfg-1200x700.jpg" height="200px" contain></v-card-media>
+                    <v-card-media src="https://picsum.photos/300/200/?random" height="200px" contain></v-card-media>
                   </v-flex>
                 </v-layout>
               </v-container>
-              </router-link>
             </v-card>
           </v-flex>
         </v-layout>
-        -->
+         </v-container>
+    </v-card>
     </section>
 </template>
 
@@ -110,7 +139,7 @@ export default class Home extends Vue {
     }
 
     viewItem(item: any) {
-        // console.log('viewItem', item);
+        console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
         this.$router.push('/postdetails')
     }
@@ -130,5 +159,17 @@ export default class Home extends Vue {
     a {
         text-decoration: none;
         /*color: white;*/
+    }
+    li {
+        list-style: none;
+    }
+    .content {
+        height: 3em;
+        overflow: hidden;
+        width: 100%;
+    }
+    content::before {
+        content: '...';
+        float: right;
     }
 </style>

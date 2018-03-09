@@ -6,7 +6,9 @@
             <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
             <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
         </app-dialog>
-        <app-data-table :data="allUsers" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <v-flex xs12 sm6 offset-sm3>
+            <app-data-table :data="allUsers" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        </v-flex>
         <!--
         <v-card-title>
             <v-spacer></v-spacer>

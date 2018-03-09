@@ -6,7 +6,9 @@
             <v-text-field label="Title" v-model="dialog.newTitle" required></v-text-field>
             <v-text-field label="Content" v-model="dialog.newContent" multi-line required=""></v-text-field>
         </app-dialog>
-        <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <v-flex xs12 sm6 offset-sm3>
+            <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        </v-flex>
         <!--
         <v-card-title>
             <v-spacer></v-spacer>

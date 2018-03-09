@@ -2,7 +2,7 @@
     <section v-if="Post">
         <h1>Post Details</h1>
         <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
             <v-card>
                 <v-card-media src="http://jjblog.wp-themes.pro/wp-content/uploads/2015/09/zgsdfg-1200x700.jpg" height="200px">
                 </v-card-media>
