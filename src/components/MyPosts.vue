@@ -1,6 +1,8 @@
 <template>
     <section v-if="User">
         <h2>My Posts</h2>
+        <app-data-table :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <!--
         <v-data-table :headers="headers" :items="User.posts" :loading="!User.posts" hide-actions class="elevation-1">
             <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
             <template slot="items" slot-scope="props">
@@ -19,12 +21,14 @@
                 </td>
             </template>
         </v-data-table>
+        -->
     </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import AppDataTable from '../components/common/AppDataTable.vue'
 
 import { Getter } from 'vuex-class';
 import { UserModel } from '../types';
@@ -42,12 +46,17 @@ import { USER_QUERY } from '../graphql/graphql'
                 }
             }
         }
+    },
+    components: {
+        // Add a reference to the component in the components property.
+        AppDataTable
     }
 })
 export default class MyPosts extends Vue {
 
     @Getter('loggedUser') loggedUser: any;
     headers: any;
+    showActions: any = {search: true, view: true, edit: true, delete: true}
 
     constructor() {
         super();
@@ -57,6 +66,11 @@ export default class MyPosts extends Vue {
             { text: 'Actions', align: 'left', value: 'actions' }
         ];
     }
+
+     onClick(option: any) {
+        const {action, item} = option;
+    }
+    
     
 };
 </script>

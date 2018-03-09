@@ -6,6 +6,8 @@
             <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
             <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
         </app-dialog>
+        <app-data-table :data="allUsers" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+        <!--
         <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
@@ -31,6 +33,7 @@
                 Your search for "{{ search }}" found no results.
             </v-alert>
         </v-data-table>
+        -->
     </section>
 </template>
 
@@ -38,6 +41,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import AppDialog from '../common/AppDialog.vue';
+import AppDataTable from '../common/AppDataTable.vue'
 
 // Vuex.
 import { Action } from 'vuex-class';
@@ -55,7 +59,8 @@ import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION, subscribeT
     },
     components: {
         // Add a reference to the component in the components property.
-        AppDialog
+        AppDialog,
+        AppDataTable
     }
 })
 export default class Users extends Vue {
@@ -65,6 +70,7 @@ export default class Users extends Vue {
     search: string = '';
     dialog: any = {show: false, newUsername: '', newEmail: '', newRole: ''};
     subscription: any;
+    showActions: any = {search: true, view: true, edit: true, delete: true};
 
     @Action('SELECTED_USER') actionSelectedUser: any;
 
@@ -143,6 +149,24 @@ export default class Users extends Vue {
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User updated successfully"});
                 this.dialog.show = false;
             })
+    }
+
+    onClick(option: any) {
+        console.log(option);
+        const {action, item} = option;
+        switch (action) {
+            case "viewItem":
+                this.viewItem(item);
+                break;
+
+            case "editItem":
+                this.editItem(item);
+                break;
+            
+            case "deleteItem":
+                this.deleteItem(item);
+                break;
+        }
     }
     
 };

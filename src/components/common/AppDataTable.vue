@@ -10,7 +10,7 @@
                 <!-- Posts fields. -->
                 <template v-if="props.item.__typename === 'Post'">
                     <td class="text-xs-left">{{ props.item.title }}</td>
-                    <td class="text-xs-left">{{ props.item.user.username }}</td>
+                    <td v-if="typeof props.item.user !== 'undefined'" class="text-xs-left">{{ props.item.user.username }}</td>
                     <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                 </template>
                 <!-- Users fields. -->
@@ -69,6 +69,10 @@ export default class AppDataTable extends Vue {
     deleteItem(item: any) {
         // console.log('deleteItem', item);
         this.$emit('clicked', {action: 'deleteItem', item: item});
+    }
+
+    showUsername(username: String) {
+        console.log("username", username);
     }
 
 };

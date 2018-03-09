@@ -30,21 +30,22 @@
                     <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
                 </v-btn>
                 </v-card-actions>
-                <v-slide-y-transition>
+                <v-slide-y-transition>    
+                <app-data-table v-show="show" :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+                <!--
                 <v-data-table v-show="show" :headers="headers" :items="User.posts" :loading="!User.posts" hide-actions class="elevation-1">
                     <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
                     <template slot="items" slot-scope="props">
                         <td class="text-xs-left">{{ props.item.title }}</td>
                         <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                         <td class="justify-center layout px-0">
-                            <!--<router-link :to="`/postdetails/${props.item.id}`">-->
-                                <v-btn icon class="mx-0" @click="viewItem(props.item)">
-                                    <v-icon color="primary">visibility</v-icon>
-                                </v-btn>
-                            <!--</router-link>-->
+                            <v-btn icon class="mx-0" @click="viewItem(props.item)">
+                                <v-icon color="primary">visibility</v-icon>
+                            </v-btn>
                         </td>
                     </template>
                 </v-data-table>
+                -->
                 </v-slide-y-transition>
             </v-card>
         </v-flex>
@@ -54,6 +55,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import AppDataTable from '../common/AppDataTable.vue'
 
 import { USER_QUERY } from '../../graphql/graphql'
 
@@ -71,12 +73,17 @@ import { UserModel } from '../../types';
                 }
             }
         }
+    },
+    components: {
+        // Add a reference to the component in the components property.
+        AppDataTable
     }
 })
 export default class UserDetails extends Vue {
 
     show: boolean = false;
     headers: any;
+    showActions: any = {search: false, view: true, edit: false, delete: false}
 
     @Getter('selectedUser') selectedUser: any;
     @Action('SELECTED_POST') actionSelectedPost: any;
@@ -94,6 +101,13 @@ export default class UserDetails extends Vue {
         console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
         this.$router.push('/postdetails')
+    }
+
+    onClick(option: any) {
+        const {action, item} = option;
+        if (action === "viewItem") {
+            this.viewItem(item);
+        }
     }
     
 };

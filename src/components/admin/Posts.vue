@@ -72,7 +72,7 @@ export default class Users extends Vue {
     search: string = '';
     dialog: any = {show: false, newTitle: '', newContent: ''};
     subscription: any;
-    showActions: any = {search: true, view: true, edit: true, delete: true}
+    showActions: any = {search: true, view: true, edit: true, delete: true};
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
