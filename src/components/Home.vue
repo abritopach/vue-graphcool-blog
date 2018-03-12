@@ -68,7 +68,8 @@
                     </v-card-actions>
                   </v-flex>
                   <v-flex xs5>
-                    <v-card-media src="https://picsum.photos/300/200/?random" height="200px" contain></v-card-media>
+                    <v-card-media v-if="item.image != null" :src="item.image" height="200px" contain></v-card-media>
+                    <v-card-media v-else src="http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" height="200px" contain></v-card-media>
                   </v-flex>
                 </v-layout>
               </v-container>

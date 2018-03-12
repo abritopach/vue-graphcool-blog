@@ -13,6 +13,9 @@
                         <v-form v-model="valid" ref="form" lazy-validation>
                             <v-text-field label="Title" v-model="title" :rules="titleRules" required></v-text-field>
                             <v-text-field label="Content" v-model="content" multi-line :rules="contentRules" required=""></v-text-field>
+                            <picture-input ref="pictureInput"  @change="onChange" width="600" height="600" margin="16"  accept="image/jpeg,image/png,image/gif" 
+                            size="10"  buttonClass="ui button primary" :customStrings="{upload: '<h1>Upload it!</h1>', drag: 'Drag and drop your image here'}">}">
+                            </picture-input>
                         </v-form>
                     </div>
                     </v-card-title>
@@ -22,7 +25,6 @@
                 </v-card>
             </v-flex>
         </v-layout>
-
     </section>
 </template>
 
@@ -38,7 +40,15 @@ import { UserModel } from '../../types'
 
 import { ADD_POST_MUTATION , ALL_POSTS_QUERY } from '../../graphql/graphql' 
 
-@Component
+declare var PictureInput: any;
+
+//import PictureInput from 'vue-picture-input'
+
+@Component({
+    components: {
+        'picture-input': PictureInput
+    }
+})
 export default class NewPost extends Vue {
 
     valid: boolean = true;
@@ -46,6 +56,7 @@ export default class NewPost extends Vue {
     content: string = '';
     titleRules: any;
     contentRules: any;
+    image: any;
 
     @Getter('loggedUser') loggedUser: any;
 
@@ -63,6 +74,7 @@ export default class NewPost extends Vue {
                     variables: {
                         title: this.title,
                         content: this.content,
+                        image: this.image,
                         userId: this.loggedUser.id
                     },
                     update: (store, { data: { createPost } }) => {
@@ -81,6 +93,17 @@ export default class NewPost extends Vue {
                     // redirect to all posts
                     this.$router.push('/')
                 })
+        }
+    }
+
+    onChange (image: any) {
+        //console.log('New picture selected!')
+        if (image) {
+            //console.log('Picture loaded.')
+            //console.log(image);
+            this.image = image;
+        } else {
+            console.log('FileReader API not supported: use the <form>')
         }
     }
     

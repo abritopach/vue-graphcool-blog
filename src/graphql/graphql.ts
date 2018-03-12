@@ -55,6 +55,7 @@ export const ALL_POSTS_QUERY = gql`
             title
             createdAt
             content
+            image
             likes
             user {
                 id
@@ -133,15 +134,17 @@ export const UPDATE_USER_MUTATION = gql`
 // Post.
 
 export const ADD_POST_MUTATION = gql`
-    mutation AddPostMutation($title: String!, $content: String!, $userId: ID!) {
+    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!) {
         createPost(
             title: $title
             content: $content
+            image: $image
             userId: $userId
         ) {
             id
             title
             content
+            image
             createdAt
             user {
                 id
