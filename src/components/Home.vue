@@ -50,6 +50,7 @@
                         </v-avatar>
                         <span>{{ item.user.username }}</span>
                         -->
+                        <v-list three-line>
                         <v-list-tile avatar>
                             <v-list-tile-avatar>
                                 <img src="http://i.pravatar.cc/120" alt="">
@@ -57,13 +58,13 @@
                             <v-list-tile-content>
                                 <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
+                                <!--<v-list-tile-sub-title>5 <v-icon color="pink">star</v-icon></v-list-tile-sub-title>-->
                             </v-list-tile-content>
-                            <!--
-                            <v-list-tile-action>
-                                <v-icon>chat_bubble</v-icon>
+                            <v-list-tile-action v-if="item.likes.length != 0">
+                                <v-list-tile-action-text>{{ item.likes }} <v-icon color="pink">star</v-icon></v-list-tile-action-text>
                             </v-list-tile-action>
-                            -->
                         </v-list-tile>
+                        </v-list>
                     </v-card-actions>
                   </v-flex>
                   <v-flex xs5>

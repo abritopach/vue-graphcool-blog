@@ -21,7 +21,7 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      meta: { requiresAuth: true, roles: ['admin', 'user'] }
+      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: false }
     },
     {
       path: '/signup',
@@ -37,43 +37,43 @@ const router = new Router({
       path: '/admin/users',
       name: 'Users',
       component: Users,
-      meta: { requiresAuth: true, roles: ['admin'] }
+      meta: { requiresAuth: true, roles: ['admin'], showBackButton: false }
     },
     {
       path: '/admin/users/details',
       name: 'UserDetails',
       component: UserDetails,
-      meta: { requiresAuth: true, roles: ['admin'] }
+      meta: { requiresAuth: true, roles: ['admin'], showBackButton: true }
     },
     {
       path: '/admin/posts/new',
       name: 'NewPost',
       component: NewPost,
-      meta: { requiresAuth: true, roles: ['admin', 'user'] }
+      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: false }
     },
     {
       path: '/admin/posts',
       name: 'Posts',
       component: Posts,
-      meta: { requiresAuth: true, roles: ['admin'] }
+      meta: { requiresAuth: true, roles: ['admin'], showBackButton: false }
     },
     {
       path: '/denied',
       name: 'Denied',
       component: Denied,
-      meta: { requiresAuth: true, roles: ['admin', 'user'] }
+      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: false }
     },
     {
       path: '/myposts',
       name: 'MyPosts',
       component: MyPosts,
-      meta: { requiresAuth: true, roles: ['user'] }
+      meta: { requiresAuth: true, roles: ['user'], showBackButton: false }
     },
     {
       path: '/postdetails',
       name: 'PostDetails',
       component: PostDetails,
-      meta: { requiresAuth: true, roles: ['admin', 'user'] }
+      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: true }
    }
   ]
 })

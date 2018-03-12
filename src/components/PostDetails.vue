@@ -17,7 +17,7 @@
                 </v-card-title>
                 <v-card-actions>
                 <v-btn flat color="primary">Share <v-icon right dark>share</v-icon></v-btn>
-                <v-btn flat color="purple">Like <v-icon right dark>favorite</v-icon></v-btn>
+                <v-btn flat color="purple" @click="onClickLike(Post)">Like <v-icon right dark>favorite</v-icon></v-btn>
                 <v-spacer></v-spacer>
                 <v-btn icon @click.native="show = !show">
                     <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
@@ -41,7 +41,9 @@ import Component from 'vue-class-component'
 
 import { Getter } from 'vuex-class';
 
-import { POST_QUERY } from '../graphql/graphql'
+import { POST_QUERY, UPDATE_POST_LIKES_MUTATION } from '../graphql/graphql'
+
+import { PostModel } from '../types'
 
 @Component({
     apollo: {
@@ -64,6 +66,21 @@ export default class PostDetails extends Vue {
 
     constructor() {
         super();
+    }
+
+    onClickLike(post: PostModel) {
+        console.log(post);
+        this.$apollo
+            .mutate({
+                mutation: UPDATE_POST_LIKES_MUTATION,
+                variables: {
+                    id: this.selectedPost.id,
+                    likes: this.selectedPost.likes + 1
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
     }
 }
 </script>

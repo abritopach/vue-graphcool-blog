@@ -55,6 +55,7 @@ export const ALL_POSTS_QUERY = gql`
             title
             createdAt
             content
+            likes
             user {
                 id
                 username
@@ -176,6 +177,15 @@ export const UPDATE_POST_MUTATION = gql`
                 id
                 username
             }
+        }
+    }
+`
+
+export const UPDATE_POST_LIKES_MUTATION = gql`
+    mutation UpdatePostLikesMutation ($id: ID!, $likes: Int!) {
+        updatePost (id: $id, likes: $likes) {
+            id
+            likes
         }
     }
 `
