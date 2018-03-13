@@ -9,7 +9,6 @@
                 </v-avatar>
                 <v-card-title primary-title>
                 <div>
-                    <input class="input is-static">
                     <div class="headline">{{User.username}}</div>
                     <span class="grey--text">{{User.email}}</span>
                 </div>

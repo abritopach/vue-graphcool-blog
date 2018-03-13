@@ -73,4 +73,9 @@ export default class App extends Vue {
 .main {
   margin-bottom: 48px;
 }
+.badge__badge {
+  top: 15px;
+  right: 8px;
+  color: white;
+}
 </style>
