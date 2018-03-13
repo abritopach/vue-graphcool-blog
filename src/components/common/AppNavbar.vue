@@ -137,7 +137,7 @@ export default class AppNavbar extends Vue {
     }
 
     logout() {
-        console.log('logout');
+        // console.log('logout');
         // Remove token from localstorage.
         localStorage.removeItem('blog-app-token');
         // Clear state.

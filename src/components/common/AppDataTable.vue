@@ -71,10 +71,6 @@ export default class AppDataTable extends Vue {
         this.$emit('clicked', {action: 'deleteItem', item: item});
     }
 
-    showUsername(username: String) {
-        console.log("username", username);
-    }
-
 };
 </script>
    

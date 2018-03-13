@@ -25,6 +25,8 @@ export const USER_QUERY = gql`
             posts {
                 id
                 title
+                content
+                likes
                 createdAt
             }
         }
@@ -145,6 +147,7 @@ export const ADD_POST_MUTATION = gql`
             title
             content
             image
+            likes
             createdAt
             user {
                 id
@@ -309,4 +312,3 @@ export function subscribeToUsersChanges(apollo: any) {
         },
     })
 }
-

@@ -1,83 +1,50 @@
 <template>
    <section v-if="allPosts">
         <h2>Latest Posts</h2>
-        <!--
-        <v-flex xs12 sm6 offset-sm3>
-            <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
-        </v-flex>
-        -->
-        <!--
-        <v-card-title>
-            <v-spacer></v-spacer>
-            <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
-        </v-card-title>
-        <v-data-table :headers="headers" :items="allPosts" :search="search" :loading="!allPosts" hide-actions class="elevation-1">
-            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-            <template slot="items" slot-scope="props">
-                  <td class="text-xs-left">{{ props.item.title }}</td>
-                  <td class="text-xs-left">{{ props.item.user.username }}</td>
-                  <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
-                  <td class="justify-center layout px-0">
-                    <v-btn icon class="mx-0" @click="viewItem(props.item)">
-                        <v-icon color="primary">visibility</v-icon>
-                    </v-btn>
-                </td>
-            </template>
-            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                Your search for "{{ search }}" found no results.
-            </v-alert>
-        </v-data-table>
-        -->
-    <v-card>
-      <v-container fluid grid-list-md text-xs-center>
-        <v-layout row wrap>
-          <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
-            <v-card height="100%">   
-              <v-container fluid grid-list-md text-xs-center @click="viewItem(item)">
-                <v-layout row wrap>
-                  <v-flex xs7>
-                    <v-card-title primary-title>
-                        <div>
-                            <h3 class="headline mb-0">{{ item.title }}</h3>
-                            <div class="content">{{ item.content }}</div>
-                        </div>
-                    </v-card-title>
-                    <v-spacer></v-spacer>
-                    <v-card-actions>
-                        <!--
-                        <v-avatar size="40px">
-                            <img src="http://i.pravatar.cc/120" alt="">
-                        </v-avatar>
-                        <span>{{ item.user.username }}</span>
-                        -->
-                        <v-list three-line>
-                        <v-list-tile avatar>
-                            <v-list-tile-avatar>
-                                <img src="http://i.pravatar.cc/120" alt="">
-                            </v-list-tile-avatar>
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
-                                <!--<v-list-tile-sub-title>5 <v-icon color="pink">star</v-icon></v-list-tile-sub-title>-->
-                            </v-list-tile-content>
-                            <v-list-tile-action v-if="item.likes.length != 0">
-                                <v-list-tile-action-text>{{ item.likes }} <v-icon color="pink">star</v-icon></v-list-tile-action-text>
-                            </v-list-tile-action>
-                        </v-list-tile>
-                        </v-list>
-                    </v-card-actions>
-                  </v-flex>
-                  <v-flex xs5>
-                    <v-card-media v-if="item.image != null" :src="item.image" height="200px" contain></v-card-media>
-                    <v-card-media v-else src="http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" height="200px" contain></v-card-media>
-                  </v-flex>
-                </v-layout>
-              </v-container>
-            </v-card>
-          </v-flex>
-        </v-layout>
-         </v-container>
-    </v-card>
+        <v-card>
+        <v-container fluid grid-list-md text-xs-center>
+            <v-layout row wrap>
+            <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
+                <v-card height="100%">   
+                <v-container fluid grid-list-md text-xs-center @click="viewItem(item)">
+                    <v-layout row wrap>
+                    <v-flex xs7>
+                        <v-card-title primary-title>
+                            <div>
+                                <h3 class="headline mb-0">{{ item.title }}</h3>
+                                <div class="content">{{ item.content }}</div>
+                            </div>
+                        </v-card-title>
+                        <v-spacer></v-spacer>
+                        <v-card-actions>
+                            <v-list three-line>
+                            <v-list-tile avatar>
+                                <v-list-tile-avatar>
+                                    <img src="http://i.pravatar.cc/120" alt="">
+                                </v-list-tile-avatar>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
+                                    <!--<v-list-tile-sub-title>5 <v-icon color="pink">star</v-icon></v-list-tile-sub-title>-->
+                                </v-list-tile-content>
+                                <v-list-tile-action v-if="item.likes != 0">
+                                    <v-list-tile-action-text>{{ item.likes }} <v-icon color="pink">star</v-icon></v-list-tile-action-text>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                            </v-list>
+                        </v-card-actions>
+                    </v-flex>
+                    <v-flex xs5>
+                        <v-card-media v-if="item.image != null" :src="item.image" height="200px" contain></v-card-media>
+                        <v-card-media v-else src="http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" height="200px" contain></v-card-media>
+                    </v-flex>
+                    </v-layout>
+                </v-container>
+                </v-card>
+            </v-flex>
+            </v-layout>
+            </v-container>
+        </v-card>
     </section>
 </template>
 
@@ -132,16 +99,15 @@ export default class Home extends Vue {
     mounted() {
         console.log("mounted Home");
         this.subscription = subscribeToPostsChanges(this.$apollo);
-        console.log(this.subscription);
     }
 
     beforeDestroy() {
-        console.log("beforeDestroy Home");
+        // console.log("beforeDestroy Home");
         this.subscription.unsubscribe();
     }
 
     viewItem(item: any) {
-        console.log('viewItem', item);
+        // console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
         this.$router.push('/postdetails')
     }

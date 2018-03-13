@@ -9,34 +9,6 @@
         <v-flex xs12 sm6 offset-sm3>
             <app-data-table :data="allPosts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
         </v-flex>
-        <!--
-        <v-card-title>
-            <v-spacer></v-spacer>
-            <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
-        </v-card-title>
-        <v-data-table :headers="headers" :items="allPosts" :search="search" :loading="!allPosts" hide-actions class="elevation-1">
-            <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-            <template slot="items" slot-scope="props">
-                <td class="text-xs-left">{{ props.item.title }}</td>
-                <td v-if="props.item.user" class="text-xs-left">{{ props.item.user.username }}</td>
-                <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
-                <td class="justify-center layout px-0">
-                    <v-btn icon class="mx-0" @click="viewItem(props.item)">
-                        <v-icon color="primary">visibility</v-icon>
-                    </v-btn>
-                    <v-btn icon class="mx-0" @click="editItem(props.item)">
-                        <v-icon color="teal">edit</v-icon>
-                    </v-btn>
-                    <v-btn icon class="mx-0" @click="deleteItem(props.item)">
-                        <v-icon color="pink darken-1">delete</v-icon>
-                    </v-btn>
-                </td>
-            </template>
-            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                Your search for "{{ search }}" found no results.
-            </v-alert>
-        </v-data-table>
-        -->
     </section>
 </template>
 
@@ -93,7 +65,7 @@ export default class Users extends Vue {
     }
 
     beforeDestroy() {
-        console.log("beforeDestroy Posts");
+        // console.log("beforeDestroy Posts");
         this.subscription.unsubscribe();
     }
 
@@ -110,18 +82,7 @@ export default class Users extends Vue {
                 mutation: DELETE_POST_MUTATION,
                 variables: {
                     id: item.id,
-                }/*,
-                update: (store, { data: { deletePost } }) => {
-                    // Read data from cache for the allPosts query.
-                    let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
-
-                    // Delete post from the data.
-                    (data as any)['allPosts'] = (data as any)['allPosts'].filter((i: any) => i.id !== deletePost.id);
-
-                    // Write data back to the cache for the allPosts query.
-                    store.writeQuery({ query: ALL_POSTS_QUERY, data })
                 }
-                */
             })
             .then(response => {
                 console.log(response);
@@ -135,8 +96,8 @@ export default class Users extends Vue {
     }
 
     onClickAccept() {
-        console.log('onClickAccept');
-        console.log(this.dialog);
+        // console.log('onClickAccept');
+        // console.log(this.dialog);
         this.updateItem();
     }
 
@@ -158,7 +119,7 @@ export default class Users extends Vue {
     }
 
     onClick(option: any) {
-        console.log(option);
+        // console.log(option);
         const {action, item} = option;
         switch (action) {
             case "viewItem":

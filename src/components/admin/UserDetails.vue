@@ -32,20 +32,6 @@
                 </v-card-actions>
                 <v-slide-y-transition>    
                 <app-data-table v-show="show" :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
-                <!--
-                <v-data-table v-show="show" :headers="headers" :items="User.posts" :loading="!User.posts" hide-actions class="elevation-1">
-                    <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
-                    <template slot="items" slot-scope="props">
-                        <td class="text-xs-left">{{ props.item.title }}</td>
-                        <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
-                        <td class="justify-center layout px-0">
-                            <v-btn icon class="mx-0" @click="viewItem(props.item)">
-                                <v-icon color="primary">visibility</v-icon>
-                            </v-btn>
-                        </td>
-                    </template>
-                </v-data-table>
-                -->
                 </v-slide-y-transition>
             </v-card>
         </v-flex>
@@ -98,7 +84,7 @@ export default class UserDetails extends Vue {
     }
 
     viewItem(item: any) {
-        console.log('viewItem', item);
+        // console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
         this.$router.push('/postdetails')
     }

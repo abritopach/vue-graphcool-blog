@@ -52,7 +52,7 @@ export default class SignUp extends Vue {
     }
 
     signup() {
-        console.log('signup');
+        // console.log('signup');
         // console.log('this.$refs.form', this.$refs.form);
         if ((<any>this.$refs.form).validate()) {
             console.log('Valid form');

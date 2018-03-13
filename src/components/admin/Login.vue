@@ -54,7 +54,7 @@ export default class SignUp extends Vue {
     }
 
     login() {
-         console.log('login');
+         // console.log('login');
 
         if ((<any>this.$refs.form).validate()) {
 
