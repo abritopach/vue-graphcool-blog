@@ -4,7 +4,8 @@
             <h2>User Details</h2>
             <v-card v-if="User">
                 <v-avatar size="100px">
-                    <img src="http://i.pravatar.cc/120" alt="">
+                        <img v-if="User.avatar !== null" :src="User.avatar" alt="">
+                        <img v-else src="../../assets/avatar.png" alt="">
                 </v-avatar>
                 <v-card-title primary-title>
                 <div>

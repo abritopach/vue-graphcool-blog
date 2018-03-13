@@ -15,6 +15,7 @@ export interface UserModel {
     username: String;
     email: String;
     role: ROLE;
+    avatar: String;
 }
 
 export interface PostModel {

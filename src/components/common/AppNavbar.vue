@@ -8,12 +8,10 @@
             <v-toolbar-title class="white--text">{{title}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <router-link to="/login" v-if="!showMenu()">
-                <v-btn flat>Login</v-btn>
+                <v-btn flat>Login<v-icon right>input</v-icon></v-btn>
             </router-link>
             <router-link to="/signup" v-if="!showMenu()">
-                <v-btn flat>
-                    SignUp
-                </v-btn>
+                <v-btn flat>SignUp<v-icon right>perm_identity</v-icon></v-btn>
             </router-link>
             <!--
             <v-btn icon>
@@ -28,10 +26,11 @@
             <v-list class="pa-1">
                 <v-list-tile avatar>
                 <v-list-tile-avatar>
-                    <img src="http://i.pravatar.cc/120" >
+                    <img v-if="loggedUser.avatar !== null" :src="loggedUser.avatar" alt="">
+                    <img v-else src="../../assets/avatar.png" alt="">
                 </v-list-tile-avatar>
                 <v-list-tile-content>
-                    <v-list-tile-title>John Leider</v-list-tile-title>
+                    <v-list-tile-title>{{ loggedUser.username }}</v-list-tile-title>
                 </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -158,5 +157,9 @@ export default class AppNavbar extends Vue {
 <style scoped>
     a {
         text-decoration: none;
+    }
+    .btn {
+        font-size: 8px;
+        min-width: 60px;
     }
 </style>

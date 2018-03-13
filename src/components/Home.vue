@@ -20,7 +20,8 @@
                             <v-list three-line>
                             <v-list-tile avatar>
                                 <v-list-tile-avatar>
-                                    <img src="http://i.pravatar.cc/120" alt="">
+                                    <img v-if="item.user.avatar !== null" :src="item.user.avatar" alt="">
+                                    <img v-else src="../assets/avatar.png" alt="">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
                                     <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>

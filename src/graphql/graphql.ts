@@ -20,6 +20,7 @@ export const USER_QUERY = gql`
         User(id: $id) {
             id
             username
+            avatar
             email
             role
             posts {
@@ -45,6 +46,7 @@ export const POST_QUERY = gql`
                 id
                 username
                 email
+                avatar
             }
         }
     }
@@ -62,6 +64,7 @@ export const ALL_POSTS_QUERY = gql`
             user {
                 id
                 username
+                avatar
             }
         }
     }
@@ -103,6 +106,7 @@ export const LOGIN_MUTATION = gql`
                 username
                 email
                 role
+                avatar
             }
         }
     }

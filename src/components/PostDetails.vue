@@ -10,7 +10,8 @@
                 <div>
                     <div class="headline">{{ Post.title }}</div>
                     <v-avatar size="36px">
-                        <img src="http://i.pravatar.cc/120" alt="">
+                        <img v-if="Post.user.avatar !== null" :src="Post.user.avatar" alt="">
+                        <img v-else src="../assets/avatar.png" alt="">
                     </v-avatar>
                     <span class="grey--text">{{ Post.user.username }}</span>
                 </div>
