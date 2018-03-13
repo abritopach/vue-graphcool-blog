@@ -10,6 +10,7 @@ import Posts from '@/components/admin/Posts.vue'
 import Denied from '@/components/common/Denied.vue'
 import PostDetails from '@/components/PostDetails.vue'
 import MyPosts from '@/components/MyPosts.vue'
+import UserProfile from '@/components/admin/UserProfile.vue'
 
 import store from '../store';
 
@@ -74,7 +75,13 @@ const router = new Router({
       name: 'PostDetails',
       component: PostDetails,
       meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: true }
-   }
+   },
+   {
+     path: '/profile',
+     name: 'UserProfile',
+     component: UserProfile,
+     meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: true }
+  }
   ]
 })
 

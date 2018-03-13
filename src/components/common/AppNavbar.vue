@@ -32,6 +32,13 @@
                 <v-list-tile-content>
                     <v-list-tile-title>{{ loggedUser.username }}</v-list-tile-title>
                 </v-list-tile-content>
+                <v-list-tile-action>
+                    <router-link to="/profile">
+                        <v-btn color="error" fab small>
+                            <v-icon>edit</v-icon>
+                        </v-btn>
+                    </router-link>
+                </v-list-tile-action>
                 </v-list-tile>
             </v-list>
             <v-list class="pt-0" dense subheader>
@@ -160,6 +167,6 @@ export default class AppNavbar extends Vue {
     }
     .btn {
         font-size: 8px;
-        min-width: 60px;
+        /*min-width: 60px;*/
     }
 </style>
