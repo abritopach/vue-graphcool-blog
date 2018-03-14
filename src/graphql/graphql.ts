@@ -137,6 +137,21 @@ export const UPDATE_USER_MUTATION = gql`
     }
 `
 
+export const UPDATE_USER_AVATAR_MUTATION = gql`
+    mutation UpdateUserMutation($id:ID!, $avatar: String!) {
+        updateUser(
+            id: $id
+            avatar: $avatar
+        ) {
+            id
+            username
+            email
+            role
+            avatar
+        }
+    }
+`
+
 // Post.
 
 export const ADD_POST_MUTATION = gql`

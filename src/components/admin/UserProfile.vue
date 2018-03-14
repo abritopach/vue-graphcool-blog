@@ -27,7 +27,7 @@
                 </v-card-title>
                 <picture-input v-if="showUpload" ref="pictureInput" @change="onChange" width="600" height="600" margin="16"  accept="image/jpeg,image/png,image/gif" 
                             size="10"  buttonClass="ui button primary" :customStrings="{upload: '<h1>Upload it!</h1>', drag: 'Drag and drop your image here'}">}">
-                            </picture-input>
+                </picture-input>
             </v-card>
         </v-flex>
     </v-layout>
@@ -38,6 +38,10 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 import { Getter } from 'vuex-class';
+
+import { UPDATE_USER_AVATAR_MUTATION } from '../../graphql/graphql'
+
+import EventBus from '../../event.bus';
 
 declare var PictureInput: any;
 
@@ -57,14 +61,29 @@ export default class UserProfile extends Vue {
     }
 
     onChange (image: any) {
-        //console.log('New picture selected!')
         if (image) {
-            //console.log('Picture loaded.')
-            //console.log(image);
             this.image = image;
+            this.loggedUser.avatar = image;
+            this.updateUser();
         } else {
             console.log('FileReader API not supported: use the <form>')
         }
+    }
+
+    updateUser() {
+        this.$apollo
+            .mutate({
+                mutation: UPDATE_USER_AVATAR_MUTATION,
+                variables: {
+                    id: this.loggedUser.id,
+                    avatar: this.image
+                }
+            })
+            .then(response => {
+                console.log(response);
+                this.showUpload = !this.showUpload;
+                EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "Image updated successfully"});
+            })
     }
     
 };
