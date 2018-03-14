@@ -78,4 +78,7 @@ export default class App extends Vue {
   right: 8px;
   color: white;
 }
+.list--three-line .list__tile {
+    height: 56px;
+}
 </style>

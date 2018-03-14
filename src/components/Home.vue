@@ -2,16 +2,16 @@
    <section v-if="allPosts">
         <h2>Latest Posts</h2>
         <v-card>
-        <v-container fluid grid-list-md text-xs-center>
+        <v-container fluid grid-list-lg>
             <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
                 <v-card height="100%">   
-                <v-container fluid grid-list-md text-xs-center @click="viewItem(item)">
-                    <v-layout row wrap>
+                <v-container fluid grid-list-lg @click="viewItem(item)">
+                    <v-layout row>
                     <v-flex xs7>
                         <v-card-title primary-title>
                             <div>
-                                <h3 class="headline mb-0">{{ item.title }}</h3>
+                                <h3 class="headline">{{ item.title }}</h3>
                                 <div class="content">{{ item.content }}</div>
                             </div>
                         </v-card-title>
@@ -26,11 +26,18 @@
                                 <v-list-tile-content>
                                     <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
-                                    <!--<v-list-tile-sub-title>5 <v-icon color="pink">star</v-icon></v-list-tile-sub-title>-->
                                 </v-list-tile-content>
                                 <v-list-tile-action v-if="item.likes != 0">
                                     <v-list-tile-action-text>{{ item.likes }} <v-icon color="pink">star</v-icon></v-list-tile-action-text>
                                 </v-list-tile-action>
+                            </v-list-tile>
+                             <v-list-tile  avatar>
+                                <v-chip label color="pink" text-color="white">
+                                    <v-icon left>label</v-icon>Tag 1
+                                </v-chip>
+                                <v-chip label color="pink" text-color="white">
+                                    <v-icon left>label</v-icon>Tag 2
+                                </v-chip>
                             </v-list-tile>
                             </v-list>
                         </v-card-actions>
@@ -136,6 +143,7 @@ export default class Home extends Vue {
         height: 3em;
         overflow: hidden;
         width: 100%;
+        justify-content: center;
     }
     content::before {
         content: '...';
