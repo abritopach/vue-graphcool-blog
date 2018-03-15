@@ -5,6 +5,8 @@ import Vuetify from 'vuetify'
 import App from './App.vue'
 import router from './router'
 
+import Meta from 'vue-meta'
+
 // GRAPHQL.
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
@@ -75,6 +77,8 @@ const apolloProvider = new VueApollo({
   defaultClient: apolloClient
 })
 
+
+// Vue.use(Meta)
 
 // Install the vue plugin.
 Vue.use(VueApollo)

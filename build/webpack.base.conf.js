@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const prerenderSpaPlugin = require('prerender-spa-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -87,5 +88,13 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  plugins: [
+    new prerenderSpaPlugin(
+      // Absolute path to compiled SPA.
+      path.join(__dirname, '.'),
+      // List of routes to prerender.
+      ['/']
+    )
+  ]
 }

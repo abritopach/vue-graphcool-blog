@@ -1,24 +1,24 @@
 <template>
-    <v-app>
-      <!-- Render the Navbar component. -->
-      <app-navbar></app-navbar>
-      <div class="main">
-        <v-card-text>
-          <h1>Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.</h1>
-        </v-card-text>
-        <v-card-text>
-          <img v-if="$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" width="100%" alt="Technologies Logo">  
-          <img v-if="!$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" alt="Technologies Logo">  
-        </v-card-text>
-        <router-view/>
-         <v-snackbar :color="snackbar.color" v-model="snackbar.show" :timeout="snackbar.timeout">
-            {{ snackbar.text }}
-            <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
-        </v-snackbar>
-      </div>
-      <!-- Render the Footer component. -->
-      <app-footer></app-footer>
-    </v-app>
+  <v-app>
+    <!-- Render the Navbar component. -->
+    <app-navbar></app-navbar>
+    <div class="main">
+      <v-card-text>
+        <h1>Sample project that shows how to build a Blog App with VueJS, GraphQL, Apollo Client and Graphcool.</h1>
+      </v-card-text>
+      <v-card-text>
+        <img v-if="$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" width="100%" alt="Technologies Logo">  
+        <img v-if="!$vuetify.breakpoint.xsOnly" src="./assets/graphql_apollo_vue_graphcool.png" alt="Technologies Logo">  
+      </v-card-text>
+      <router-view/>
+        <v-snackbar :color="snackbar.color" v-model="snackbar.show" :timeout="snackbar.timeout">
+          {{ snackbar.text }}
+          <v-btn dark flat @click.native="snackbar.show = false">Close</v-btn>
+      </v-snackbar>
+    </div>
+    <!-- Render the Footer component. -->
+    <app-footer></app-footer>
+  </v-app>
 </template>
 
 <script lang="ts">
