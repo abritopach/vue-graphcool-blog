@@ -34,7 +34,7 @@
                 </v-list-tile-content>
                 <v-list-tile-action>
                     <router-link to="/profile">
-                        <v-btn color="error" fab small>
+                        <v-btn color="error" fab small aria-label="Edit Profile">
                             <v-icon>edit</v-icon>
                         </v-btn>
                     </router-link>
@@ -44,7 +44,7 @@
             <v-list class="pt-0" dense subheader>
                 <v-divider></v-divider>
                 <v-subheader>HOME</v-subheader>
-                <router-link v-for="item in itemsHome" :key="item.title" :to="item.to">
+                <router-link v-for="item in itemsHome" :key="item.title" :to="item.to" :title="item.title" :aria-label="item.title">
                     <v-list-tile v-if="showMenuOption(item.roles)">
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -58,7 +58,7 @@
             <v-list class="pt-0" dense subheader>
                 <v-divider></v-divider>
                 <v-subheader>POST</v-subheader>
-                <router-link v-for="item in itemsPost" :key="item.title" :to="item.to">
+                <router-link v-for="item in itemsPost" :key="item.title" :to="item.to" :title="item.title" :aria-label="item.title">
                     <v-list-tile v-if="showMenuOption(item.roles)">
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -71,7 +71,7 @@
             </v-list>
             <v-list class="pt-0" dense subheader>
                 <v-subheader>USER</v-subheader>
-                <router-link v-for="item in itemsUser" :key="item.title" :to="item.to">
+                <router-link v-for="item in itemsUser" :key="item.title" :to="item.to" :title="item.title" :aria-label="item.title">
                     <v-list-tile v-if="showMenuOption(item.roles)">
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
