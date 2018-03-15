@@ -11,6 +11,16 @@
                     <v-card-title primary-title>
                     <div class="newPostForm">
                         <v-form v-model="valid" ref="form" lazy-validation>
+                            <v-select v-if="allCategories" v-model="select" label="Categories" multiple chips tags :items="allCategories" return-object 
+                            item-text="name" item-value="name" :rules="[() => select.length > 0 || 'You must choose at least one']">
+                                <template slot="selection" slot-scope="data">
+                                    <v-chip @input="data.parent.selectItem(data.item)" class="chip--select-multi"
+                                            :selected="data.selected" :key="JSON.stringify(data.item)">
+                                        <v-avatar class="accent">{{ data.item.name.slice(0, 1).toUpperCase() }}</v-avatar>
+                                        {{ data.item.name }}
+                                    </v-chip>
+                                </template>
+                            </v-select>
                             <v-text-field label="Title" v-model="title" :rules="titleRules" required></v-text-field>
                             <v-text-field label="Content" v-model="content" multi-line :rules="contentRules" required=""></v-text-field>
                             <picture-input ref="pictureInput"  @change="onChange" width="600" height="600" margin="16"  accept="image/jpeg,image/png,image/gif" 
@@ -36,15 +46,21 @@ import EventBus from '../../event.bus';
 
 import { Getter } from 'vuex-class';
 
-import { UserModel } from '../../types'
+import { UserModel, CategoryModel  } from '../../types'
 
-import { ADD_POST_MUTATION , ALL_POSTS_QUERY } from '../../graphql/graphql' 
+import { ADD_POST_MUTATION , ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../../graphql/graphql' 
 
 declare var PictureInput: any;
 
 //import PictureInput from 'vue-picture-input'
 
 @Component({
+     apollo: {
+        // Fetch all categories.
+        allCategories: {
+            query: ALL_CATEGORIES_QUERY
+        }
+    },
     components: {
         'picture-input': PictureInput
     }
@@ -56,7 +72,9 @@ export default class NewPost extends Vue {
     content: string = '';
     titleRules: any;
     contentRules: any;
+    categoriesRules: any;
     image: any;
+    select: CategoryModel[] = [];
 
     @Getter('loggedUser') loggedUser: any;
 
@@ -67,6 +85,10 @@ export default class NewPost extends Vue {
     }
 
     addPost() {
+
+        let categories = this.select.map( category => ({ 'name': category.name }));
+        console.log(categories);
+
         if ((<any>this.$refs.form).validate()) {
             this.$apollo
                 .mutate({
@@ -75,7 +97,8 @@ export default class NewPost extends Vue {
                         title: this.title,
                         content: this.content,
                         image: this.image,
-                        userId: this.loggedUser.id
+                        userId: this.loggedUser.id,
+                        categories: categories
                     },
                     update: (store, { data: { createPost } }) => {
                         // Read data from cache for this query.

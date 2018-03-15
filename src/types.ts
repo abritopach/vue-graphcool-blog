@@ -27,3 +27,8 @@ export interface PostModel {
     title: String;
     user: UserModel
 }
+
+export interface CategoryModel {
+    id: String
+    name: String
+}

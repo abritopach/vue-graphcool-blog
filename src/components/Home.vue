@@ -32,11 +32,8 @@
                                 </v-list-tile-action>
                             </v-list-tile>
                              <v-list-tile  avatar>
-                                <v-chip label color="pink" text-color="white">
-                                    <v-icon left>label</v-icon>Tag 1
-                                </v-chip>
-                                <v-chip label color="pink" text-color="white">
-                                    <v-icon left>label</v-icon>Tag 2
+                                <v-chip label color="pink" text-color="white" v-for="category in item.categories" v-bind:key="category.id">
+                                    <v-icon left>label</v-icon>{{ category.name }}
                                 </v-chip>
                             </v-list-tile>
                             </v-list>

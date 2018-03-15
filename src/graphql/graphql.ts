@@ -66,6 +66,21 @@ export const ALL_POSTS_QUERY = gql`
                 username
                 avatar
             }
+            categories {
+                id
+                name
+            }
+        }
+    }
+`
+
+// Category
+
+export const ALL_CATEGORIES_QUERY = gql`
+    query AllUsersQuery {
+        allCategories {
+            id
+            name
         }
     }
 `
@@ -155,12 +170,13 @@ export const UPDATE_USER_AVATAR_MUTATION = gql`
 // Post.
 
 export const ADD_POST_MUTATION = gql`
-    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!) {
+    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory]!) {
         createPost(
             title: $title
             content: $content
             image: $image
             userId: $userId
+            categories: $categories
         ) {
             id
             title
@@ -168,6 +184,10 @@ export const ADD_POST_MUTATION = gql`
             image
             likes
             createdAt
+            categories {
+                id
+                name
+            }
             user {
                 id
                 username
