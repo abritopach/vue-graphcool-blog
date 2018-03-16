@@ -170,7 +170,7 @@ export const UPDATE_USER_AVATAR_MUTATION = gql`
 // Post.
 
 export const ADD_POST_MUTATION = gql`
-    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory]!) {
+    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory!]) {
         createPost(
             title: $title
             content: $content
