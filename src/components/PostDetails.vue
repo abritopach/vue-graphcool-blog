@@ -1,6 +1,16 @@
 <template>
     <section v-if="Post">
         <h1>Post Details</h1>
+        <!-- Dialog Categories. -->
+        <app-dialog title="Categories" :show="dialog.show" @clickAccept="onClickAccept">
+            <v-layout row wrap>
+                <v-flex md6 lg6  v-for="category in dialog.categories" v-bind:key="category.id">
+                    <v-chip label color="pink" text-color="white">
+                        <v-icon left>label</v-icon>{{ category.name }}
+                    </v-chip>
+                </v-flex>
+            </v-layout>
+        </app-dialog>
         <v-layout row>
             <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
             <v-card>
@@ -17,8 +27,8 @@
                                 <v-list-tile-content>
                                     <v-list-tile-title>{{ Post.title }}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{ Post.user.username }}</v-list-tile-sub-title>
-                                    <v-list-tile-sub-title>
-                                        <v-chip label color="pink" text-color="white">
+                                    <v-list-tile-sub-title v-if="Post.categories.length !== 0">
+                                        <v-chip label color="pink" text-color="white" @click.stop="showCategories(Post.categories)">
                                             <v-icon left>label</v-icon>{{ Post.categories.length }} categories
                                         </v-chip>
                                     </v-list-tile-sub-title>
@@ -52,6 +62,8 @@
 import Vue from 'vue' 
 import Component from 'vue-class-component'
 
+import AppDialog from '../components/common/AppDialog.vue'
+
 import { Getter } from 'vuex-class';
 
 import { POST_QUERY, UPDATE_POST_LIKES_MUTATION } from '../graphql/graphql'
@@ -69,6 +81,10 @@ import { PostModel } from '../types'
                 }
             }
         }
+    },
+    components: {
+        // Add a reference to the component in the components property.
+        AppDialog
     }
 })
 export default class PostDetails extends Vue {
@@ -76,6 +92,7 @@ export default class PostDetails extends Vue {
     show: boolean = false;
 
     @Getter('selectedPost') selectedPost: any;
+    dialog: any = {show: false};
 
     constructor() {
         super();
@@ -94,6 +111,15 @@ export default class PostDetails extends Vue {
             .then(response => {
                 console.log(response);
             })
+    }
+
+    showCategories(categories: any) {
+        console.log("showCategories", categories);
+        this.dialog = {show: true, categories: categories};
+    }
+
+    onClickAccept() {
+        this.dialog.show = false;
     }
 }
 </script>

@@ -1,6 +1,16 @@
 <template>
    <section v-if="allPosts">
         <h2>Latest Posts</h2>
+        <!-- Dialog Categories. -->
+        <app-dialog title="Categories" :show="dialog.show" @clickAccept="onClickAccept">
+            <v-layout row wrap>
+                <v-flex md6 lg6  v-for="category in dialog.categories" v-bind:key="category.id">
+                    <v-chip label color="pink" text-color="white">
+                        <v-icon left>label</v-icon>{{ category.name }}
+                    </v-chip>
+                </v-flex>
+            </v-layout>
+        </app-dialog>
         <v-card>
         <v-container fluid grid-list-lg>
             <v-layout row wrap>
@@ -59,6 +69,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 
 import AppDataTable from '../components/common/AppDataTable.vue'
+import AppDialog from '../components/common/AppDialog.vue'
 
 // Vuex.
 import { Action } from 'vuex-class';
@@ -74,7 +85,8 @@ import { ALL_POSTS_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
     },
     components: {
         // Add a reference to the component in the components property.
-        AppDataTable
+        AppDataTable, 
+        AppDialog
     }
 })
 export default class Home extends Vue {
@@ -84,6 +96,7 @@ export default class Home extends Vue {
     items: any = [];
     subscription: any;
     showActions: any = {search: true, view: true, edit: false, delete: false}
+    dialog: any = {show: false};
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -126,6 +139,11 @@ export default class Home extends Vue {
 
     showCategories(categories: any) {
         console.log("showCategories", categories);
+        this.dialog = {show: true, categories: categories};
+    }
+
+    onClickAccept() {
+        this.dialog.show = false;
     }
 
 }
