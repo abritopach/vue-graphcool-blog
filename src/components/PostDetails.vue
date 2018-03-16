@@ -7,14 +7,26 @@
                 <v-card-media src="http://jjblog.wp-themes.pro/wp-content/uploads/2015/09/zgsdfg-1200x700.jpg" height="200px">
                 </v-card-media>
                 <v-card-title primary-title>
-                <div>
-                    <div class="headline">{{ Post.title }}</div>
-                    <v-avatar size="36px">
+                    <v-avatar size="48px">
                         <img v-if="Post.user.avatar !== null" :src="Post.user.avatar" alt="">
                         <img v-else src="../assets/avatar.png" alt="">
                     </v-avatar>
-                    <span class="grey--text">{{ Post.user.username }}</span>
-                </div>
+                    <div>
+                        <v-list three-line>
+                            <v-list-tile avatar>
+                                <v-list-tile-content>
+                                    <v-list-tile-title>{{ Post.title }}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{ Post.user.username }}</v-list-tile-sub-title>
+                                    <v-list-tile-sub-title>
+                                        <v-chip label color="pink" text-color="white">
+                                            <v-icon left>label</v-icon>{{ Post.categories.length }} categories
+                                        </v-chip>
+                                    </v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </div>
+
                 </v-card-title>
                 <v-card-actions>
                 <v-btn flat color="primary">Share <v-icon right dark>share</v-icon></v-btn>
@@ -88,4 +100,14 @@ export default class PostDetails extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only. -->
 <style scoped>
+    .avatar {
+        margin-top: 15px;
+    }
+    .card__title, card__actions {
+        justify-content: center;
+        padding: 0;
+    }
+    .list__tile__title, .list__tile__sub-title {
+        text-align: center;
+    }
 </style>

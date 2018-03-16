@@ -6,7 +6,7 @@
             <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
             <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
         </app-dialog>
-        <v-flex xs12 sm6 offset-sm3>
+        <v-flex xs12 sm8 offset-sm2>
             <app-data-table :data="allUsers" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
         </v-flex>
     </section>

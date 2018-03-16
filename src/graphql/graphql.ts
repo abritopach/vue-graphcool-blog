@@ -42,6 +42,10 @@ export const POST_QUERY = gql`
             id
             title
             content
+            categories {
+                id
+                name
+            }
             user {
                 id
                 username

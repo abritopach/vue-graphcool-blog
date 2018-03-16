@@ -31,13 +31,11 @@
                                     <v-list-tile-action-text>{{ item.likes }} <v-icon color="pink">star</v-icon></v-list-tile-action-text>
                                 </v-list-tile-action>
                             </v-list-tile>
-                            <!--
-                             <v-list-tile  avatar>
-                                <v-chip label color="pink" text-color="white" v-for="category in item.categories" v-bind:key="category.id">
-                                    <v-icon left>label</v-icon>{{ category.name }}
+                            <div class="categories" v-if="item.categories.length !== 0">
+                                <v-chip label color="pink" text-color="white" @click.stop="showCategories(item.categories)">
+                                    <v-icon left>label</v-icon>{{ item.categories.length }} categories
                                 </v-chip>
-                            </v-list-tile>
-                            -->
+                            </div>
                             </v-list>
                         </v-card-actions>
                     </v-flex>
@@ -45,13 +43,6 @@
                         <v-card-media v-if="item.image != null" :src="item.image" height="200px" contain></v-card-media>
                         <v-card-media v-else src="http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" height="200px" contain></v-card-media>
                     </v-flex>
-                    </v-layout>
-                    <v-layout row wrap v-if="!$vuetify.breakpoint.xsOnly">
-                        <v-flex md6 lg6  v-for="category in item.categories" v-bind:key="category.id">
-                            <v-chip label color="pink" text-color="white">
-                                <v-icon left>label</v-icon>{{ category.name.substring(0,6) }}
-                            </v-chip>
-                        </v-flex>
                     </v-layout>
                 </v-container>
                 </v-card>
@@ -133,6 +124,10 @@ export default class Home extends Vue {
         }
     }
 
+    showCategories(categories: any) {
+        console.log("showCategories", categories);
+    }
+
 }
 </script>
 
@@ -154,5 +149,11 @@ export default class Home extends Vue {
     content::before {
         content: '...';
         float: right;
+    }
+    .list__tile {
+        height: 56px;
+    }
+    .categories {
+        height: 32px;
     }
 </style>
