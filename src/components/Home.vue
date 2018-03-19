@@ -61,10 +61,12 @@
             </v-layout>
             </v-container>
         </v-card>
-        <infinite-loading @infinite="infiniteHandler($event)">
+        <infinite-loading v-if="!$apollo.queries._allPostsMeta.loading" @infinite="infiniteHandler($event)">
+            <!--
             <span slot="no-more">
                 There is no more posts :(
             </span>
+            -->
         </infinite-loading>
     </section>
 </template>
@@ -82,19 +84,27 @@ import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading
 // Vuex.
 import { Action } from 'vuex-class';
 
-import { ALL_POSTS_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
+import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
 
 @Component({
     apollo: {
+        _allPostsMeta: {
+            query: POSTS_COUNT_QUERY,
+            result (loading: any) {
+                console.log(loading);
+                if (!loading) {
+                }
+            },
+        },
         // Fetch all posts.
         allPosts: {
             query: ALL_POSTS_QUERY,
             variables: {
                 orderBy: "createdAt_DESC",
                 skip: 0,
-                first: 5
+                first: 6
             },
-        }
+        }, 
     },
     components: {
         // Add a reference to the component in the components property.
@@ -111,9 +121,10 @@ export default class Home extends Vue {
     subscription: any;
     showActions: any = {search: true, view: true, edit: false, delete: false}
     dialog: any = {show: false};
-    postsCount: number = 5;
+    postsCount: number = 6;
     skip: number;
     allPosts: any;
+    _allPostsMeta: any;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -177,19 +188,14 @@ export default class Home extends Vue {
         // Transform the previous result with new data.
         updateQuery: (prevState: any, { fetchMoreResult } : any) => {
 
-            if (prevState.allPosts.length < fetchMoreResult.meta.count) {
-                this.skip = this.skip + fetchMoreResult.allPosts.length;
-                console.log("skip: " + this.skip);
-            }
-
+            console.log("prevState", prevState);
             console.log("fetchMoreResult", fetchMoreResult);
 
             if (!fetchMoreResult) return prevState;
 
-            event.loaded();
             return {
               ...prevState,
-              allPosts: [...prevState.allPosts, ...fetchMoreResult.allPosts]
+              allPosts: [...prevState.allPosts, ...fetchMoreResult.allPosts],
             };
         },   
       })
@@ -197,7 +203,28 @@ export default class Home extends Vue {
 
     infiniteHandler(event: any) {
         console.log("infiniteHandler");
-        this.loadMorePosts(event);
+        console.log("allPosts", this.allPosts, "allPostsLength", this.allPosts.length);
+        console.log("_allPostsMeta", this._allPostsMeta);
+        console.log("skip before if: " + this.skip);
+        console.log(event);
+
+        if (this.allPosts.length !== this._allPostsMeta.count) {
+            if (this.skip <= this._allPostsMeta.count) {
+
+                setTimeout(() => {
+                    event.loaded()
+                    this.loadMorePosts(event);
+                    this.skip = this.skip + this.allPosts.length;
+                    console.log("skip: " + this.skip);
+                }, 2000);
+            }
+            else {
+                event.complete();
+            }
+        }
+        else {
+            event.complete();
+        }
     }
 
 }

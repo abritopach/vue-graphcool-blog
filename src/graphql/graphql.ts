@@ -75,7 +75,15 @@ export const ALL_POSTS_QUERY = gql`
                 name
             }
         }
-        meta: _allPostsMeta {
+        _allPostsMeta {
+            count
+        }
+    }
+`
+
+export const POSTS_COUNT_QUERY = gql`
+    query PostsCountQuery {
+        _allPostsMeta {
             count
         }
     }
@@ -261,6 +269,12 @@ export const POSTS_SUBSCRIPTION = gql`
                 title
                 createdAt
                 content
+                image
+                likes
+                categories {
+                    id
+                    name
+                }
                 user {
                     id
                     username
