@@ -57,8 +57,8 @@ export const POST_QUERY = gql`
 `
 
 export const ALL_POSTS_QUERY = gql`
-    query AllPostsQuery {
-        allPosts {
+    query AllPostsQuery($orderBy: PostOrderBy, $first: Int, $skip: Int) {
+        allPosts(orderBy: $orderBy, first: $first, skip: $skip) {
             id
             title
             createdAt
@@ -74,6 +74,9 @@ export const ALL_POSTS_QUERY = gql`
                 id
                 name
             }
+        }
+        meta: _allPostsMeta {
+            count
         }
     }
 `

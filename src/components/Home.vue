@@ -12,6 +12,7 @@
             </v-layout>
         </app-dialog>
         <v-card>
+        <v-progress-circular v-if="$apollo.queries.allPosts.loading" indeterminate :size="50" color="primary"></v-progress-circular>
         <v-container fluid grid-list-lg>
             <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
@@ -60,6 +61,11 @@
             </v-layout>
             </v-container>
         </v-card>
+        <infinite-loading @infinite="infiniteHandler($event)">
+            <span slot="no-more">
+                There is no more posts :(
+            </span>
+        </infinite-loading>
     </section>
 </template>
 
@@ -71,6 +77,8 @@ import Component from 'vue-class-component'
 import AppDataTable from '../components/common/AppDataTable.vue'
 import AppDialog from '../components/common/AppDialog.vue'
 
+import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue';
+
 // Vuex.
 import { Action } from 'vuex-class';
 
@@ -80,13 +88,19 @@ import { ALL_POSTS_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
     apollo: {
         // Fetch all posts.
         allPosts: {
-            query: ALL_POSTS_QUERY
+            query: ALL_POSTS_QUERY,
+            variables: {
+                orderBy: "createdAt_DESC",
+                skip: 0,
+                first: 5
+            },
         }
     },
     components: {
         // Add a reference to the component in the components property.
         AppDataTable, 
-        AppDialog
+        AppDialog,
+        'infinite-loading': InfiniteLoading
     }
 })
 export default class Home extends Vue {
@@ -97,6 +111,9 @@ export default class Home extends Vue {
     subscription: any;
     showActions: any = {search: true, view: true, edit: false, delete: false}
     dialog: any = {show: false};
+    postsCount: number = 5;
+    skip: number;
+    allPosts: any;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -108,6 +125,7 @@ export default class Home extends Vue {
             { text: 'DateTime', align: 'left', value: 'datetime'},
             { text: 'Actions', align: 'left', value: 'actions' }
         ];
+        this.skip = this.postsCount;
     }
 
     created() {
@@ -144,6 +162,42 @@ export default class Home extends Vue {
 
     onClickAccept() {
         this.dialog.show = false;
+    }
+
+
+    loadMorePosts(event: any) {
+        console.log("loadMorePosts");
+        console.log(this.$apollo.queries.allPosts);
+
+        // Fetch more data and transform the original result
+        this.$apollo.queries.allPosts.fetchMore({
+        variables: {
+          skip: this.skip
+        },
+        // Transform the previous result with new data.
+        updateQuery: (prevState: any, { fetchMoreResult } : any) => {
+
+            if (prevState.allPosts.length < fetchMoreResult.meta.count) {
+                this.skip = this.skip + fetchMoreResult.allPosts.length;
+                console.log("skip: " + this.skip);
+            }
+
+            console.log("fetchMoreResult", fetchMoreResult);
+
+            if (!fetchMoreResult) return prevState;
+
+            event.loaded();
+            return {
+              ...prevState,
+              allPosts: [...prevState.allPosts, ...fetchMoreResult.allPosts]
+            };
+        },   
+      })
+    }
+
+    infiniteHandler(event: any) {
+        console.log("infiniteHandler");
+        this.loadMorePosts(event);
     }
 
 }
