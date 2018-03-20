@@ -152,6 +152,17 @@ export const DELETE_USER_MUTATION = gql`
     }
 `
 
+export const MARK_AS_DELETED_USER_MUTATION = gql`
+    mutation MarkAsDeletedUserMutation($id:ID!, $toDelete: Boolean!) {
+        updateUser(
+            id: $id
+            toDelete: $toDelete
+        ) {
+            id
+        }
+    }
+`
+
 export const UPDATE_USER_MUTATION = gql`
     mutation UpdateUserMutation($id:ID!, $username: String!, $role: String!) {
         updateUser(
@@ -313,6 +324,25 @@ export const USERS_SUBSCRIPTION = gql`
     }
 `;
 
+export const DELETE_USER_SUBSCRIPTION = gql`
+    subscription deleteUser {
+        User(
+            filter: {
+                mutation_in: [UPDATED]
+                updatedFields_contains_some: ["toDelete"]
+            }
+        ) {
+            updatedFields
+            node {
+                id
+                posts {
+                    id
+                }
+            }
+        }
+    }
+`;
+
 export function subscribeToPostsChanges(apollo: any) {
     return apollo.queries.allPosts.subscribeToMore({
         // GraphQL document.
@@ -325,7 +355,7 @@ export function subscribeToPostsChanges(apollo: any) {
                 return previousResult;
             }
 
-            // console.log('subscriptionData', subscriptionData);
+            console.log('subscriptionData', subscriptionData);
 
             if (subscriptionData.data.Post.mutation == 'CREATED') {
                 console.log("CREATED NEW POST");

@@ -1,7 +1,7 @@
 <template>
      <section>
         <v-layout>
-            <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
+            <v-flex xs10 sm6 lg4 offset-xs1 offset-sm3 offset-lg4>
                 <v-card>
                     <v-card-text>
                         <h3 class="headline mb-0">New Post</h3>    
@@ -59,6 +59,10 @@ declare var PictureInput: any;
         // Fetch all categories.
         allCategories: {
             query: ALL_CATEGORIES_QUERY
+        },
+        // Fetch all posts.
+        allPosts: {
+            query: ALL_POSTS_QUERY
         }
     },
     components: {
@@ -103,6 +107,7 @@ export default class NewPost extends Vue {
                     update: (store, { data: { createPost } }) => {
                         // Read data from cache for this query.
                         let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
+                        console.log(data);
 
                         // Add new post from the mutation to existing posts.
                         (data as any)['allPosts'].push(createPost)

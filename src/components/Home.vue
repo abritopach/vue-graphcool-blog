@@ -16,7 +16,7 @@
         <v-container fluid grid-list-lg>
             <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
-                <v-card height="100%">   
+                <v-card class="homeCard" height="100%">   
                 <v-container fluid grid-list-lg @click="viewItem(item)">
                     <v-layout row>
                     <v-flex xs7>
@@ -90,6 +90,7 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges } from '../
     apollo: {
         _allPostsMeta: {
             query: POSTS_COUNT_QUERY,
+            fetchPolicy: "network-only",
             result (loading: any) {
                 console.log(loading);
                 if (!loading) {
@@ -103,6 +104,10 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges } from '../
                 orderBy: "createdAt_DESC",
                 skip: 0,
                 first: 6
+            },
+            fetchPolicy: "network-only",
+            result (data: any) {
+                console.log(data);
             },
         }, 
     },
@@ -254,5 +259,8 @@ export default class Home extends Vue {
     }
     .categories {
         height: 32px;
+    }
+    .homeCard {
+        border-left: 4px solid #c73460;
     }
 </style>

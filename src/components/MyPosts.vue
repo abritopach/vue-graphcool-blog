@@ -23,7 +23,7 @@ import { UserModel } from '../types';
 
 import EventBus from '../event.bus';
 
-import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION } from '../graphql/graphql'
+import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
@@ -35,7 +35,14 @@ import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION } from '../graph
                     id: this.loggedUser.id
                 }
             }
-        }
+        },
+        // Fetch all posts.
+        allPosts: {
+            query: ALL_POSTS_QUERY,
+            variables: {
+                orderBy: "createdAt_DESC",
+            },
+        }, 
     },
     components: {
         // Add a reference to the component in the components property.

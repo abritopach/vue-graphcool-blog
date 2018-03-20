@@ -23,7 +23,8 @@ import { Action } from 'vuex-class';
 
 import EventBus from '../../event.bus';
 
-import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION, subscribeToUsersChanges } from '../../graphql/graphql'
+import { ALL_USERS_QUERY, DELETE_USER_MUTATION, UPDATE_USER_MUTATION, subscribeToUsersChanges,
+         MARK_AS_DELETED_USER_MUTATION } from '../../graphql/graphql'
 
 @Component({
     apollo: {
@@ -75,11 +76,25 @@ export default class Users extends Vue {
 
     deleteItem(item: any) {
         // console.log('deleteItem', item);
+        /*
         this.$apollo
             .mutate({
                 mutation: DELETE_USER_MUTATION,
                 variables: {
                     id: item.id,
+                }
+            })
+            .then(response => {
+                EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User deleted successfully"});
+                console.log(response);
+            })
+        */
+       this.$apollo
+            .mutate({
+                mutation: MARK_AS_DELETED_USER_MUTATION,
+                variables: {
+                    id: item.id,
+                    toDelete: true
                 }
             })
             .then(response => {

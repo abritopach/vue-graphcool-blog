@@ -1,8 +1,8 @@
 <template>
     <section>
         <v-layout>
-            <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
-                <v-card>
+            <v-flex xs10 sm6 lg4 offset-xs1 offset-sm3 offset-lg4>
+                <v-card class="signUp">
                     <v-card-text>
                         <h3 class="headline mb-0">SignUp</h3>    
                     </v-card-text>
@@ -83,6 +83,10 @@ export default class SignUp extends Vue {
 </script>
 
 <style scoped>
+    .signUp {
+        border-top: 5px solid #c73460;
+        border-radius: 10px;
+    }
     .signUpForm {
         width: 100%;
     }
