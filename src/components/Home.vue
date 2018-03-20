@@ -1,5 +1,10 @@
 <template>
    <section v-if="allPosts">
+        <v-breadcrumbs divider="/">
+            <v-breadcrumbs-item v-for="item in categories()" :key="item">
+                {{ item }}
+            </v-breadcrumbs-item>
+        </v-breadcrumbs>
         <h2>Latest Posts</h2>
         <!-- Dialog Categories. -->
         <app-dialog title="Categories" :show="dialog.show" @clickAccept="onClickAccept">
@@ -84,7 +89,7 @@ import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading
 // Vuex.
 import { Action } from 'vuex-class';
 
-import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges } from '../graphql/graphql'
+import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
@@ -110,6 +115,9 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges } from '../
                 console.log(data);
             },
         }, 
+        allCategories: {
+            query: ALL_CATEGORIES_QUERY
+        },
     },
     components: {
         // Add a reference to the component in the components property.
@@ -122,7 +130,6 @@ export default class Home extends Vue {
 
     search: string = '';
     headers: any;
-    items: any = [];
     subscription: any;
     showActions: any = {search: true, view: true, edit: false, delete: false}
     dialog: any = {show: false};
@@ -130,6 +137,7 @@ export default class Home extends Vue {
     skip: number;
     allPosts: any;
     _allPostsMeta: any;
+    allCategories: any;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
@@ -230,6 +238,11 @@ export default class Home extends Vue {
         else {
             event.complete();
         }
+    }
+
+    categories() {
+        console.log(Array.from(new Set(this.allCategories.map((category: any) => category.name))));
+        return Array.from(new Set(this.allCategories.map((category: any) => category.name)))
     }
 
 }
