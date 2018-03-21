@@ -50,9 +50,9 @@ import { UserModel, CategoryModel  } from '../../types'
 
 import { ADD_POST_MUTATION , ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../../graphql/graphql' 
 
-declare var PictureInput: any;
+// import PictureInput from 'vue-picture-input/PictureInput.vue'
 
-//import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input'
 
 @Component({
      apollo: {

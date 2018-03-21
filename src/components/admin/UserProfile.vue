@@ -43,7 +43,9 @@ import { UPDATE_USER_AVATAR_MUTATION } from '../../graphql/graphql'
 
 import EventBus from '../../event.bus';
 
-declare var PictureInput: any;
+// import PictureInput from 'vue-picture-input/PictureInput.vue'
+
+import PictureInput from 'vue-picture-input'
 
 @Component({
     components: {
