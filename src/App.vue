@@ -76,4 +76,7 @@ export default class App extends Vue {
   right: 8px;
   color: white;
 }
+li:last-child .breadcrumbs__item {
+    color: #1976d2!important;
+}
 </style>

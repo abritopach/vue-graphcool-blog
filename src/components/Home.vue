@@ -1,8 +1,8 @@
 <template>
    <section v-if="allPosts">
         <v-breadcrumbs divider="/">
-            <v-breadcrumbs-item v-for="item in categories()" :key="item">
-                {{ item }}
+            <v-breadcrumbs-item v-for="item in allCategories" :key="item.id" @click.native="filterPostsByCategory(item)">
+                {{ item.name }}
             </v-breadcrumbs-item>
         </v-breadcrumbs>
         <h2>Latest Posts</h2>
@@ -84,6 +84,8 @@ import Component from 'vue-class-component'
 import AppDataTable from '../components/common/AppDataTable.vue'
 import AppDialog from '../components/common/AppDialog.vue'
 
+import { CategoryModel } from '../types'
+
 import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue';
 
 // Vuex.
@@ -108,7 +110,8 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGO
             variables: {
                 orderBy: "createdAt_DESC",
                 skip: 0,
-                first: 6
+                first: 6,
+                filter: {}
             },
             fetchPolicy: "network-only",
             result (data: any) {
@@ -200,10 +203,6 @@ export default class Home extends Vue {
         },
         // Transform the previous result with new data.
         updateQuery: (prevState: any, { fetchMoreResult } : any) => {
-
-            console.log("prevState", prevState);
-            console.log("fetchMoreResult", fetchMoreResult);
-
             if (!fetchMoreResult) return prevState;
 
             return {
@@ -216,19 +215,12 @@ export default class Home extends Vue {
 
     infiniteHandler(event: any) {
         console.log("infiniteHandler");
-        console.log("allPosts", this.allPosts, "allPostsLength", this.allPosts.length);
-        console.log("_allPostsMeta", this._allPostsMeta);
-        console.log("skip before if: " + this.skip);
-        console.log(event);
-
         if (this.allPosts.length !== this._allPostsMeta.count) {
             if (this.skip <= this._allPostsMeta.count) {
-
                 setTimeout(() => {
                     event.loaded()
                     this.loadMorePosts(event);
                     this.skip = this.skip + this.allPosts.length;
-                    console.log("skip: " + this.skip);
                 }, 2000);
             }
             else {
@@ -240,9 +232,21 @@ export default class Home extends Vue {
         }
     }
 
-    categories() {
-        console.log(Array.from(new Set(this.allCategories.map((category: any) => category.name))));
-        return Array.from(new Set(this.allCategories.map((category: any) => category.name)))
+    filterPostsByCategory(item: CategoryModel) {
+        console.log("item", item);
+        let filter = {
+            categories_some: {
+                name: item.name
+            }
+        };
+        this.$apollo.queries.allPosts.refetch(
+            {
+                orderBy: "createdAt_DESC",
+                skip: 0,
+                first: 6,
+                filter: filter
+            }
+        );
     }
 
 }
