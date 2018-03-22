@@ -17,10 +17,13 @@
             </v-layout>
         </app-dialog>
         <v-card>
-        <v-progress-circular v-if="$apollo.queries.allPosts.loading" indeterminate :size="50" color="primary"></v-progress-circular>
+        <!--<v-progress-circular v-if="$apollo.queries.allPosts.loading" indeterminate :size="50" color="primary"></v-progress-circular>-->
         <v-container fluid grid-list-lg>
             <v-layout row wrap>
-            <v-flex xs12 sm6 md6 lg4 v-for="item in allPosts" v-bind:key="item.id" >
+            <v-flex xs12 sm6 md6 lg4 v-show="loadingAllPosts">
+                <card-skeleton v-for="n in 6" v-bind:key="n" :hasHeader="true" :hasActions="true" :hasMedia="true"></card-skeleton>
+            </v-flex>
+            <v-flex xs12 sm6 md6 lg4 v-show="!loadingAllPosts" v-for="item in allPosts" v-bind:key="item.id" >
                 <v-card class="homeCard" height="100%">   
                 <v-container fluid grid-list-lg @click="viewItem(item)">
                     <v-layout row>
@@ -88,6 +91,8 @@ import { CategoryModel } from '../types'
 
 import InfiniteLoading from 'vue-infinite-loading/src/components/InfiniteLoading.vue';
 
+import CardSkeleton from '../components/common/CardSkeleton/CardSkeleton.vue'
+
 // Vuex.
 import { Action } from 'vuex-class';
 
@@ -98,10 +103,8 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGO
         _allPostsMeta: {
             query: POSTS_COUNT_QUERY,
             fetchPolicy: "network-only",
-            result (loading: any) {
-                console.log(loading);
-                if (!loading) {
-                }
+            result (result: any) {
+                console.log("_allPostsMeta result", result);
             },
         },
         // Fetch all posts.
@@ -115,18 +118,32 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGO
             },
             fetchPolicy: "network-only",
             result (data: any) {
-                console.log(data);
+                console.log("allPosts result", data);
+            },
+            watchLoading(isLoading, countModifier) {
+                console.log("watchLoading allPosts", isLoading);
+                console.log("countModifier", countModifier);
+                if (!isLoading) {
+                    setTimeout(() => {
+                        this.$data.loadingAllPosts = isLoading;
+                    }, 500);
+                }
+                console.log("this.$data.loadingAllPosts", this.$data.loadingAllPosts);
             },
         }, 
         allCategories: {
-            query: ALL_CATEGORIES_QUERY
+            query: ALL_CATEGORIES_QUERY,
+            result (data: any) {
+                console.log("allCategories result", data);
+            },
         },
     },
     components: {
         // Add a reference to the component in the components property.
         AppDataTable, 
         AppDialog,
-        'infinite-loading': InfiniteLoading
+        'infinite-loading': InfiniteLoading,
+        CardSkeleton
     }
 })
 export default class Home extends Vue {
@@ -141,6 +158,7 @@ export default class Home extends Vue {
     allPosts: any;
     _allPostsMeta: any;
     allCategories: any;
+    loadingAllPosts: boolean = true;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 
