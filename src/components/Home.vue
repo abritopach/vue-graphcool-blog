@@ -20,9 +20,6 @@
         <!--<v-progress-circular v-if="$apollo.queries.allPosts.loading" indeterminate :size="50" color="primary"></v-progress-circular>-->
         <v-container fluid grid-list-lg>
             <v-layout row wrap>
-            <v-flex xs12 sm6 md6 lg4 v-show="loadingAllPosts">
-                <card-skeleton v-for="n in 6" v-bind:key="n" :hasHeader="true" :hasActions="true" :hasMedia="true"></card-skeleton>
-            </v-flex>
             <v-flex xs12 sm6 md6 lg4 v-show="!loadingAllPosts" v-for="item in allPosts" v-bind:key="item.id" >
                 <v-card class="homeCard" height="100%">   
                 <v-container fluid grid-list-lg @click="viewItem(item)">
@@ -65,6 +62,9 @@
                     </v-layout>
                 </v-container>
                 </v-card>
+            </v-flex>
+            <v-flex xs12 sm6 md6 lg4 v-show="loadingAllPosts">
+                <card-skeleton v-for="n in 6" v-bind:key="n" :hasHeader="true" :hasActions="true" :hasMedia="true"></card-skeleton>
             </v-flex>
             </v-layout>
             </v-container>
@@ -236,6 +236,7 @@ export default class Home extends Vue {
         if (this.allPosts.length !== this._allPostsMeta.count) {
             if (this.skip <= this._allPostsMeta.count) {
                 setTimeout(() => {
+                    this.loadingAllPosts = true;
                     event.loaded()
                     this.loadMorePosts(event);
                     this.skip = this.skip + this.allPosts.length;

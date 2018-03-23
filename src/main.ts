@@ -17,6 +17,10 @@ import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
+
+// Wait for support of websocket link in apollo-boost.
+// import { ApolloClient, InMemoryCache, HttpLink, split } from 'apollo-boost';
+
 // VUEX
 import store from './store';
 

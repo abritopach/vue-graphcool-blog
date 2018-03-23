@@ -27,6 +27,8 @@ Technologies: Vue.js, Vuetify.js, Vuex, Typescript, GraphQL, Apollo Client and G
 
 ![Technologies](readme_resources/graphql_apollo_vue_graphcool.png "Technologies")
 
+## App Example
+
 ![App example](readme_resources/app.gif "App example")
 
 ## Build Setup

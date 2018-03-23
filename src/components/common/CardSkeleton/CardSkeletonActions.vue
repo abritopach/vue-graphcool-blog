@@ -6,8 +6,8 @@
                 <div class='skeleton-card_actions__avatar'></div>
             </v-list-tile-avatar>
             <v-list-tile-content>
-                <v-list-tile-title class="skeleton-card_actions__title">Nombre Apellido1</v-list-tile-title>
-                <v-list-tile-sub-title class="skeleton-card_actions__subtitle mt-1">24/06/2017</v-list-tile-sub-title>
+                <v-list-tile-title class="skeleton-card_actions__title"></v-list-tile-title>
+                <v-list-tile-sub-title class="skeleton-card_actions__subtitle mt-1"></v-list-tile-sub-title>
             </v-list-tile-content>
         </v-list-tile>
         </v-list>
@@ -34,10 +34,13 @@ export default class CardSkeletonActions extends Vue {
         border-radius: 50%;
         height: 40px;
         width: 40px;
-        background-color: gainsboro;
+        background-color: lightgray;
+        opacity: 0.5;
     }
     .skeleton-card_actions__title, .skeleton-card_actions__subtitle {
-        background-color: gainsboro;
-        color: transparent!important;
+        background-color: lightgray;
+        opacity: 0.5;
+        height: 1em;
+        width: 100px;
     }
 </style>
