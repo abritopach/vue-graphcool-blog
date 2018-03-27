@@ -82,6 +82,28 @@ export const ALL_POSTS_QUERY = gql`
     }
 `
 
+export const RELATED_POSTS_QUERY = gql`
+    query RelatedPostsQuery($orderBy: PostOrderBy, $first: Int, $filter: PostFilter) {
+        allPosts(orderBy: $orderBy, first: $first, filter: $filter) {
+            id
+            title
+            createdAt
+            content
+            image
+            likes
+            user {
+                id
+                username
+                avatar
+            }
+            categories {
+                id
+                name
+            }
+        }
+}
+`
+
 export const POSTS_COUNT_QUERY = gql`
     query PostsCountQuery {
         _allPostsMeta {

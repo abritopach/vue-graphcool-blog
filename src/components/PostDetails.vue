@@ -54,6 +54,8 @@
             </v-card>
             </v-flex>
         </v-layout>
+        <v-spacer></v-spacer>
+        <related-posts :categories="Post.categories"></related-posts>
     </section>
 </template>
 
@@ -63,6 +65,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 
 import AppDialog from '../components/common/AppDialog.vue'
+import RelatedPosts from './RelatedPosts.vue'
 
 import { Getter } from 'vuex-class';
 
@@ -84,12 +87,13 @@ import { PostModel } from '../types'
     },
     components: {
         // Add a reference to the component in the components property.
-        AppDialog
+        AppDialog,
+        RelatedPosts
     }
 })
 export default class PostDetails extends Vue {
 
-    show: boolean = false;
+    show: boolean = true;
 
     @Getter('selectedPost') selectedPost: any;
     dialog: any = {show: false};
