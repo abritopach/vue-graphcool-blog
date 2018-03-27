@@ -63,8 +63,8 @@
                 </v-container>
                 </v-card>
             </v-flex>
-            <v-flex xs12 sm6 md6 lg4 v-show="loadingAllPosts">
-                <card-skeleton v-for="n in 6" v-bind:key="n" :hasHeader="true" :hasActions="true" :hasMedia="true"></card-skeleton>
+            <v-flex xs12 sm6 md6 lg4 v-show="loadingAllPosts" v-for="n in 6" v-bind:key="n">
+                <card-skeleton :hasHeader="true" :hasActions="true" :hasMedia="true"></card-skeleton>
             </v-flex>
             </v-layout>
             </v-container>
