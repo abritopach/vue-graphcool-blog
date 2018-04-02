@@ -1,5 +1,9 @@
 <template>
     <section>
+        <!-- Dialog forgot password. -->
+        <app-dialog title="Forgot Password" :show="dialog.show" @clickAccept="onClickAccept">
+            <v-text-field label="Email" v-model="dialog.email" required></v-text-field>
+        </app-dialog>
         <v-layout>
             <v-flex xs10 sm6 lg4 offset-xs1 offset-sm3 offset-lg4>
                 <v-card class="login">
@@ -18,6 +22,7 @@
                     </v-card-title>
                     <v-card-actions>
                         <v-btn raised color="pink darken-1" class="white--text" @click="login" :disabled="!valid">Login</v-btn>
+                        <v-btn flat small color="primary" @click="forgotPassword">Forgot your password?</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -31,12 +36,18 @@ import Component from 'vue-class-component';
 
 import EventBus from '../../event.bus';
 
-import { LOGIN_MUTATION  } from '../../graphql/graphql'
+import AppDialog from '../common/AppDialog.vue'
+
+import { LOGIN_MUTATION, FORGOT_PASSWORD_MUTATION  } from '../../graphql/graphql'
 
 // Vuex.
 import { Action } from 'vuex-class';
 
-@Component
+@Component({
+    components: {
+        AppDialog
+    }
+})
 export default class SignUp extends Vue {
 
     valid: boolean = true;
@@ -44,6 +55,7 @@ export default class SignUp extends Vue {
     password: string = '';
     emailRules: any;
     passwordRules: any;
+    dialog: any = {show: false, email: ''};
 
     @Action('LOGGED_USER') actionLoggedUser: any;
 
@@ -84,6 +96,34 @@ export default class SignUp extends Vue {
                     console.error( 'onRejected function called: ', reason );
                 })
         }
+    }
+
+    forgotPassword() {
+        console.log('forgotPassword');
+        this.dialog.show = true;
+        /*
+        this.$apollo
+            .mutate({
+                mutation: FORGOT_PASSWORD_MUTATION,
+                variables: {
+                    email: this.email,
+                }
+            })
+            .then(response => {
+                console.log(response);
+                EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "info", timeout: 6000, text: "An email has been sent to you with password reset instructions."});
+            })
+            .catch( reason => {
+                console.log(JSON.parse(JSON.stringify(reason)));
+                EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "error", timeout: 6000, text: JSON.parse(JSON.stringify(reason)).message});
+                console.error( 'onRejected function called: ', reason );
+            })
+        */
+    }
+
+    onClickAccept() {
+        // console.log('onClickAccept');
+        this.dialog.show = false;
     }
     
 };

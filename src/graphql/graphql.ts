@@ -216,6 +216,14 @@ export const UPDATE_USER_AVATAR_MUTATION = gql`
     }
 `
 
+export const FORGOT_PASSWORD_MUTATION = gql`
+    mutation ForgotPasswordMutation($email: String!) {
+        triggerPasswordReset(email: $email) {
+            id
+        }
+    }
+`
+
 // Post.
 
 export const ADD_POST_MUTATION = gql`
