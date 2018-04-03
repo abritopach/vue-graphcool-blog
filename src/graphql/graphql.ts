@@ -225,8 +225,8 @@ export const FORGOT_PASSWORD_MUTATION = gql`
 `
 
 export const RESET_PASSWORD_MUTATION = gql`
-    mutation ResetPasswordMutation($resetToken: String!, $password: String!) {
-        resetPassword(resetToken: $resetToken, password: $password) {
+    mutation ResetPasswordMutation($resetToken: String!, $password: String!, $newPassword: String!) {
+        resetPassword(resetToken: $resetToken, password: $password, newPassword: $newPassword) {
             id
         }
     }

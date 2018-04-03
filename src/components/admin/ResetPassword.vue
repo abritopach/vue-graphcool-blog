@@ -11,7 +11,8 @@
                     <v-card-title primary-title>
                     <div class="resetPasswordForm">
                         <v-form v-model="valid" ref="form" lazy-validation>
-                            <v-text-field type="password" label="New password" v-model="password" :rules="passwordRules" required></v-text-field>
+                            <v-text-field type="password" label="Current password" v-model="password" :rules="passwordRules" required></v-text-field>
+                            <v-text-field type="password" label="New password" v-model="newPassword" :rules="newPasswordRules" required></v-text-field>
                         </v-form>
                     </div>
                     </v-card-title>
@@ -38,10 +39,13 @@ export default class ResetPassword extends Vue {
     valid: boolean = true;
     password: string = '';
     passwordRules: any;
+    newPassword: string = '';
+    newPasswordRules: any;
 
     constructor() {
         super();
         this.passwordRules = [(v: any) => !!v || 'Password is required.'];
+        this.newPasswordRules = [(v: any) => !!v || 'New Password is required.'];
     }
 
     mounted() {
@@ -57,7 +61,8 @@ export default class ResetPassword extends Vue {
                     mutation: RESET_PASSWORD_MUTATION,
                     variables: {
                         resetToken: this.$route.query.token,
-                        password: this.password
+                        password: this.password,
+                        newPassword: this.newPassword
                     }
                 })
                 .then(response => {
