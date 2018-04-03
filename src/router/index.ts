@@ -11,6 +11,7 @@ import Denied from '@/components/common/Denied.vue'
 import PostDetails from '@/components/PostDetails.vue'
 import MyPosts from '@/components/MyPosts.vue'
 import UserProfile from '@/components/admin/UserProfile.vue'
+import ResetPassword from '@/components/admin/ResetPassword.vue'
 
 import store from '../store';
 
@@ -81,7 +82,13 @@ const router = new Router({
      name: 'UserProfile',
      component: UserProfile,
      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: true }
-  }
+    },
+    {
+      path: '/reset',
+      name: 'ResetPassword',
+      component: ResetPassword,
+      meta: { requiresAuth: false, roles: ['admin', 'user'] }
+     }
   ]
 })
 

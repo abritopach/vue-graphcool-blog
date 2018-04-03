@@ -101,12 +101,16 @@ export default class SignUp extends Vue {
     forgotPassword() {
         console.log('forgotPassword');
         this.dialog.show = true;
-        /*
+    }
+
+    onClickAccept() {
+        // console.log('onClickAccept');
+
         this.$apollo
             .mutate({
                 mutation: FORGOT_PASSWORD_MUTATION,
                 variables: {
-                    email: this.email,
+                    email: this.dialog.email,
                 }
             })
             .then(response => {
@@ -118,11 +122,7 @@ export default class SignUp extends Vue {
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "error", timeout: 6000, text: JSON.parse(JSON.stringify(reason)).message});
                 console.error( 'onRejected function called: ', reason );
             })
-        */
-    }
 
-    onClickAccept() {
-        // console.log('onClickAccept');
         this.dialog.show = false;
     }
     

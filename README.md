@@ -11,6 +11,8 @@ This project shows you how to:
     * Use vuex to manage state app.
     * Use graphql: queries, mutations, subscriptions.
     * User login and signup.
+    * Forgot password: 
+        - Sendgrig is used for sending emails: [outdated documentation]https://github.com/graphcool/templates/tree/master/outdated/auth/email-user-management/functions/reset-password
     * If you are a simple user
         * Edit your profile (change your avatar image).
         * Show the latest posts published by users.
