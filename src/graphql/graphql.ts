@@ -29,6 +29,10 @@ export const USER_QUERY = gql`
                 content
                 likes
                 createdAt
+                categories {
+                    id
+                    name
+                }
             }
         }
     }
@@ -274,11 +278,12 @@ export const DELETE_POST_MUTATION = gql`
 `
 
 export const UPDATE_POST_MUTATION = gql`
-    mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!) {
+    mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!, $categories: [PostcategoriesCategory!]) {
         updatePost(
             id: $id
             title: $title
             content: $content
+            categories: $categories
         ) {
             id
             title
@@ -287,6 +292,10 @@ export const UPDATE_POST_MUTATION = gql`
             user {
                 id
                 username
+            }
+            categories {
+                id
+                name
             }
         }
     }

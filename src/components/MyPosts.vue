@@ -2,9 +2,22 @@
     <section v-if="User">
         <h2>My Posts</h2>
         <!-- Dialog edit post. -->
-        <app-dialog title="Edit Post" :show="dialog.show" @clickAccept="onClickAccept">
+        <app-dialog title="Edit Post" :show="dialog.show" @clickAccept="onClickAccept" @clickClose="onClickClose">
+            <v-select v-if="allCategories" v-model="select" label="Categories" multiple chips tags :items="allCategories" return-object 
+                item-text="name" item-value="name" :rules="[() => select.length > 0 || 'You must choose at least one']">
+                <template slot="selection" slot-scope="data">
+                    <v-chip @input="data.parent.selectItem(data.item)" class="chip--select-multi"
+                            :selected="data.selected" :key="JSON.stringify(data.item)">
+                        <v-avatar class="accent">{{ data.item.name.slice(0, 1).toUpperCase() }}</v-avatar>
+                        {{ data.item.name }}
+                    </v-chip>
+                </template>
+            </v-select>
             <v-text-field label="Title" v-model="dialog.newTitle" required></v-text-field>
             <v-text-field label="Content" v-model="dialog.newContent" multi-line required=""></v-text-field>
+            <picture-input ref="pictureInput"  @change="onChange" width="600" height="600" margin="16"  accept="image/jpeg,image/png,image/gif" 
+                size="10"  buttonClass="ui button primary" :customStrings="{upload: '<h1>Upload it!</h1>', drag: 'Drag and drop your image here'}">}">
+            </picture-input>
         </app-dialog>
         <v-flex xs12 sm6 offset-sm3>
             <app-data-table :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
@@ -19,14 +32,20 @@ import AppDataTable from '../components/common/AppDataTable.vue'
 import AppDialog from '../components/common/AppDialog.vue'
 
 import { Action, Getter } from 'vuex-class';
-import { UserModel } from '../types';
+import { UserModel, CategoryModel } from '../types';
 
 import EventBus from '../event.bus';
 
-import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY } from '../graphql/graphql'
+import PictureInput from 'vue-picture-input'
+
+import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
+        // Fetch all categories.
+        allCategories: {
+            query: ALL_CATEGORIES_QUERY
+        },
         // Fetch user by ID
         User: {
             query: USER_QUERY,
@@ -47,7 +66,8 @@ import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY
     components: {
         // Add a reference to the component in the components property.
         AppDataTable,
-        AppDialog
+        AppDialog,
+        'picture-input': PictureInput
     }
 })
 export default class MyPosts extends Vue {
@@ -57,6 +77,8 @@ export default class MyPosts extends Vue {
     headers: any;
     showActions: any = {search: true, view: true, edit: true, delete: true};
     dialog: any = {show: false, newTitle: '', newContent: ''};
+    image: any;
+    select: CategoryModel[] = [];
 
     constructor() {
         super();
@@ -74,8 +96,10 @@ export default class MyPosts extends Vue {
     }
 
     editItem(item: any) {
-        // console.log('editItem', item);
-        this.dialog = {show: true, newTitle: item.title, newContent: item.content, post: item};
+        console.log('editItem', item);
+        this.select = item.categories;
+        this.dialog = {show: true, newTitle: item.title, newContent: item.content, post: item, categories: item.categories};
+        console.log(this.dialog);
     }
 
     deleteItem(item: any) {
@@ -111,14 +135,21 @@ export default class MyPosts extends Vue {
         this.updateItem();
     }
 
+    onClickClose() {
+        // console.log('onClickClose');
+        this.dialog.show = false;
+    }
+
     updateItem() {
+        let categories = this.select.map( category => ({ 'name': category.name }));
         this.$apollo
             .mutate({
                 mutation: UPDATE_POST_MUTATION,
                 variables: {
                     id: this.dialog.post.id,
                     title: this.dialog.newTitle,
-                    content: this.dialog.newContent
+                    content: this.dialog.newContent,
+                    categories: categories
                 }
             })
             .then(response => {
@@ -142,6 +173,17 @@ export default class MyPosts extends Vue {
             case "deleteItem":
                 this.deleteItem(item);
                 break;
+        }
+    }
+
+    onChange (image: any) {
+        //console.log('New picture selected!')
+        if (image) {
+            //console.log('Picture loaded.')
+            //console.log(image);
+            this.image = image;
+        } else {
+            console.log('FileReader API not supported: use the <form>')
         }
     }
     
