@@ -41,6 +41,7 @@ export const POST_QUERY = gql`
         Post(id: $id) {
             id
             title
+            image
             content
             categories {
                 id

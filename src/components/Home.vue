@@ -159,6 +159,7 @@ export default class Home extends Vue {
     _allPostsMeta: any;
     allCategories: any;
     loadingAllPosts: boolean = true;
+    observer: any;
 
     @Action('SELECTED_POST') actionSelectedPost: any;
 

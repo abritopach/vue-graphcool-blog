@@ -79,4 +79,7 @@ export default class App extends Vue {
 li:last-child .breadcrumbs__item {
     color: #1976d2!important;
 }
+.card__media__background {
+    margin-top: 10px;
+}
 </style>

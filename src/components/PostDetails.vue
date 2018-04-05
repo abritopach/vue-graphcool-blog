@@ -14,12 +14,12 @@
         <v-layout row>
             <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
             <v-card>
-                <v-card-media src="http://jjblog.wp-themes.pro/wp-content/uploads/2015/09/zgsdfg-1200x700.jpg" height="200px">
-                </v-card-media>
-                <v-card-title primary-title>
+                <v-card-media v-if="Post.image !== null" :src="Post.image" height="200px" contain></v-card-media>
+                <v-card-media v-else src="http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg" height="200px" contain></v-card-media>
+                <v-card-title primary-title> 
                     <v-avatar size="48px">
-                        <img v-if="Post.user.avatar !== null" :src="Post.user.avatar" alt="">
-                        <img v-else src="../assets/avatar.png" alt="">
+                        <img v-if="Post.user.avatar !== null" :src="Post.user.avatar" alt="Avatar image">
+                        <img v-else src="../assets/avatar.png" alt="Avatar image not available">
                     </v-avatar>
                     <div>
                         <v-list three-line>
