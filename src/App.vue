@@ -61,25 +61,31 @@ export default class App extends Vue {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-.main {
-  margin-bottom: 48px;
-}
-.badge__badge {
-  top: 15px;
-  right: 8px;
-  color: white;
-}
-li:last-child .breadcrumbs__item {
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
+  .main {
+    margin-bottom: 48px;
+  }
+  .badge__badge {
+    top: 15px;
+    right: 8px;
+    color: white;
+  }
+  li:last-child .breadcrumbs__item {
     color: #1976d2!important;
-}
-.card__media__background {
+  }
+  .card__media__background {
     margin-top: 10px;
-}
+  }
+  #disqus_thread {
+    overflow: hidden;
+  }
+  #disqus_thread iframe {
+    margin-bottom: -54px;
+  }
 </style>

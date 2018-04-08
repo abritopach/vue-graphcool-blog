@@ -55,6 +55,9 @@
             </v-flex>
         </v-layout>
         <v-spacer></v-spacer>
+        <div class="comments">
+            <vue-disqus shortname="blogadri" :title="Post.title" :identifier="Post.id" url="http://example.com"></vue-disqus>
+        </div>
         <related-posts :categories="Post.categories"></related-posts>
     </section>
 </template>
@@ -66,6 +69,8 @@ import Component from 'vue-class-component'
 
 import AppDialog from '../components/common/AppDialog.vue'
 import RelatedPosts from './RelatedPosts.vue'
+
+import VueDisqus from 'vue-disqus/VueDisqus.vue'
 
 import { Getter } from 'vuex-class';
 
@@ -88,7 +93,8 @@ import { PostModel } from '../types'
     components: {
         // Add a reference to the component in the components property.
         AppDialog,
-        RelatedPosts
+        RelatedPosts,
+        VueDisqus
     }
 })
 export default class PostDetails extends Vue {
