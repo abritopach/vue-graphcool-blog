@@ -23,6 +23,7 @@
                             </v-select>
                             <v-text-field label="Title" v-model="title" :rules="titleRules" required></v-text-field>
                             <v-text-field label="Content" v-model="content" multi-line :rules="contentRules" required=""></v-text-field>
+                            <v-switch :label="`Publish: ${publish.toString()}`" v-model="publish"></v-switch>
                             <picture-input ref="pictureInput"  @change="onChange" width="600" height="600" margin="16"  accept="image/jpeg,image/png,image/gif" 
                             size="10"  buttonClass="ui button primary" :customStrings="{upload: '<h1>Upload it!</h1>', drag: 'Drag and drop your image here'}">}">
                             </picture-input>
@@ -79,6 +80,7 @@ export default class NewPost extends Vue {
     categoriesRules: any;
     image: any;
     select: CategoryModel[] = [];
+    publish: boolean = false;
 
     @Getter('loggedUser') loggedUser: any;
 
@@ -102,7 +104,8 @@ export default class NewPost extends Vue {
                         content: this.content,
                         image: this.image,
                         userId: this.loggedUser.id,
-                        categories: categories
+                        categories: categories,
+                        isPublished: this.publish
                     },
                     update: (store, { data: { createPost } }) => {
                         // Read data from cache for this query.

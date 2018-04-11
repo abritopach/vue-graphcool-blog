@@ -83,6 +83,7 @@ export default class MyPosts extends Vue {
     constructor() {
         super();
         this.headers = [
+            { text: 'Publish', align: 'left', value: 'publish'},
             { text: 'Title', align: 'left', value: 'title'},
             { text: 'DateTime', align: 'left', value: 'datetime'},
             { text: 'Actions', align: 'left', value: 'actions' }

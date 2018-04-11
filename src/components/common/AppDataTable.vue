@@ -9,6 +9,10 @@
             <template slot="items" slot-scope="props">
                 <!-- Posts fields. -->
                 <template v-if="props.item.__typename === 'Post'">
+                    <td class="text-xs-left">
+                        <v-icon v-if="!props.item.isPublished" color="pink darken-1">content_paste</v-icon>
+                        <v-icon v-if="props.item.isPublished" color="primary">publish</v-icon>
+                    </td>
                     <td class="text-xs-left">{{ props.item.title }}</td>
                     <td v-if="typeof props.item.user !== 'undefined'" class="text-xs-left">{{ props.item.user.username }}</td>
                     <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>

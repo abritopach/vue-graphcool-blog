@@ -114,7 +114,7 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGO
                 orderBy: "createdAt_DESC",
                 skip: 0,
                 first: 6,
-                filter: {}
+                filter: {isPublished: true}
             },
             fetchPolicy: "network-only",
             result (data: any) {

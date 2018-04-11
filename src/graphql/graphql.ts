@@ -33,6 +33,7 @@ export const USER_QUERY = gql`
                     id
                     name
                 }
+                isPublished
             }
         }
     }
@@ -80,6 +81,7 @@ export const ALL_POSTS_QUERY = gql`
                 id
                 name
             }
+            isPublished
         }
         _allPostsMeta {
             count
@@ -240,13 +242,15 @@ export const RESET_PASSWORD_MUTATION = gql`
 // Post.
 
 export const ADD_POST_MUTATION = gql`
-    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory!]) {
+    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory!],
+    $isPublished: Boolean!) {
         createPost(
             title: $title
             content: $content
             image: $image
             userId: $userId
             categories: $categories
+            isPublished: $isPublished
         ) {
             id
             title
@@ -254,6 +258,7 @@ export const ADD_POST_MUTATION = gql`
             image
             likes
             createdAt
+            isPublished
             categories {
                 id
                 name
