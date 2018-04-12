@@ -10,8 +10,8 @@
                 <!-- Posts fields. -->
                 <template v-if="props.item.__typename === 'Post'">
                     <td class="text-xs-left">
-                        <v-icon v-if="!props.item.isPublished" color="pink darken-1">content_paste</v-icon>
-                        <v-icon v-if="props.item.isPublished" color="primary">publish</v-icon>
+                        <v-icon v-if="props.item.isPublished" color="primary">content_paste</v-icon>
+                        <span v-if="!props.item.isPublished" @click="editItem(props.item)"><v-icon color="pink darken-1">cloud_upload</v-icon> Draft</span>
                     </td>
                     <td class="text-xs-left">{{ props.item.title }}</td>
                     <td v-if="typeof props.item.user !== 'undefined'" class="text-xs-left">{{ props.item.user.username }}</td>

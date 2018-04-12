@@ -53,6 +53,7 @@ export default class Users extends Vue {
     constructor() {
         super();
         this.headers = [
+          { text: 'Published?', align: 'left', value: 'Published?'},
           { text: 'Title', align: 'left', value: 'title'},
           { text: 'Username', align: 'left', value: 'username' },
           { text: 'DateTime', align: 'left', value: 'datetime' },

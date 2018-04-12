@@ -15,6 +15,7 @@
             </v-select>
             <v-text-field label="Title" v-model="dialog.newTitle" required></v-text-field>
             <v-text-field label="Content" v-model="dialog.newContent" multi-line required=""></v-text-field>
+            <v-switch :label="`Publish: ${dialog.publish.toString()}`" v-model="dialog.publish"></v-switch>
             <picture-input ref="pictureInput"  @change="onChange" width="600" height="600" margin="16"  accept="image/jpeg,image/png,image/gif" 
                 size="10"  buttonClass="ui button primary" :customStrings="{upload: '<h1>Upload it!</h1>', drag: 'Drag and drop your image here'}">}">
             </picture-input>
@@ -76,14 +77,14 @@ export default class MyPosts extends Vue {
     @Action('SELECTED_POST') actionSelectedPost: any;
     headers: any;
     showActions: any = {search: true, view: true, edit: true, delete: true};
-    dialog: any = {show: false, newTitle: '', newContent: ''};
+    dialog: any = {show: false, newTitle: '', newContent: '', publish: ''};
     image: any;
     select: CategoryModel[] = [];
 
     constructor() {
         super();
         this.headers = [
-            { text: 'Publish', align: 'left', value: 'publish'},
+            { text: 'Published?', align: 'left', value: 'Published?'},
             { text: 'Title', align: 'left', value: 'title'},
             { text: 'DateTime', align: 'left', value: 'datetime'},
             { text: 'Actions', align: 'left', value: 'actions' }
@@ -99,7 +100,7 @@ export default class MyPosts extends Vue {
     editItem(item: any) {
         console.log('editItem', item);
         this.select = item.categories;
-        this.dialog = {show: true, newTitle: item.title, newContent: item.content, post: item, categories: item.categories};
+        this.dialog = {show: true, newTitle: item.title, newContent: item.content, post: item, categories: item.categories, publish: item.isPublished};
         console.log(this.dialog);
     }
 
@@ -150,7 +151,8 @@ export default class MyPosts extends Vue {
                     id: this.dialog.post.id,
                     title: this.dialog.newTitle,
                     content: this.dialog.newContent,
-                    categories: categories
+                    categories: categories,
+                    isPublished: this.dialog.publish
                 }
             })
             .then(response => {

@@ -283,12 +283,13 @@ export const DELETE_POST_MUTATION = gql`
 `
 
 export const UPDATE_POST_MUTATION = gql`
-    mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!, $categories: [PostcategoriesCategory!]) {
+    mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!, $categories: [PostcategoriesCategory!], $isPublished: Boolean!) {
         updatePost(
             id: $id
             title: $title
             content: $content
             categories: $categories
+            isPublished: $isPublished
         ) {
             id
             title
@@ -302,6 +303,7 @@ export const UPDATE_POST_MUTATION = gql`
                 id
                 name
             }
+            isPublished
         }
     }
 `
