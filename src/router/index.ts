@@ -23,7 +23,7 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: false }
+      meta: { requiresAuth: true, roles: ['ADMIN', 'USER'], showBackButton: false }
     },
     {
       path: '/signup',
@@ -39,55 +39,55 @@ const router = new Router({
       path: '/admin/users',
       name: 'Users',
       component: Users,
-      meta: { requiresAuth: true, roles: ['admin'], showBackButton: false }
+      meta: { requiresAuth: true, roles: ['ADMIN'], showBackButton: false }
     },
     {
       path: '/admin/users/details',
       name: 'UserDetails',
       component: UserDetails,
-      meta: { requiresAuth: true, roles: ['admin'], showBackButton: true }
+      meta: { requiresAuth: true, roles: ['ADMIN'], showBackButton: true }
     },
     {
       path: '/admin/posts/new',
       name: 'NewPost',
       component: NewPost,
-      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: false }
+      meta: { requiresAuth: true, roles: ['ADMIN', 'USER'], showBackButton: false }
     },
     {
       path: '/admin/posts',
       name: 'Posts',
       component: Posts,
-      meta: { requiresAuth: true, roles: ['admin'], showBackButton: false }
+      meta: { requiresAuth: true, roles: ['ADMIN'], showBackButton: false }
     },
     {
       path: '/denied',
       name: 'Denied',
       component: Denied,
-      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: false }
+      meta: { requiresAuth: true, roles: ['ADMIN', 'USER'], showBackButton: false }
     },
     {
       path: '/myposts',
       name: 'MyPosts',
       component: MyPosts,
-      meta: { requiresAuth: true, roles: ['user'], showBackButton: false }
+      meta: { requiresAuth: true, roles: ['USER'], showBackButton: false }
     },
     {
       path: '/postdetails',
       name: 'PostDetails',
       component: PostDetails,
-      meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: true }
+      meta: { requiresAuth: true, roles: ['ADMIN', 'USER'], showBackButton: true }
    },
    {
      path: '/profile',
      name: 'UserProfile',
      component: UserProfile,
-     meta: { requiresAuth: true, roles: ['admin', 'user'], showBackButton: true }
+     meta: { requiresAuth: true, roles: ['ADMIN', 'USER'], showBackButton: true }
     },
     {
       path: '/reset',
       name: 'ResetPassword',
       component: ResetPassword,
-      meta: { requiresAuth: false, roles: ['admin', 'user'] }
+      meta: { requiresAuth: false, roles: ['ADMIN', 'USER'] }
      }
   ]
 })

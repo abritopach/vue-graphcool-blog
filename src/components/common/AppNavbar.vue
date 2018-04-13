@@ -118,15 +118,15 @@ export default class AppNavbar extends Vue {
         this.title = "VueJS & GraphCool Blog ";
         this.drawer = null,
         this.itemsHome = [
-            { title: 'Latest Posts', icon: 'schedule', to: '/', roles: ['admin', 'user']}
+            { title: 'Latest Posts', icon: 'schedule', to: '/', roles: ['ADMIN', 'USER']}
         ];
         this.itemsPost = [
-          { title: 'New Post', icon: 'create', to: '/admin/posts/new', roles: ['admin', 'user']},
-          { title: 'Posts', icon: 'description', to: '/admin/posts', roles: ['admin']},
-          { title: 'My Posts', icon: 'description', to: '/myposts', roles: ['user']}
+          { title: 'New Post', icon: 'create', to: '/admin/posts/new', roles: ['ADMIN', 'USER']},
+          { title: 'Posts', icon: 'description', to: '/admin/posts', roles: ['ADMIN']},
+          { title: 'My Posts', icon: 'description', to: '/myposts', roles: ['USER']}
         ];
         this.itemsUser = [
-            { title: 'Users', icon: 'people', to: '/admin/users', roles: ['admin']}
+            { title: 'Users', icon: 'people', to: '/admin/users', roles: ['ADMIN']}
         ];
     }
 

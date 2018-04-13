@@ -1,8 +1,8 @@
 # Vue-Graphcool-Blog
 
-Sample project that shows how to build a Blog App (Role Based Authentication) with VueJS, Vuex, GraphQL, Apollo Client and Graphcool.
+Sample project that shows how to build a Blog App (Role Based Authentication) with VueJS, Vuex, GraphQL, Apollo Client and Prisma.
 
-This example is based on the example ["Build a Blog with VueJS, GraphQL and Apollo Client"](https://scotch.io/tutorials/build-a-blog-with-vue-graphql-and-apollo-client) that I modified to practice my skills. The original post uses GraphQL server built with AdonisJS and it also uses Bulma CSS. I have decided to replace "GraphQL server built with AdonisJS and Bulma CSS" with Graphcool and Vuetify. This project integrates Typescript in VueJS.
+This example is based on the example ["Build a Blog with VueJS, GraphQL and Apollo Client"](https://scotch.io/tutorials/build-a-blog-with-vue-graphql-and-apollo-client) that I modified to practice my skills. The original post uses GraphQL server built with AdonisJS and it also uses Bulma CSS. I have decided to replace "GraphQL server built with AdonisJS and Bulma CSS" with Prisma and Vuetify. This project integrates Typescript in VueJS.
 
 This project shows you how to:
 
@@ -25,7 +25,7 @@ This project shows you how to:
     * Skeleton Screen in latest post view.
 
 
-Technologies: Vue.js, Vuetify.js, Vuex, Typescript, GraphQL, Apollo Client and Graphcool.
+Technologies: Vue.js, Vuetify.js, Vuex, Typescript, GraphQL, Apollo Client and Prisma.
 
 ![Technologies](readme_resources/graphql_apollo_vue_graphcool.png "Technologies")
 

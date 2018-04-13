@@ -18,6 +18,7 @@
         </app-dialog>
         <v-card>
         <!--<v-progress-circular v-if="$apollo.queries.allPosts.loading" indeterminate :size="50" color="primary"></v-progress-circular>-->
+
         <v-container fluid grid-list-lg>
             <v-layout row wrap>
             <v-flex xs12 sm6 md6 lg4 v-show="!loadingAllPosts" v-for="item in allPosts" v-bind:key="item.id" >
@@ -36,11 +37,11 @@
                             <v-list three-line>
                             <v-list-tile avatar>
                                 <v-list-tile-avatar>
-                                    <img v-if="item.user.avatar !== null" :src="item.user.avatar" alt="">
+                                    <img v-if="item.author.avatar !== null" :src="item.author.avatar" alt="">
                                     <img v-else src="../assets/avatar.png" alt="">
                                 </v-list-tile-avatar>
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
+                                    <v-list-tile-title>{{ item.author.name }}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                                 <v-list-tile-action v-if="item.likes != 0">
@@ -69,13 +70,13 @@
             </v-layout>
             </v-container>
         </v-card>
+        <!--
         <infinite-loading v-if="!$apollo.queries._allPostsMeta.loading" @infinite="infiniteHandler($event)">
-            <!--
             <span slot="no-more">
                 There is no more posts :(
             </span>
-            -->
         </infinite-loading>
+        -->
     </section>
 </template>
 
@@ -96,10 +97,11 @@ import CardSkeleton from '../components/common/CardSkeleton/CardSkeleton.vue'
 // Vuex.
 import { Action } from 'vuex-class';
 
-import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
+import { ALL_POSTS_QUERY, /*POSTS_COUNT_QUERY, subscribeToPostsChanges,*/ ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
+        /*
         _allPostsMeta: {
             query: POSTS_COUNT_QUERY,
             fetchPolicy: "network-only",
@@ -107,6 +109,7 @@ import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGO
                 console.log("_allPostsMeta result", result);
             },
         },
+        */
         // Fetch all posts.
         allPosts: {
             query: ALL_POSTS_QUERY,
@@ -180,12 +183,12 @@ export default class Home extends Vue {
 
     mounted() {
         console.log("mounted Home");
-        this.subscription = subscribeToPostsChanges(this.$apollo);
+        // this.subscription = subscribeToPostsChanges(this.$apollo);
     }
 
     beforeDestroy() {
         // console.log("beforeDestroy Home");
-        this.subscription.unsubscribe();
+        // this.subscription.unsubscribe();
     }
 
     viewItem(item: any) {

@@ -26,14 +26,14 @@ import store from './store';
 
 import moment from 'moment';
 
-const SIMPLE_API_ENDPOINT = 'https://api.graph.cool/simple/v1/cje2ponq50idi01357s55y4h2';
-
+// const SIMPLE_API_ENDPOINT = 'https://api.graph.cool/simple/v1/cje2ponq50idi01357s55y4h2';
+const SIMPLE_API_ENDPOINT = 'http://localhost:4000/';
 
 // Create an authLink that gets the user token from local storage and return the headers which
 // contains the Authorization header.
 const authLink = setContext((_, { headers }) => {
   // Get the authentication token from localstorage if it exists.
-  const token = localStorage.getItem('blog-app-token')
+  const token = localStorage.getItem('blog-app-token');
 
   // Return the headers to the context so httpLink can read them.
   return {

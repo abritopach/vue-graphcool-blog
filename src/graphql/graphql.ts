@@ -62,6 +62,7 @@ export const POST_QUERY = gql`
     }
 `
 
+/*
 export const ALL_POSTS_QUERY = gql`
     query AllPostsQuery($orderBy: PostOrderBy, $first: Int, $skip: Int, $filter: PostFilter) {
         allPosts(orderBy: $orderBy, first: $first, skip: $skip, 
@@ -85,6 +86,31 @@ export const ALL_POSTS_QUERY = gql`
         }
         _allPostsMeta {
             count
+        }
+    }
+`
+*/
+
+export const ALL_POSTS_QUERY = gql`
+    query AllPostsQuery($orderBy: PostOrderByInput, $first: Int, $skip: Int, $filter: PostWhereInput) {
+        allPosts(orderBy: $orderBy, first: $first, skip: $skip, 
+            filter: $filter) {
+            id
+            title
+            createdAt
+            content
+            image
+            likes
+            author {
+                id
+                name
+                avatar
+            }
+            categories {
+                id
+                name
+            }
+            isPublished
         }
     }
 `
@@ -151,7 +177,7 @@ export const SIGNUP_MUTATION = gql`
         }
     }
 `
-
+/*
 export const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!, $password: String!) {
         signinUser(
@@ -159,6 +185,25 @@ export const LOGIN_MUTATION = gql`
                 email: $email
                 password: $password 
             }
+        ) {
+            token
+            user {
+                id,
+                username
+                email
+                role
+                avatar
+            }
+        }
+    }
+`
+*/
+
+export const LOGIN_MUTATION = gql`
+    mutation LoginMutation($email: String!, $password: String!) {
+        login(
+            email: $email
+            password: $password 
         ) {
             token
             user {

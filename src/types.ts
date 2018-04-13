@@ -6,7 +6,7 @@ export interface State {
     selectedPost: PostModel
 }
 
-export type ROLE = 'admin' | 'user';
+export type ROLE = 'ADMIN' | 'USER';
 
 // Models.
 export interface UserModel {
@@ -25,7 +25,7 @@ export interface PostModel {
     id: String,
     updatedAt: Date,
     title: String,
-    user: UserModel,
+    author: UserModel,
     isPublished: Boolean
 }
 
