@@ -70,13 +70,11 @@
             </v-layout>
             </v-container>
         </v-card>
-        <!--
         <infinite-loading v-if="!$apollo.queries._allPostsMeta.loading" @infinite="infiniteHandler($event)">
             <span slot="no-more">
                 There is no more posts :(
             </span>
         </infinite-loading>
-        -->
     </section>
 </template>
 
@@ -97,11 +95,10 @@ import CardSkeleton from '../components/common/CardSkeleton/CardSkeleton.vue'
 // Vuex.
 import { Action } from 'vuex-class';
 
-import { ALL_POSTS_QUERY, /*POSTS_COUNT_QUERY, subscribeToPostsChanges,*/ ALL_CATEGORIES_QUERY } from '../graphql/graphql'
+import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, /*subscribeToPostsChanges,*/ ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
-        /*
         _allPostsMeta: {
             query: POSTS_COUNT_QUERY,
             fetchPolicy: "network-only",
@@ -109,7 +106,6 @@ import { ALL_POSTS_QUERY, /*POSTS_COUNT_QUERY, subscribeToPostsChanges,*/ ALL_CA
                 console.log("_allPostsMeta result", result);
             },
         },
-        */
         // Fetch all posts.
         allPosts: {
             query: ALL_POSTS_QUERY,
