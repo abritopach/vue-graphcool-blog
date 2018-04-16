@@ -33,7 +33,10 @@ const SIMPLE_API_ENDPOINT = 'http://localhost:4000/';
 // contains the Authorization header.
 const authLink = setContext((_, { headers }) => {
   // Get the authentication token from localstorage if it exists.
-  const token = localStorage.getItem('blog-app-token');
+  let token = localStorage.getItem('blog-app-token');
+
+  // Remove double quotes from token.
+  token = token!.replace(/\"/g, "");
 
   // Return the headers to the context so httpLink can read them.
   return {

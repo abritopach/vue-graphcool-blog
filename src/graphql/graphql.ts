@@ -238,6 +238,7 @@ export const MARK_AS_DELETED_USER_MUTATION = gql`
     }
 `
 
+/*
 export const UPDATE_USER_MUTATION = gql`
     mutation UpdateUserMutation($id:ID!, $username: String!, $role: String!) {
         updateUser(
@@ -249,6 +250,21 @@ export const UPDATE_USER_MUTATION = gql`
             username
             email
             role
+        }
+    }
+`
+*/
+
+export const UPDATE_USER_MUTATION = gql`
+    mutation UpdateUserMutation($avatar: String) {
+        updateUser(
+            avatar: $avatar
+        ) {
+            id
+            username
+            email
+            role
+            avatar
         }
     }
 `
@@ -287,6 +303,37 @@ export const RESET_PASSWORD_MUTATION = gql`
 // Post.
 
 export const ADD_POST_MUTATION = gql`
+    mutation AddPostMutation($title: String!, $content: String!, $image: String, $categories: [CategoryWhereInput!],
+    $isPublished: Boolean!) {
+        createPost(
+            title: $title
+            content: $content
+            image: $image
+            categories: $categories
+            isPublished: $isPublished
+        ) {
+            id
+            title
+            content
+            image
+            likes
+            createdAt
+            isPublished
+            categories {
+                id
+                name
+            }
+            author {
+                id
+                username
+                email
+            }
+        }
+    }
+`
+
+/*
+export const ADD_POST_MUTATION = gql`
     mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory!],
     $isPublished: Boolean!) {
         createPost(
@@ -316,6 +363,7 @@ export const ADD_POST_MUTATION = gql`
         }
     }
 `
+*/
 
 export const DELETE_POST_MUTATION = gql`
     mutation DeletePostMutation($id: ID!) {

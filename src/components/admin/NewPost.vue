@@ -92,8 +92,7 @@ export default class NewPost extends Vue {
 
     addPost() {
 
-        let categories = this.select.map( category => ({ 'name': category.name }));
-        console.log(categories);
+        let categories = this.select.map( category => ({ 'id': category.id }));
 
         if ((<any>this.$refs.form).validate()) {
             this.$apollo
@@ -103,7 +102,6 @@ export default class NewPost extends Vue {
                         title: this.title,
                         content: this.content,
                         image: this.image,
-                        userId: this.loggedUser.id,
                         categories: categories,
                         isPublished: this.publish
                     },

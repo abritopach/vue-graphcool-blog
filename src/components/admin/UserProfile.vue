@@ -39,7 +39,7 @@ import Component from 'vue-class-component';
 
 import { Getter } from 'vuex-class';
 
-import { UPDATE_USER_AVATAR_MUTATION } from '../../graphql/graphql'
+import { UPDATE_USER_MUTATION } from '../../graphql/graphql'
 
 import EventBus from '../../event.bus';
 
@@ -75,9 +75,9 @@ export default class UserProfile extends Vue {
     updateUser() {
         this.$apollo
             .mutate({
-                mutation: UPDATE_USER_AVATAR_MUTATION,
+                mutation: UPDATE_USER_MUTATION,
                 variables: {
-                    id: this.loggedUser.id,
+                    // id: this.loggedUser.id,
                     avatar: this.image
                 }
             })
