@@ -147,7 +147,11 @@ export default class RelatedPosts extends Vue {
     viewItem(item: any) {
         // console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
-        this.$router.push('/postdetails')
+        this.$router.push('/postdetails');
+        // Scroll to top of page.
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
     }
 
 }

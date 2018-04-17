@@ -7,7 +7,7 @@
         </v-breadcrumbs>
         <h2>Latest Posts</h2>
         <!-- Dialog Categories. -->
-        <app-dialog title="Categories" :show="dialog.show" @clickAccept="onClickAccept">
+        <app-dialog title="Categories" :show="dialog.show" @clickAccept="onClickAccept" @clickClose="onClickCloseCategoriesDialog">
             <v-layout row wrap>
                 <v-flex md6 lg6  v-for="category in dialog.categories" v-bind:key="category.id">
                     <v-chip label color="pink" text-color="white">
@@ -210,6 +210,9 @@ export default class Home extends Vue {
         this.dialog.show = false;
     }
 
+    onClickCloseCategoriesDialog() {
+        this.dialog.show = false;
+    }
 
     loadMorePosts(event: any) {
         console.log("loadMorePosts");
