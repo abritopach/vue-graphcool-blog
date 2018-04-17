@@ -20,11 +20,11 @@
                         <v-list three-line>
                         <v-list-tile avatar>
                             <v-list-tile-avatar>
-                                <img v-if="item.user.avatar !== null" :src="item.user.avatar" alt="">
+                                <img v-if="item.author.avatar !== null" :src="item.author.avatar" alt="">
                                 <img v-else src="../assets/avatar.png" alt="">
                             </v-list-tile-avatar>
                             <v-list-tile-content>
-                                <v-list-tile-title>{{ item.user.username }}</v-list-tile-title>
+                                <v-list-tile-title>{{ item.author.username }}</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ item.createdAt | formatDate }}</v-list-tile-sub-title>
                             </v-list-tile-content>
                             <v-list-tile-action v-if="item.likes != 0">
@@ -63,7 +63,7 @@ import Component from 'vue-class-component'
 
 import { CategoryModel } from '../types'
 
-import { RELATED_POSTS_QUERY } from '../graphql/graphql'
+import { ALL_POSTS_QUERY } from '../graphql/graphql'
 
 import { Getter, Action } from 'vuex-class';
 
@@ -79,7 +79,7 @@ import CardSkeleton from '../components/common/CardSkeleton/CardSkeleton.vue'
     apollo: {
         // Fetch all posts.
         allPosts: {
-            query: RELATED_POSTS_QUERY,
+            query: ALL_POSTS_QUERY,
             variables () {
                 return {
                     orderBy: "createdAt_DESC",
@@ -147,7 +147,11 @@ export default class RelatedPosts extends Vue {
     viewItem(item: any) {
         // console.log('viewItem', item);
         this.actionSelectedPost({ data: item });
-        this.$router.push('/postdetails')
+        this.$router.push('/postdetails');
+        // Scroll to top of page.
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 100);
     }
 
 }

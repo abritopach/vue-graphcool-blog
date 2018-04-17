@@ -39,8 +39,33 @@ export const USER_QUERY = gql`
     }
 `
 
+export const ME_QUERY = gql`
+    query MeQuery {
+        me {
+            id
+            username
+            avatar
+            email
+            role
+            posts {
+                id
+                title
+                content
+                likes
+                createdAt
+                categories {
+                    id
+                    name
+                }
+                isPublished
+            }
+        }
+    }
+`
+
 // Post.
 
+/*
 export const POST_QUERY = gql`
     query PostQuery($id: ID!) {
         Post(id: $id) {
@@ -53,6 +78,28 @@ export const POST_QUERY = gql`
                 name
             }
             user {
+                id
+                username
+                email
+                avatar
+            }
+        }
+    }
+`
+*/
+
+export const POST_QUERY = gql`
+    query PostQuery($id: ID!) {
+        post(id: $id) {
+            id
+            title
+            image
+            content
+            categories {
+                id
+                name
+            }
+            author {
                 id
                 username
                 email
@@ -115,6 +162,7 @@ export const ALL_POSTS_QUERY = gql`
     }
 `
 
+/*
 export const RELATED_POSTS_QUERY = gql`
     query RelatedPostsQuery($orderBy: PostOrderBy, $first: Int, $filter: PostFilter) {
         allPosts(orderBy: $orderBy, first: $first, filter: $filter) {
@@ -136,6 +184,7 @@ export const RELATED_POSTS_QUERY = gql`
         }
 }
 `
+*/
 
 export const POSTS_COUNT_QUERY = gql`
     query PostsCountQuery {
@@ -375,6 +424,7 @@ export const DELETE_POST_MUTATION = gql`
     }
 `
 
+/*
 export const UPDATE_POST_MUTATION = gql`
     mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!, $categories: [PostcategoriesCategory!], $isPublished: Boolean!) {
         updatePost(
@@ -400,7 +450,37 @@ export const UPDATE_POST_MUTATION = gql`
         }
     }
 `
+*/
 
+export const UPDATE_POST_MUTATION = gql`
+    mutation UpdatePostMutation($id:ID!, $title: String, $content: String, $image: String, $likes: Int, $categories: [CategoryWhereInput!], $isPublished: Boolean) {
+        updatePost(
+            id: $id
+            title: $title
+            content: $content
+            image: $image
+            likes: $likes
+            categories: $categories
+            isPublished: $isPublished
+        ) {
+            id
+            title
+            content
+            createdAt
+            author {
+                id
+                username
+            }
+            categories {
+                id
+                name
+            }
+            isPublished
+        }
+    }
+`
+
+/*
 export const UPDATE_POST_LIKES_MUTATION = gql`
     mutation UpdatePostLikesMutation ($id: ID!, $likes: Int!) {
         updatePost (id: $id, likes: $likes) {
@@ -409,6 +489,7 @@ export const UPDATE_POST_LIKES_MUTATION = gql`
         }
     }
 `
+*/
 
 // ********************
 

@@ -1,5 +1,5 @@
 <template>
-    <section v-if="User">
+    <section v-if="me">
         <h2>My Posts</h2>
         <!-- Dialog edit post. -->
         <app-dialog title="Edit Post" :show="dialog.show" @clickAccept="onClickAccept" @clickClose="onClickClose">
@@ -21,7 +21,7 @@
             </picture-input>
         </app-dialog>
         <v-flex xs12 sm6 offset-sm3>
-            <app-data-table :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+            <app-data-table :data="me.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
         </v-flex>
     </section>
 </template>
@@ -39,7 +39,7 @@ import EventBus from '../event.bus';
 
 import PictureInput from 'vue-picture-input'
 
-import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
+import { /*USER_QUERY*/ME_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
@@ -47,14 +47,9 @@ import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY
         allCategories: {
             query: ALL_CATEGORIES_QUERY
         },
-        // Fetch user by ID
-        User: {
-            query: USER_QUERY,
-            variables () {
-                return {
-                    id: this.loggedUser.id
-                }
-            }
+        // Fetch current user.
+        me: {
+            query: ME_QUERY
         },
         // Fetch all posts.
         allPosts: {
@@ -114,15 +109,15 @@ export default class MyPosts extends Vue {
                 },
                 update: (store, { data: { deletePost } }) => {
                     // Read data from cache for the allPosts query.
-                    let data = store.readQuery({ query: USER_QUERY, variables: { id: this.loggedUser.id} }) || {};
+                    let data = store.readQuery({ query: ME_QUERY, variables: { id: this.loggedUser.id} }) || {};
 
                     console.log('data', data);
 
                     // Delete post from the data.
-                    (data as any)['User']['posts'] = (data as any)['User']['posts'].filter((i: any) => i.id !== deletePost.id);
+                    (data as any)['me']['posts'] = (data as any)['me']['posts'].filter((i: any) => i.id !== deletePost.id);
 
                     // Write data back to the cache for the allPosts query.
-                    store.writeQuery({ query: USER_QUERY, data })
+                    store.writeQuery({ query: ME_QUERY, data })
                 }
             })
             .then(response => {
@@ -143,7 +138,7 @@ export default class MyPosts extends Vue {
     }
 
     updateItem() {
-        let categories = this.select.map( category => ({ 'name': category.name }));
+        let categories = this.select.map( category => ({ 'id': category.id }));
         this.$apollo
             .mutate({
                 mutation: UPDATE_POST_MUTATION,
