@@ -150,6 +150,7 @@ export const ALL_POSTS_QUERY = gql`
             likes
             author {
                 id
+                username
                 name
                 avatar
             }
@@ -305,8 +306,11 @@ export const UPDATE_USER_MUTATION = gql`
 */
 
 export const UPDATE_USER_MUTATION = gql`
-    mutation UpdateUserMutation($avatar: String) {
+    mutation UpdateUserMutation($id: ID!, $username: String, $role: String, $avatar: String) {
         updateUser(
+            id: $id
+            username: $username
+            role: $role
             avatar: $avatar
         ) {
             id
@@ -318,6 +322,7 @@ export const UPDATE_USER_MUTATION = gql`
     }
 `
 
+/*
 export const UPDATE_USER_AVATAR_MUTATION = gql`
     mutation UpdateUserMutation($id:ID!, $avatar: String!) {
         updateUser(
@@ -332,6 +337,7 @@ export const UPDATE_USER_AVATAR_MUTATION = gql`
         }
     }
 `
+*/
 
 export const FORGOT_PASSWORD_MUTATION = gql`
     mutation ForgotPasswordMutation($email: String!) {

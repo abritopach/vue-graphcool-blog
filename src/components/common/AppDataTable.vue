@@ -14,7 +14,7 @@
                         <span v-if="!props.item.isPublished" @click="editItem(props.item)"><v-icon color="pink darken-1">cloud_upload</v-icon> Draft</span>
                     </td>
                     <td class="text-xs-left">{{ props.item.title }}</td>
-                    <td v-if="typeof props.item.user !== 'undefined'" class="text-xs-left">{{ props.item.user.username }}</td>
+                    <td v-if="typeof props.item.author !== 'undefined'" class="text-xs-left">{{ props.item.author.username }}</td>
                     <td class="text-xs-left">{{ props.item.createdAt | formatDate }}</td>
                 </template>
                 <!-- Users fields. -->

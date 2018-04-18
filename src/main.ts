@@ -36,7 +36,7 @@ const authLink = setContext((_, { headers }) => {
   let token = localStorage.getItem('blog-app-token');
 
   // Remove double quotes from token.
-  token = token!.replace(/\"/g, "");
+  if (token !== null) token = token!.replace(/\"/g, "");
 
   // Return the headers to the context so httpLink can read them.
   return {
