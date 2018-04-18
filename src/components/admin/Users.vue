@@ -2,7 +2,8 @@
     <section v-if="allUsers">
         <h2>Users</h2>
          <!-- Dialog edit user. -->
-         <app-dialog title="Edit User" :show="dialog.show" @clickAccept="onClickAccept">
+         <app-dialog title="Edit User" :show="dialog.show" @clickAccept="onClickAccept" @clickClose="onClickClose">
+            <v-text-field label="Email" v-model="dialog.newEmail" disabled></v-text-field>
             <v-text-field label="Username" v-model="dialog.newUsername" required></v-text-field>
             <v-text-field label="Role" v-model="dialog.newRole" required></v-text-field>
         </app-dialog>
@@ -104,13 +105,17 @@ export default class Users extends Vue {
     }
 
     editItem(item: any) {
-        this.dialog = {show: true, newUsername: item.username, newRole: item.role, user: item};
+        this.dialog = {show: true, newEmail: item.email, newUsername: item.username, newRole: item.role, user: item};
     }
 
-     onClickAccept() {
+    onClickAccept() {
         // console.log('onClickAccept');
         // console.log(this.dialog);
         this.updateItem();
+    }
+
+    onClickClose() {
+        this.dialog.show = false;
     }
 
     updateItem() {

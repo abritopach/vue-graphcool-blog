@@ -29,7 +29,8 @@ Technologies: Vue.js, Vuetify.js, Vuex, Typescript, GraphQL, Apollo Client and G
 
 ![Technologies](readme_resources/graphql_apollo_vue_graphcool.png "Technologies")
 
-NOTE: Sample project using Prisma instead of GraphCool in [prisma branch](https://github.com/abritopach/vue-graphcool-blog/tree/prisma)
+NOTE: Sample project using Prisma instead of GraphCool in [prisma branch](https://github.com/abritopach/vue-graphcool-blog/tree/prisma).
+      [Prisma server](https://github.com/abritopach/prisma-blog)
 
 ## App Example
 

@@ -2,7 +2,7 @@
     <section v-if="allPosts">
         <h2>Posts</h2>
         <!-- Dialog edit post. -->
-        <app-dialog title="Edit Post" :show="dialog.show" @clickAccept="onClickAccept">
+        <app-dialog title="Edit Post" :show="dialog.show" @clickAccept="onClickAccept" @clickClose="onClickClose">
             <v-text-field label="Title" v-model="dialog.newTitle" required></v-text-field>
             <v-text-field label="Content" v-model="dialog.newContent" multi-line required=""></v-text-field>
         </app-dialog>
@@ -100,6 +100,10 @@ export default class Users extends Vue {
         // console.log('onClickAccept');
         // console.log(this.dialog);
         this.updateItem();
+    }
+
+     onClickClose() {
+        this.dialog.show = false;
     }
 
     updateItem() {
