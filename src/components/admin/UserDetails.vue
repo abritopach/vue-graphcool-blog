@@ -2,19 +2,19 @@
     <v-layout row>
         <v-flex xs12 sm6 lg4 offset-sm3 offset-lg4>
             <h2>User Details</h2>
-            <v-card v-if="User">
+            <v-card v-if="user">
                 <v-avatar size="100px">
-                        <img v-if="User.avatar !== null" :src="User.avatar" alt="">
+                        <img v-if="user.avatar !== null" :src="user.avatar" alt="">
                         <img v-else src="../../assets/avatar.png" alt="">
                 </v-avatar>
                 <v-card-title primary-title>
                 <div>
-                    <div class="headline">{{User.username}}</div>
-                    <span class="grey--text">{{User.email}}</span>
+                    <div class="headline">{{user.name}} ( {{user.username}} )</div>
+                    <span class="grey--text">{{user.email}}</span>
                 </div>
                 </v-card-title>
                 <v-card-actions>
-                    <v-chip color="pink darken-1" text-color="white">Role: {{User.role}}</v-chip>
+                    <v-chip color="pink darken-1" text-color="white">Role: {{user.role}}</v-chip>
                 <!--
                 <v-btn flat>Share</v-btn>
                 <v-btn flat color="purple">Explore</v-btn>
@@ -22,7 +22,7 @@
                 <v-spacer></v-spacer>
                 <div>
                         <v-badge color="red">
-                            <span slot="badge">{{User.posts.length}}</span>
+                            <span slot="badge">{{user.posts.length}}</span>
                             <span>Number of posts</span>
                         </v-badge>
                     </div>
@@ -31,7 +31,7 @@
                 </v-btn>
                 </v-card-actions>
                 <v-slide-y-transition>    
-                <app-data-table v-show="show" :data="User.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
+                <app-data-table v-show="show" :data="user.posts" :headers="headers" :actions="showActions" @clicked="onClick"></app-data-table>
                 </v-slide-y-transition>
             </v-card>
         </v-flex>
@@ -51,7 +51,7 @@ import { UserModel } from '../../types';
 @Component({
     apollo: {
         // Fetch user by ID
-        User: {
+        user: {
             query: USER_QUERY,
             variables () {
                 return {

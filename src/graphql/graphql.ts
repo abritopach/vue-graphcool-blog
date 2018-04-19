@@ -8,8 +8,9 @@ export const ALL_USERS_QUERY = gql`
     query AllUsersQuery {
         allUsers {
             id
+            name
             username
-            email,
+            email
             role
         }
     }
@@ -17,8 +18,9 @@ export const ALL_USERS_QUERY = gql`
 
 export const USER_QUERY = gql`
     query UserQuery($id: ID!) {
-        User(id: $id) {
+        user(id: $id) {
             id
+            name
             username
             avatar
             email
@@ -65,29 +67,6 @@ export const ME_QUERY = gql`
 
 // Post.
 
-/*
-export const POST_QUERY = gql`
-    query PostQuery($id: ID!) {
-        Post(id: $id) {
-            id
-            title
-            image
-            content
-            categories {
-                id
-                name
-            }
-            user {
-                id
-                username
-                email
-                avatar
-            }
-        }
-    }
-`
-*/
-
 export const POST_QUERY = gql`
     query PostQuery($id: ID!) {
         post(id: $id) {
@@ -108,35 +87,6 @@ export const POST_QUERY = gql`
         }
     }
 `
-
-/*
-export const ALL_POSTS_QUERY = gql`
-    query AllPostsQuery($orderBy: PostOrderBy, $first: Int, $skip: Int, $filter: PostFilter) {
-        allPosts(orderBy: $orderBy, first: $first, skip: $skip, 
-            filter: $filter) {
-            id
-            title
-            createdAt
-            content
-            image
-            likes
-            user {
-                id
-                username
-                avatar
-            }
-            categories {
-                id
-                name
-            }
-            isPublished
-        }
-        _allPostsMeta {
-            count
-        }
-    }
-`
-*/
 
 export const ALL_POSTS_QUERY = gql`
     query AllPostsQuery($orderBy: PostOrderByInput, $first: Int, $skip: Int, $filter: PostWhereInput) {
@@ -163,30 +113,6 @@ export const ALL_POSTS_QUERY = gql`
     }
 `
 
-/*
-export const RELATED_POSTS_QUERY = gql`
-    query RelatedPostsQuery($orderBy: PostOrderBy, $first: Int, $filter: PostFilter) {
-        allPosts(orderBy: $orderBy, first: $first, filter: $filter) {
-            id
-            title
-            createdAt
-            content
-            image
-            likes
-            user {
-                id
-                username
-                avatar
-            }
-            categories {
-                id
-                name
-            }
-        }
-}
-`
-*/
-
 export const POSTS_COUNT_QUERY = gql`
     query PostsCountQuery {
         _allPostsMeta {
@@ -212,6 +138,7 @@ export const ALL_CATEGORIES_QUERY = gql`
 
 // User.
 
+/*
 export const SIGNUP_MUTATION = gql`
     mutation SignupMutation($username: String!, $email: String!, $password: String!) {
         createUser(
@@ -227,27 +154,23 @@ export const SIGNUP_MUTATION = gql`
         }
     }
 `
-/*
-export const LOGIN_MUTATION = gql`
-    mutation LoginMutation($email: String!, $password: String!) {
-        signinUser(
-            email: { 
-                email: $email
-                password: $password 
-            }
+*/
+
+export const SIGNUP_MUTATION = gql`
+    mutation SignupMutation($email: String!, $password: String!, $name: String!, $username: String!) {
+        signup(
+            email: $email
+            password: $password
+            name: $name
+            username: $username
         ) {
             token
             user {
-                id,
-                username
-                email
-                role
-                avatar
+                id
             }
         }
     }
 `
-*/
 
 export const LOGIN_MUTATION = gql`
     mutation LoginMutation($email: String!, $password: String!) {
@@ -257,7 +180,7 @@ export const LOGIN_MUTATION = gql`
         ) {
             token
             user {
-                id,
+                id
                 username
                 email
                 role
@@ -288,23 +211,6 @@ export const MARK_AS_DELETED_USER_MUTATION = gql`
     }
 `
 
-/*
-export const UPDATE_USER_MUTATION = gql`
-    mutation UpdateUserMutation($id:ID!, $username: String!, $role: String!) {
-        updateUser(
-            id: $id
-            username: $username
-            role: $role
-        ) {
-            id
-            username
-            email
-            role
-        }
-    }
-`
-*/
-
 export const UPDATE_USER_MUTATION = gql`
     mutation UpdateUserMutation($id: ID!, $username: String, $role: String, $avatar: String) {
         updateUser(
@@ -321,23 +227,6 @@ export const UPDATE_USER_MUTATION = gql`
         }
     }
 `
-
-/*
-export const UPDATE_USER_AVATAR_MUTATION = gql`
-    mutation UpdateUserMutation($id:ID!, $avatar: String!) {
-        updateUser(
-            id: $id
-            avatar: $avatar
-        ) {
-            id
-            username
-            email
-            role
-            avatar
-        }
-    }
-`
-*/
 
 export const FORGOT_PASSWORD_MUTATION = gql`
     mutation ForgotPasswordMutation($email: String!) {
@@ -387,39 +276,6 @@ export const ADD_POST_MUTATION = gql`
     }
 `
 
-/*
-export const ADD_POST_MUTATION = gql`
-    mutation AddPostMutation($title: String!, $content: String!, $image: String, $userId: ID!, $categories: [PostcategoriesCategory!],
-    $isPublished: Boolean!) {
-        createPost(
-            title: $title
-            content: $content
-            image: $image
-            userId: $userId
-            categories: $categories
-            isPublished: $isPublished
-        ) {
-            id
-            title
-            content
-            image
-            likes
-            createdAt
-            isPublished
-            categories {
-                id
-                name
-            }
-            user {
-                id
-                username
-                email
-            }
-        }
-    }
-`
-*/
-
 export const DELETE_POST_MUTATION = gql`
     mutation DeletePostMutation($id: ID!) {
         deletePost(
@@ -429,34 +285,6 @@ export const DELETE_POST_MUTATION = gql`
         }
     }
 `
-
-/*
-export const UPDATE_POST_MUTATION = gql`
-    mutation UpdatePostMutation($id:ID!, $title: String!, $content: String!, $categories: [PostcategoriesCategory!], $isPublished: Boolean!) {
-        updatePost(
-            id: $id
-            title: $title
-            content: $content
-            categories: $categories
-            isPublished: $isPublished
-        ) {
-            id
-            title
-            content
-            createdAt
-            user {
-                id
-                username
-            }
-            categories {
-                id
-                name
-            }
-            isPublished
-        }
-    }
-`
-*/
 
 export const UPDATE_POST_MUTATION = gql`
     mutation UpdatePostMutation($id:ID!, $title: String, $content: String, $image: String, $likes: Int, $categories: [CategoryWhereInput!], $isPublished: Boolean) {
@@ -485,17 +313,6 @@ export const UPDATE_POST_MUTATION = gql`
         }
     }
 `
-
-/*
-export const UPDATE_POST_LIKES_MUTATION = gql`
-    mutation UpdatePostLikesMutation ($id: ID!, $likes: Int!) {
-        updatePost (id: $id, likes: $likes) {
-            id
-            likes
-        }
-    }
-`
-*/
 
 // ********************
 
