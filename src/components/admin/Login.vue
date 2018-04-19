@@ -14,14 +14,14 @@
                     </v-card-media>
                     <v-card-title primary-title>
                     <div class="loginForm">
-                        <v-form v-model="valid" ref="form" lazy-validation>
-                            <v-text-field label="E-mail" v-model="email" :rules="emailRules" required></v-text-field>
-                            <v-text-field type="password" label="Password" v-model="password" :rules="passwordRules" required></v-text-field>
+                        <v-form v-model="loginForm.valid" ref="form" lazy-validation>
+                            <v-text-field label="E-mail" v-model="loginForm.email" :rules="loginForm.emailRules" required></v-text-field>
+                            <v-text-field type="password" label="Password" v-model="loginForm.password" :rules="loginForm.passwordRules" required></v-text-field>
                         </v-form>
                     </div>
                     </v-card-title>
                     <v-card-actions>
-                        <v-btn raised color="pink darken-1" class="white--text" @click="login" :disabled="!valid">Login</v-btn>
+                        <v-btn raised color="pink darken-1" class="white--text" @click="login" :disabled="!loginForm.valid">Login</v-btn>
                         <v-btn flat small color="primary" @click="forgotPassword">Forgot your password?</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -50,19 +50,18 @@ import { Action } from 'vuex-class';
 })
 export default class SignUp extends Vue {
 
-    valid: boolean = true;
-    email: string = '';
-    password: string = '';
-    emailRules: any;
-    passwordRules: any;
+    loginForm: any = {
+        email: '', emailRules: [(v: any) => !!v || 'E-mail is required.', (v: any) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid.'],
+        password: '', passwordRules: [(v: any) => !!v || 'Password is required.'],
+        valid: true
+    };
+
     dialog: any = {show: false, email: ''};
 
     @Action('LOGGED_USER') actionLoggedUser: any;
 
     constructor() {
         super();
-        this.emailRules = [(v: any) => !!v || 'E-mail is required.', (v: any) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid.'];
-        this.passwordRules = [(v: any) => !!v || 'Password is required.'];
     }
 
     login() {
@@ -74,8 +73,8 @@ export default class SignUp extends Vue {
                 .mutate({
                     mutation: LOGIN_MUTATION,
                     variables: {
-                        email: this.email,
-                        password: this.password
+                        email: this.loginForm.email,
+                        password: this.loginForm.password
                     }
                 })
                 .then(response => {
