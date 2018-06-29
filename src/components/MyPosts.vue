@@ -105,7 +105,10 @@ export default class MyPosts extends Vue {
     }
 
     deleteItem(item: any) {
+        
         // console.log('deleteItem', item);
+
+        /*
         this.$apollo
             .mutate({
                 mutation: DELETE_POST_MUTATION,
@@ -129,6 +132,7 @@ export default class MyPosts extends Vue {
                 console.log(response);
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "Post deleted successfully"});
             })
+            */
     }
 
     onClickAccept() {

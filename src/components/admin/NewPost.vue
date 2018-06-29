@@ -95,6 +95,7 @@ export default class NewPost extends Vue {
         let categories = this.select.map( category => ({ 'name': category.name }));
         console.log(categories);
 
+        /*
         if ((<any>this.$refs.form).validate()) {
             this.$apollo
                 .mutate({
@@ -106,7 +107,7 @@ export default class NewPost extends Vue {
                         userId: this.loggedUser.id,
                         categories: categories,
                         isPublished: this.publish
-                    },
+                    }/*,
                     update: (store, { data: { createPost } }) => {
                         // Read data from cache for this query.
                         let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
@@ -125,6 +126,7 @@ export default class NewPost extends Vue {
                     this.$router.push('/')
                 })
         }
+        */
     }
 
     onChange (image: any) {

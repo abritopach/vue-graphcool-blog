@@ -28,6 +28,11 @@ import moment from 'moment';
 
 const SIMPLE_API_ENDPOINT = 'https://api.graph.cool/simple/v1/cje2ponq50idi01357s55y4h2';
 
+interface Definintion {
+  kind: string;
+  operation?: string;
+};
+
 
 // Create an authLink that gets the user token from local storage and return the headers which
 // contains the Authorization header.
@@ -62,7 +67,7 @@ const wsLink = new WebSocketLink({
 const link = split(
   // Split based on operation type.
   ({ query }) => {
-    const { kind, operation } = getMainDefinition(query)
+    const { kind, operation }: Definintion = getMainDefinition(query)
     return kind === 'OperationDefinition' &&
       operation === 'subscription'
   },
@@ -80,7 +85,6 @@ const apolloClient = new ApolloClient({
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient
 })
-
 
 // Vue.use(Meta)
 
@@ -103,7 +107,7 @@ new Vue({
   el: '#app',
   store,
   router,
-  apolloProvider,
+  provide: apolloProvider.provide(),
   components: { App },
   template: '<App/>'
 })
