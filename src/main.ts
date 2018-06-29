@@ -29,14 +29,14 @@ import moment from 'moment';
 // const SIMPLE_API_ENDPOINT = 'https://api.graph.cool/simple/v1/cje2ponq50idi01357s55y4h2';
 const SIMPLE_API_ENDPOINT = 'http://localhost:4000/';
 
+// Get the authentication token from localstorage if it exists.
+let token = localStorage.getItem('blog-app-token');
+// Remove double quotes from token.
+if (token !== null) token = token!.replace(/\"/g, "");
+
 // Create an authLink that gets the user token from local storage and return the headers which
 // contains the Authorization header.
 const authLink = setContext((_, { headers }) => {
-  // Get the authentication token from localstorage if it exists.
-  let token = localStorage.getItem('blog-app-token');
-
-  // Remove double quotes from token.
-  if (token !== null) token = token!.replace(/\"/g, "");
 
   // Return the headers to the context so httpLink can read them.
   return {
@@ -54,11 +54,16 @@ const httpLink = new HttpLink({
 
 // Create the subscription websocket link.
 const wsLink = new WebSocketLink({
-  uri: 'wss://subscriptions.graph.cool/v1/cje2ponq50idi01357s55y4h2',
+  // uri: 'wss://subscriptions.graph.cool/v1/cje2ponq50idi01357s55y4h2',
+  uri: 'wss://localhost:4000',
   options: {
     reconnect: true,
+    connectionParams: {
+      Authorization: token ? `Bearer ${token}` : null
+    }
   },
 })
+
 
 // Using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent.

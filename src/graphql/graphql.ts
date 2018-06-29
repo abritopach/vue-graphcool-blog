@@ -320,6 +320,7 @@ export const UPDATE_POST_MUTATION = gql`
 Subscription query that we’ll run to automatically receive new item created, updated and deleted on the server.
 */
 
+/*
 export const POSTS_SUBSCRIPTION = gql`  
     subscription changedPosts {  
         Post(
@@ -340,6 +341,34 @@ export const POSTS_SUBSCRIPTION = gql`
                     name
                 }
                 user {
+                    id
+                    username
+                }
+            }
+            previousValues {
+                id
+            }
+        }
+    }
+`;
+*/
+
+export const POSTS_SUBSCRIPTION = gql`
+    subscription {  
+        publications {
+            mutation
+            node {
+                id
+                title
+                createdAt
+                content
+                image
+                likes
+                categories {
+                    id
+                    name
+                }
+                author {
                     id
                     username
                 }
@@ -410,18 +439,20 @@ export function subscribeToPostsChanges(apollo: any) {
 
             console.log('subscriptionData', subscriptionData);
 
-            if (subscriptionData.data.Post.mutation == 'CREATED') {
+            /*
+            if (subscriptionData.data.post.mutation == 'CREATED') {
                 console.log("CREATED NEW POST");
                 return Object.assign({}, previousResult, {
-                    allPosts: previousResult['allPosts'].concat(subscriptionData.data.Post.node)
+                    allPosts: previousResult['allPosts'].concat(subscriptionData.data.post.node)
                 });
             }
-            else if (subscriptionData.data.Post.mutation == 'DELETED') {
+            else if (subscriptionData.data.post.mutation == 'DELETED') {
                 console.log("DELETED POST");
                 return Object.assign({}, previousResult, {
-                    allPosts: previousResult['allPosts'].filter((i: any) => i.id !== subscriptionData.data.Post.previousValues.id)
+                    allPosts: previousResult['allPosts'].filter((i: any) => i.id !== subscriptionData.data.post.previousValues.id)
                 });
             }
+            */
         },
     })
 }

@@ -95,7 +95,7 @@ import CardSkeleton from '../components/common/CardSkeleton/CardSkeleton.vue'
 // Vuex.
 import { Action } from 'vuex-class';
 
-import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, /*subscribeToPostsChanges,*/ ALL_CATEGORIES_QUERY } from '../graphql/graphql'
+import { ALL_POSTS_QUERY, POSTS_COUNT_QUERY, subscribeToPostsChanges, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
 @Component({
     apollo: {
@@ -179,12 +179,12 @@ export default class Home extends Vue {
 
     mounted() {
         console.log("mounted Home");
-        // this.subscription = subscribeToPostsChanges(this.$apollo);
+        this.subscription = subscribeToPostsChanges(this.$apollo);
     }
 
     beforeDestroy() {
         // console.log("beforeDestroy Home");
-        // this.subscription.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
     viewItem(item: any) {

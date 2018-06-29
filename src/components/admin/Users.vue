@@ -77,7 +77,6 @@ export default class Users extends Vue {
 
     deleteItem(item: any) {
         // console.log('deleteItem', item);
-        /*
         this.$apollo
             .mutate({
                 mutation: DELETE_USER_MUTATION,
@@ -89,7 +88,7 @@ export default class Users extends Vue {
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User deleted successfully"});
                 console.log(response);
             })
-        */
+        /*
        this.$apollo
             .mutate({
                 mutation: MARK_AS_DELETED_USER_MUTATION,
@@ -102,6 +101,7 @@ export default class Users extends Vue {
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "User deleted successfully"});
                 console.log(response);
             })
+            */
     }
 
     editItem(item: any) {
