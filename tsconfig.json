@@ -5,7 +5,7 @@
       "allowJs":true,
       "sourceMap": true,
       "noImplicitReturns": true,
-      "noImplicitAny": true,
+      "noImplicitAny": false,
       // This aligns with Vue's browser support.
       "target": "es5",
       // This enables stricter inference for data properties on `this`.

@@ -13,6 +13,7 @@ function resolve (dir) {
 
 
 module.exports = {
+  mode: 'development',
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.ts'
@@ -91,12 +92,12 @@ module.exports = {
     child_process: 'empty'
   },
   plugins: [
+    new VueLoaderPlugin(),
     new prerenderSpaPlugin(
       // Absolute path to compiled SPA.
       path.join(__dirname, '.'),
       // List of routes to prerender.
       ['/']
-    ),
-    new VueLoaderPlugin()
+    )
   ]
 }

@@ -37,7 +37,7 @@ import { UserModel, CategoryModel } from '../types';
 
 import EventBus from '../event.bus';
 
-import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input/PictureInput.vue'
 
 import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
@@ -62,7 +62,7 @@ import { USER_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY
             variables: {
                 orderBy: "createdAt_DESC",
             },
-        }, 
+        }
     },
     components: {
         // Add a reference to the component in the components property.
@@ -107,14 +107,12 @@ export default class MyPosts extends Vue {
     deleteItem(item: any) {
         
         // console.log('deleteItem', item);
-
-        /*
         this.$apollo
             .mutate({
                 mutation: DELETE_POST_MUTATION,
                 variables: {
                     id: item.id,
-                },
+                }/*,
                 update: (store, { data: { deletePost } }) => {
                     // Read data from cache for the allPosts query.
                     let data = store.readQuery({ query: USER_QUERY, variables: { id: this.loggedUser.id} }) || {};
@@ -127,12 +125,13 @@ export default class MyPosts extends Vue {
                     // Write data back to the cache for the allPosts query.
                     store.writeQuery({ query: USER_QUERY, data })
                 }
+                */
             })
             .then(response => {
                 console.log(response);
                 EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "Post deleted successfully"});
             })
-            */
+ 
     }
 
     onClickAccept() {

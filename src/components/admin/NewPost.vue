@@ -53,7 +53,7 @@ import { ADD_POST_MUTATION , ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../..
 
 // import PictureInput from 'vue-picture-input/PictureInput.vue'
 
-import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input/PictureInput.vue'
 
 @Component({
      apollo: {
@@ -95,8 +95,8 @@ export default class NewPost extends Vue {
         let categories = this.select.map( category => ({ 'name': category.name }));
         console.log(categories);
 
-        /*
         if ((<any>this.$refs.form).validate()) {
+
             this.$apollo
                 .mutate({
                     mutation: ADD_POST_MUTATION,
@@ -108,7 +108,7 @@ export default class NewPost extends Vue {
                         categories: categories,
                         isPublished: this.publish
                     }/*,
-                    update: (store, { data: { createPost } }) => {
+                    update: (store, { data: { createPost  } }) => {
                         // Read data from cache for this query.
                         let data = store.readQuery({ query: ALL_POSTS_QUERY }) || {};
                         console.log(data);
@@ -119,14 +119,15 @@ export default class NewPost extends Vue {
                         // Write data back to the cache.
                         store.writeQuery({ query: ALL_POSTS_QUERY, data })
                     }
+                    */
                 })
                 .then(response => {
                     EventBus.$emit('SHOW_SNACKBAR', {show: true, color: "pink darken-1", timeout: 6000, text: "Post added successfully"});
                     // redirect to all posts
                     this.$router.push('/')
                 })
+
         }
-        */
     }
 
     onChange (image: any) {
