@@ -45,7 +45,7 @@ import EventBus from '../../event.bus';
 
 // import PictureInput from 'vue-picture-input/PictureInput.vue'
 
-import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input/PictureInput.vue'
 
 @Component({
     components: {

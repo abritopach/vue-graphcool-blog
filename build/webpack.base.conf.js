@@ -4,6 +4,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const prerenderSpaPlugin = require('prerender-spa-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -12,6 +13,7 @@ function resolve (dir) {
 
 
 module.exports = {
+  mode: 'development',
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.ts'
@@ -90,6 +92,7 @@ module.exports = {
     child_process: 'empty'
   },
   plugins: [
+    new VueLoaderPlugin(),
     new prerenderSpaPlugin(
       // Absolute path to compiled SPA.
       path.join(__dirname, '.'),

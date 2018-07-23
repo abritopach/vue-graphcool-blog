@@ -29,6 +29,11 @@ import moment from 'moment';
 // const SIMPLE_API_ENDPOINT = 'https://api.graph.cool/simple/v1/cje2ponq50idi01357s55y4h2';
 const SIMPLE_API_ENDPOINT = 'http://localhost:4000/';
 
+interface Definintion {
+  kind: string;
+  operation?: string;
+};
+
 // Get the authentication token from localstorage if it exists.
 let token = localStorage.getItem('blog-app-token');
 // Remove double quotes from token.
@@ -64,13 +69,12 @@ const wsLink = new WebSocketLink({
   },
 })
 
-
 // Using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent.
 const link = split(
   // Split based on operation type.
   ({ query }) => {
-    const { kind, operation } = getMainDefinition(query)
+    const { kind, operation }: Definintion = getMainDefinition(query)
     return kind === 'OperationDefinition' &&
       operation === 'subscription'
   },
@@ -111,7 +115,7 @@ new Vue({
   el: '#app',
   store,
   router,
-  apolloProvider,
+  provide: apolloProvider.provide(),
   components: { App },
   template: '<App/>'
 })

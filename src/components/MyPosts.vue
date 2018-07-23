@@ -37,7 +37,7 @@ import { UserModel, CategoryModel } from '../types';
 
 import EventBus from '../event.bus';
 
-import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input/PictureInput.vue'
 
 import { /*USER_QUERY*/ME_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, ALL_POSTS_QUERY, ALL_CATEGORIES_QUERY } from '../graphql/graphql'
 
@@ -106,7 +106,7 @@ export default class MyPosts extends Vue {
                 mutation: DELETE_POST_MUTATION,
                 variables: {
                     id: item.id,
-                },
+                }/*,
                 update: (store, { data: { deletePost } }) => {
                     // Read data from cache for the allPosts query.
                     let data = store.readQuery({ query: ME_QUERY, variables: { id: this.loggedUser.id} }) || {};
@@ -118,7 +118,7 @@ export default class MyPosts extends Vue {
 
                     // Write data back to the cache for the allPosts query.
                     store.writeQuery({ query: ME_QUERY, data })
-                }
+                }*/
             })
             .then(response => {
                 console.log(response);

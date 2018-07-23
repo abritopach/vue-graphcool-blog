@@ -41,7 +41,7 @@ import { CategoryModel } from '../../types';
 
 import { ALL_POSTS_QUERY, DELETE_POST_MUTATION, UPDATE_POST_MUTATION, subscribeToPostsChanges, ALL_CATEGORIES_QUERY } from '../../graphql/graphql'
 
-import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input/PictureInput.vue'
 
 
 @Component({
